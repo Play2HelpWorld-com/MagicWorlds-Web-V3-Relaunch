@@ -281,7 +281,7 @@ const Feature = () => {
         cancelAnimationFrame(animationFrameId.current);
       }
     };
-  }, [mousePosition, isMounted]);
+  }, [mousePosition, isMounted, scrollY]);
 
   // Calculate the radial gradient
   const radialGradientStyle = isMounted

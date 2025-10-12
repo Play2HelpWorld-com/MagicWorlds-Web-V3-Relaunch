@@ -254,7 +254,7 @@ const EpicGamingShowcase: React.FC = () => {
         videoElement.removeEventListener("pause", handlePauseEvent);
       };
     }
-  }, [activeIndex, isInitialLoad, loadingProgress]);
+  }, [activeIndex, isInitialLoad, loadingProgress, handleNextVideo]);
 
   // Setup thumbnail hover effects
   useEffect(() => {
