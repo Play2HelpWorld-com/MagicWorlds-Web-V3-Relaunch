@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 
 type DocSection = {
   title: string;
@@ -28,9 +29,9 @@ export const docsData: Record<string, DocSection> = {
             Unlike traditional games, Magic Worlds combines procedural
             generation with hand-crafted storytelling to create unique
             experiences for every player. Your choices matter, permanently
-            altering the world around you. In The Otherworlds Edition, you'll
-            pilot a spaceship, navigate to different planets, and unlock their
-            hidden magic.
+            altering the world around you. In The Otherworlds Edition,
+            you&apos;ll pilot a spaceship, navigate to different planets, and
+            unlock their hidden magic.
           </p>
         </div>
 
@@ -98,8 +99,10 @@ export const docsData: Record<string, DocSection> = {
                 Exclusive cosmetics & skins (coming soon)
               </li>
               <li>
-                <span className="font-semibold text-white">Collector's:</span> +
-                Art book, soundtrack & season pass (coming soon)
+                <span className="font-semibold text-white">
+                  Collector&apos;s:
+                </span>{" "}
+                + Art book, soundtrack & season pass (coming soon)
               </li>
               {/* <li>
                 <span className="font-semibold text-white">Premium Pass:</span>{" "}
@@ -328,10 +331,12 @@ export const docsData: Record<string, DocSection> = {
             with Unity, the game integrates AI-driven NPCs to enhance gameplay
             and drive the in-game economy.
           </p>
-          <img
+          <Image
             className="my-4 rounded-lg border border-purple-500/40"
             src="/images/play/magicworlds.jpg"
             alt="Magic Worlds Concept Art"
+            width={800}
+            height={450}
           />
         </div>
 
@@ -516,8 +521,8 @@ export const docsData: Record<string, DocSection> = {
         <p className="text-lg leading-relaxed">
           Magic Worlds offers diverse gameplay modes and mechanics to suit
           different play styles. From exploring to creating, from social
-          interactions to competitive activities, there's something for every
-          player.
+          interactions to competitive activities, there&apos;s something for
+          every player.
         </p>
 
         <div className="mb-6 grid grid-cols-1 gap-6 md:grid-cols-2">
@@ -557,7 +562,9 @@ export const docsData: Record<string, DocSection> = {
             </h3>
             <div className="space-y-3 rounded-lg border border-gray-700 bg-gray-800/50 p-4">
               <ul className="list-disc space-y-1 pl-5">
-                <li>Building: Use Unity's tools to create 3D environments</li>
+                <li>
+                  Building: Use Unity&apos;s tools to create 3D environments
+                </li>
                 <li>
                   Exploration: Discover various world templates and
                   user-generated realms
@@ -721,8 +728,8 @@ export const docsData: Record<string, DocSection> = {
               <h4 className="font-bold text-blue-300">Economic Agents</h4>
               <p className="text-sm">
                 NPCs buy and sell goods, adjust prices based on supply and
-                demand, and participate actively in the game's economy. Some may
-                offer special deals or rare items.
+                demand, and participate actively in the game&apos;s economy.
+                Some may offer special deals or rare items.
               </p>
             </div>
             <div className="rounded border border-amber-700/30 bg-amber-900/20 p-3">
@@ -730,7 +737,7 @@ export const docsData: Record<string, DocSection> = {
               <p className="text-sm">
                 Many NPCs can teach real-world skills and in-game abilities.
                 Learning from these characters can unlock new gameplay options
-                and improve your character's capabilities.
+                and improve your character&apos;s capabilities.
               </p>
             </div>
           </div>
@@ -865,8 +872,8 @@ export const docsData: Record<string, DocSection> = {
                   </span>
                   <p className="text-sm">
                     Monthly showcases where players display their architectural
-                    and magical engineering prowess. Winners' creations become
-                    permanent landmarks.
+                    and magical engineering prowess. Winners&apos; creations
+                    become permanent landmarks.
                   </p>
                 </div>
               </li>
@@ -1669,8 +1676,9 @@ export const docsData: Record<string, DocSection> = {
 
         <div className="text-center">
           <p className="italic text-blue-300">
-            "Magic Worlds isn't just a game - it's a digital ecosystem where
-            imagination becomes reality and creativity has real value."
+            &quot;Magic Worlds isn&apos;t just a game - it&apos;s a digital
+            ecosystem where imagination becomes reality and creativity has real
+            value.&quot;
           </p>
         </div>
       </div>

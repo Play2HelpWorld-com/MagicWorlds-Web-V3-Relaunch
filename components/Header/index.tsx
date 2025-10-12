@@ -104,7 +104,7 @@ const Header = () => {
           }}
         >
           <div className="flex w-full items-center justify-between transition-all duration-500 ease-out xl:w-[12%]">
-            <a
+            <Link
               href="/"
               title="Home"
               className="transition-transform duration-500 ease-out hover:scale-105 active:scale-95"
@@ -123,7 +123,7 @@ const Header = () => {
                 height={50}
                 className="h-18 w-24 transition-opacity duration-300 dark:hidden"
               />
-            </a>
+            </Link>
 
             {/* <!-- Hamburger Toggle BTN --> */}
             <button

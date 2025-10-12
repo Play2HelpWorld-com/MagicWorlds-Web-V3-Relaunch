@@ -217,8 +217,8 @@ const Contact = () => {
                     Quest Accepted!
                   </h3>
                   <p className="text-lg text-purple-200">
-                    Your message has been sent successfully. We'll respond to
-                    your quest soon!
+                    Your message has been sent successfully. We&apos;ll respond
+                    to your quest soon!
                   </p>
                 </motion.div>
               ) : formState === "error" ? (

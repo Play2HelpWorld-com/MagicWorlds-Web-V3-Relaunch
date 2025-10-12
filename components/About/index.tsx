@@ -232,7 +232,7 @@ const About = () => {
                   Welcome to Magic Worlds, the ultimate virtual universe where
                   adventure meets rewards. Explore diverse realms, engage in
                   thrilling activities, and earn tokens as you journey through
-                  this immersive experience. Whether you're a seasoned
+                  this immersive experience. Whether you&apos;re a seasoned
                   adventurer or a newcomer, Magic Worlds offers something for
                   everyone.
                 </p>
@@ -1192,7 +1192,7 @@ const About = () => {
 
                   {/* Quote text */}
                   <p className="relative mb-5 font-rajdhani text-[15px] font-medium italic leading-relaxed text-gray-300 sm:text-base">
-                    "{testimonial.quote}"
+                    &quot;{testimonial.quote}&quot;
                   </p>
 
                   {/* Rating stars with animation */}
