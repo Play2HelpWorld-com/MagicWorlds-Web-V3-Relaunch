@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import {
   Play,
   Pause,
@@ -431,10 +431,10 @@ const EpicGamingShowcase: React.FC = () => {
     }
   };
 
-  const handleNextVideo = () => {
+  const handleNextVideo = useCallback(() => {
     const newIndex = (activeIndex + 1) % videos.length;
     handleVideoSelect(newIndex);
-  };
+  }, [activeIndex, videos.length, handleVideoSelect]);
 
   const handlePrevVideo = () => {
     const newIndex = (activeIndex - 1 + videos.length) % videos.length;

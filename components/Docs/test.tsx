@@ -88,8 +88,10 @@ export const docsData: Record<string, DocSection> = {
                 Exclusive cosmetics & mount
               </li>
               <li>
-                <span className="font-semibold text-white">Collector's:</span> +
-                Art book, soundtrack & season pass
+                <span className="font-semibold text-white">
+                  Collector&apos;s:
+                </span>{" "}
+                + Art book, soundtrack & season pass
               </li>
               <li>
                 <span className="font-semibold text-white">Legendary:</span> +
@@ -450,7 +452,7 @@ export const docsData: Record<string, DocSection> = {
             <p>
               A secretive organization that believes all magic should be free
               from regulation. They work from the shadows to undermine the
-              Arcanum's authority.
+              Arcanum&apos;s authority.
             </p>
           </div>
         </div>
@@ -602,8 +604,8 @@ export const docsData: Record<string, DocSection> = {
                   </span>
                   <p className="text-sm">
                     Monthly showcases where players display their architectural
-                    and magical engineering prowess. Winners' creations become
-                    permanent landmarks.
+                    and magical engineering prowess. Winners&apos; creations
+                    become permanent landmarks.
                   </p>
                 </div>
               </li>
@@ -751,9 +753,9 @@ export const docsData: Record<string, DocSection> = {
             Plugin Framework
           </h3>
           <p>
-            Extend the game's functionality with custom plugins that can modify
-            UI elements, add new features, or integrate with external services.
-            Plugins are written in C# and compiled at runtime.
+            Extend the game&apos;s functionality with custom plugins that can
+            modify UI elements, add new features, or integrate with external
+            services. Plugins are written in C# and compiled at runtime.
           </p>
         </div>
       </div>
