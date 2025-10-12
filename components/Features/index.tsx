@@ -605,7 +605,7 @@ const GameFeatureCard = ({ feature, index, inView }) => {
           {/* Title section with enhanced styling */}
           <div className="flex-1 space-y-3 pt-2">
             <motion.h3
-              className={`font-orbitron bg-gradient-to-r ${colorTheme.gradient} bg-clip-text text-xl font-black uppercase leading-tight tracking-wide text-transparent md:text-2xl`}
+              className={`bg-gradient-to-r font-orbitron ${colorTheme.gradient} bg-clip-text text-xl font-black uppercase leading-tight tracking-wide text-transparent md:text-2xl`}
               animate={isHovered ? { x: 3 } : { x: 0 }}
               transition={{ type: "spring", stiffness: 300, damping: 25 }}
             >
@@ -648,7 +648,7 @@ const GameFeatureCard = ({ feature, index, inView }) => {
         {/* Footer Section - Enhanced CTA Button */}
         <div className="border-t border-white/[0.08] bg-gradient-to-t from-white/[0.02] to-transparent p-7 md:p-9">
           <motion.div
-            className={`group/btn relative overflow-hidden rounded-xl bg-gradient-to-r ${colorTheme.gradient} font-rajdhani px-7 py-4 text-center text-base font-bold uppercase tracking-widest text-white shadow-2xl`}
+            className={`group/btn relative overflow-hidden rounded-xl bg-gradient-to-r ${colorTheme.gradient} px-7 py-4 text-center font-rajdhani text-base font-bold uppercase tracking-widest text-white shadow-2xl`}
             animate={isHovered ? { opacity: 1, y: 0 } : { opacity: 0.95, y: 0 }}
             transition={{ duration: 0.3 }}
             whileHover={{ scale: 1.03, y: -2 }}
