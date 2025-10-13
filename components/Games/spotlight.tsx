@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useCallback } from "react";
 import useMousePosition from "@/utils/games/useMousePosition";
 
 type SpotlightProps = {
@@ -36,10 +36,6 @@ export default function Spotlight({
     };
   }, [boxes]);
 
-  useEffect(() => {
-    onMouseMove();
-  }, [mousePosition]);
-
   const initContainer = () => {
     if (containerRef.current) {
       containerSize.current.w = containerRef.current.offsetWidth;
@@ -47,7 +43,7 @@ export default function Spotlight({
     }
   };
 
-  const onMouseMove = () => {
+  const onMouseMove = useCallback(() => {
     if (containerRef.current) {
       const rect = containerRef.current.getBoundingClientRect();
       const { w, h } = containerSize.current;
@@ -67,7 +63,11 @@ export default function Spotlight({
         });
       }
     }
-  };
+  }, [boxes, mousePosition.x, mousePosition.y]);
+
+  useEffect(() => {
+    onMouseMove();
+  }, [onMouseMove]);
 
   return (
     <div className={className} ref={containerRef}>

@@ -189,9 +189,10 @@ const Hero = () => {
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
-              className="inline-block rounded-lg bg-gradient-to-r from-purple-700 via-fuchsia-700 to-purple-700 bg-clip-text  py-1 text-transparent "
+              className="inline-flex items-center gap-2 rounded-full border border-purple-500/30 bg-gradient-to-r from-purple-500/10 via-fuchsia-500/10 to-purple-500/10 px-6 py-2.5 backdrop-blur-sm"
             >
-              <span className="text-sm font-bold tracking-wider drop-shadow-[0_0_15px_rgba(168,85,247,0.9)] sm:text-base lg:text-lg">
+              <div className="h-2 w-2 animate-pulse rounded-full bg-purple-500"></div>
+              <span className="font-rajdhani text-sm font-bold uppercase tracking-widest text-purple-400 drop-shadow-[0_0_10px_rgba(168,85,247,0.8)] sm:text-base lg:text-base">
                 A NEW JOURNEY
               </span>
             </motion.div>
@@ -200,13 +201,13 @@ const Hero = () => {
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.6 }}
-              className="mt-3 bg-clip-text text-3xl font-extrabold leading-tight tracking-tighter text-transparent sm:mt-4 sm:text-4xl md:text-5xl lg:text-6xl"
-              style={{ fontFamily: "'Oswald', sans-serif" }}
+              className="font-orbitron mt-4 whitespace-nowrap text-3xl font-black uppercase leading-[1.1] tracking-tighter sm:mt-5 sm:text-4xl md:text-5xl lg:text-6xl"
             >
-              <span className="bg-gradient-to-r from-purple-500 via-fuchsia-500 to-purple-600 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-purple-400 via-fuchsia-400 to-purple-500 bg-clip-text text-transparent drop-shadow-[0_0_30px_rgba(168,85,247,0.9)]">
                 MAGIC
-              </span>{" "}
-              <span className="drop-shadow-glow bg-gradient-to-r from-cyan-400 via-blue-400 to-indigo-500 bg-clip-text text-transparent">
+              </span>
+              &nbsp;
+              <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-indigo-400 bg-clip-text text-transparent drop-shadow-[0_0_30px_rgba(59,130,246,0.9)]">
                 WORLDS
               </span>
             </motion.h1>
@@ -215,26 +216,30 @@ const Hero = () => {
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.8 }}
-              style={{ fontFamily: "'Press Start 2P', cursive" }}
-              className="mx-auto mt-4 max-w-xl px-4 text-xs leading-relaxed text-gray-500 drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)] sm:mt-6 sm:px-0 sm:text-sm md:text-base lg:text-lg"
+              className="font-rajdhani mx-auto mt-5 max-w-xl text-base font-medium leading-relaxed text-gray-400 sm:mt-6 sm:text-lg md:text-xl lg:text-lg"
             >
-              Magic Worlds – Love, Laugh, Learn, Lucrative. Welcome to Magic
-              Worlds, a free, family-friendly, and open-source universe where
-              you shape your adventures.
+              <span className="text-gray-300">Magic Worlds</span> – Love, Laugh,
+              Learn, Lucrative.
+              <span className="mt-1 block">
+                Welcome to a <span className="text-purple-400">free</span>,{" "}
+                <span className="text-fuchsia-400">family-friendly</span>, and{" "}
+                <span className="text-blue-400">open-source</span> universe
+                where you shape your adventures.
+              </span>
             </motion.p>
 
             <motion.div
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 1 }}
-              className="mt-6 flex flex-col flex-wrap items-center justify-center gap-3 sm:mt-8 sm:flex-row sm:gap-4 md:mt-10 lg:justify-start"
+              className="mt-8 flex flex-col flex-wrap items-center justify-center gap-4 sm:mt-10 sm:flex-row sm:gap-5 md:mt-12 lg:justify-start"
             >
               <ClaimButton />
 
               <motion.button
-                whileHover={{ scale: 1.05 }}
+                whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}
-                className="rounded-3xl border-2 border-purple-700/70 bg-gradient-to-r from-purple-900/50 to-fuchsia-900/40 px-6 py-3 text-sm font-bold text-purple-300 backdrop-blur-sm transition-all duration-300 hover:border-fuchsia-600 hover:from-purple-800/60 hover:to-fuchsia-800/50 hover:text-fuchsia-200 hover:shadow-[0_0_30px_rgba(168,85,247,0.6)] sm:px-8 sm:py-4 sm:text-base"
+                className="font-rajdhani rounded-2xl border-2 border-purple-600/50 bg-gradient-to-r from-purple-900/40 to-fuchsia-900/30 px-8 py-4 text-base font-bold uppercase tracking-wider text-purple-200 backdrop-blur-md transition-all duration-300 hover:border-fuchsia-500 hover:from-purple-800/50 hover:to-fuchsia-800/40 hover:text-white hover:shadow-[0_0_40px_rgba(168,85,247,0.7)] sm:px-10 sm:text-lg"
               >
                 EXPLORE WORLDS
               </motion.button>
@@ -244,7 +249,7 @@ const Hero = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 1.2 }}
-              className="mt-6 hidden items-center justify-center space-x-2 text-sm text-gray-600 sm:mt-8 sm:flex md:text-base lg:justify-start"
+              className="font-rajdhani mt-8 hidden items-center justify-center space-x-3 text-sm font-medium text-gray-500 sm:mt-10 sm:flex md:text-base lg:justify-start"
             >
               <div className="flex -space-x-2">
                 {[1, 2, 3, 4].map((i) => (
@@ -393,9 +398,9 @@ const Hero = () => {
                           }}
                         >
                           {/* Inner card with glassmorphism */}
-                          <div className="h-full w-full rounded-2xl border border-purple-700/40 bg-[#0a0015]/90 p-6 backdrop-blur-2xl sm:p-7 md:p-8 lg:p-7">
+                          <div className="flex h-full w-full flex-col justify-between rounded-2xl border border-purple-700/40 bg-[#0a0015]/90 p-5 backdrop-blur-2xl sm:p-6 md:p-7 lg:p-6">
                             {/* Character Image */}
-                            <div className="mb-4 flex justify-center">
+                            <div className="flex justify-center">
                               <motion.div
                                 animate={{ scale: [1, 1.05, 1] }}
                                 transition={{
@@ -403,7 +408,7 @@ const Hero = () => {
                                   repeat: Infinity,
                                   ease: "easeInOut",
                                 }}
-                                className="relative h-32 w-32 overflow-hidden rounded-2xl border-2 border-purple-600/50 bg-gradient-to-br from-purple-900/80 to-fuchsia-900/80 shadow-[0_0_30px_rgba(168,85,247,0.6)] sm:h-36 sm:w-36 md:h-44 md:w-44 lg:h-40 lg:w-40"
+                                className="relative h-32 w-32 overflow-hidden rounded-2xl border-2 border-purple-600/50 bg-gradient-to-br from-purple-900/80 to-fuchsia-900/80 shadow-[0_0_30px_rgba(168,85,247,0.6)] sm:h-36 sm:w-36 md:h-40 md:w-40 lg:h-36 lg:w-36"
                               >
                                 <div className="absolute inset-0 z-10 bg-gradient-to-t from-[#0a0015]/80 via-transparent to-transparent" />
                                 <Image
@@ -417,21 +422,21 @@ const Hero = () => {
                             </div>
 
                             {/* Token motto - PLAY/EARN/DONATE */}
-                            <div className="mb-3 text-center">
-                              <div className="mb-1 bg-gradient-to-r from-purple-300 via-fuchsia-300 to-purple-300 bg-clip-text text-4xl font-black text-transparent drop-shadow-[0_0_20px_rgba(168,85,247,0.9)] sm:text-5xl md:text-6xl lg:text-5xl">
+                            <div className="text-center">
+                              <motion.div
+                                className="font-orbitron mb-1.5 bg-gradient-to-r from-purple-300 via-fuchsia-300 to-purple-300 bg-clip-text text-3xl font-black uppercase tracking-tight text-transparent drop-shadow-[0_0_20px_rgba(168,85,247,0.9)] sm:text-4xl md:text-5xl lg:text-4xl"
+                                animate={{ scale: [1, 1.02, 1] }}
+                                transition={{ duration: 2, repeat: Infinity }}
+                              >
                                 {cryptoTokens[activeToken].motto}
+                              </motion.div>
+                              <div className="font-rajdhani text-xs font-semibold uppercase tracking-wider text-purple-400/70 sm:text-sm">
+                                {cryptoTokens[activeToken].name}
                               </div>
                             </div>
 
-                            {/* Token name */}
-                            {/* <div className="mb-2 text-center">
-                              <h3 className="mb-1 bg-gradient-to-r from-purple-400 via-fuchsia-400 to-purple-400 bg-clip-text text-lg font-bold text-transparent drop-shadow-[0_0_12px_rgba(168,85,247,0.8)] sm:text-xl md:text-2xl lg:text-xl">
-                                {cryptoTokens[activeToken].name}
-                              </h3>
-                            </div> */}
-
                             {/* Blockchain-style connection lines */}
-                            <div className="mb-4 flex items-center justify-between px-2">
+                            <div className="flex items-center justify-between px-1">
                               <div className="h-px w-full bg-gradient-to-r from-transparent via-purple-600 to-transparent shadow-[0_0_8px_rgba(168,85,247,0.6)]" />
                               <motion.div
                                 animate={{ scale: [1, 1.3, 1] }}
@@ -440,21 +445,21 @@ const Hero = () => {
                               />
                               <div className="h-px w-full bg-gradient-to-r from-transparent via-fuchsia-600 to-transparent shadow-[0_0_8px_rgba(217,70,239,0.6)]" />
                             </div>
-
-                            {/* Token action button */}
-                            <motion.button
-                              whileHover={{ scale: 1.05 }}
-                              whileTap={{ scale: 0.95 }}
-                              className="mt-5 w-full rounded-xl border border-purple-700/50 bg-gradient-to-r from-purple-800 via-fuchsia-800 to-purple-900 py-3 text-sm font-bold text-purple-100 shadow-lg shadow-purple-950/70 transition-all duration-300 hover:from-purple-700 hover:via-fuchsia-700 hover:to-purple-800 hover:shadow-purple-900/90 sm:text-base md:py-4 md:text-lg lg:py-3 lg:text-base"
-                              style={{
-                                boxShadow: `0 0 20px ${cryptoTokens[activeToken].glowColor}`,
-                              }}
-                            >
-                              {cryptoTokens[activeToken].motto} NOW
-                            </motion.button>
                           </div>
                         </div>
                       </motion.div>
+
+                      {/* Token action button - Outside card */}
+                      <motion.button
+                        whileHover={{ scale: 1.05, y: -2 }}
+                        whileTap={{ scale: 0.95 }}
+                        className="font-rajdhani absolute -bottom-6 left-1/2 w-[180px] -translate-x-1/2 rounded-xl border border-purple-700/50 bg-gradient-to-r from-purple-800 via-fuchsia-800 to-purple-900 py-3 text-sm font-bold uppercase tracking-wider text-purple-100 shadow-lg shadow-purple-950/70 transition-all duration-300 hover:from-purple-700 hover:via-fuchsia-700 hover:to-purple-800 hover:shadow-purple-900/90 sm:-bottom-8 sm:w-[180px] sm:py-3.5 sm:text-base md:-bottom-10 md:w-[180px] md:py-4 md:text-base lg:-bottom-8 lg:w-[180px] lg:py-3 lg:text-sm"
+                        style={{
+                          boxShadow: `0 0 20px ${cryptoTokens[activeToken].glowColor}`,
+                        }}
+                      >
+                        {cryptoTokens[activeToken].motto} NOW
+                      </motion.button>
 
                       {/* Floating particles around token */}
                       {[...Array(8)].map((_, i) => (

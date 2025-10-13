@@ -14,8 +14,8 @@ export const docsData = {
           worlds, each with its own challenges and rewards.
         </li>
         <li className="mb-2">
-          <strong>Thrilling Activities:</strong> From quests to battles, there's
-          always something exciting to do in Magic Worlds.
+          <strong>Thrilling Activities:</strong> From quests to battles,
+          there&apos;s always something exciting to do in Magic Worlds.
         </li>
         <li className="mb-2">
           <strong>Token Rewards:</strong> Earn tokens as you play, which can be

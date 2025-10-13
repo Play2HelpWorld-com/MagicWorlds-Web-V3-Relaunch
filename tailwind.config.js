@@ -13,6 +13,9 @@ module.exports = {
   theme: {
     fontFamily: {
       inter: ["Inter", "sans-serif"],
+      orbitron: ["var(--font-orbitron)", "sans-serif"],
+      rajdhani: ["var(--font-rajdhani)", "sans-serif"],
+      exo2: ["var(--font-exo2)", "sans-serif"],
     },
     extend: {
       colors: {

@@ -329,8 +329,9 @@ const FAQ = () => {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.5, duration: 0.5 }}
             >
-              Level up your knowledge with our comprehensive FAQs. Can't find
-              what you're looking for? Our support team is ready to assist.
+              Level up your knowledge with our comprehensive FAQs. Can&apos;t
+              find what you&apos;re looking for? Our support team is ready to
+              assist.
             </motion.p>
 
             <motion.a

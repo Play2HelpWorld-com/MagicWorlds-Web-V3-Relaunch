@@ -277,8 +277,8 @@ const FAQ = () => {
 
             <p className="mb-8 max-w-md text-lg text-slate-300">
               Level up your knowledge with our most commonly asked questions.
-              Can't find what you're looking for? Our support team is ready to
-              assist.
+              Can&apos;t find what you&apos;re looking for? Our support team is
+              ready to assist.
             </p>
 
             <motion.a

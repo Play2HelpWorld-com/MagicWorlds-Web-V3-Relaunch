@@ -12,6 +12,8 @@ export const metadata: Metadata = {
   // other metadata
 };
 
+export const dynamic = "force-dynamic";
+
 const PlayPage = () => {
   return (
     <main>

@@ -93,7 +93,7 @@ const Header = () => {
     >
       <div className="mx-auto mt-3 max-w-7xl px-4 transition-all duration-500 ease-out md:px-6 lg:px-8">
         <div
-          className={`relative mx-auto items-center justify-between border border-white/20 bg-black/95 px-2 py-1 backdrop-blur-2xl backdrop-saturate-150 transition-all duration-700 ease-[cubic-bezier(0.86,0,0.07,1)] md:px-6 xl:flex ${
+          className={`relative mx-auto items-center justify-between border border-white/20 bg-black/95 px-2 py-0.5 backdrop-blur-2xl backdrop-saturate-150 transition-all duration-700 ease-[cubic-bezier(0.86,0,0.07,1)] md:px-6 xl:flex ${
             stickyMenu
               ? "scale-[0.98] rounded-[2rem] shadow-[0_8px_32px_rgba(0,0,0,0.6)]"
               : "scale-100 rounded-[2.5rem] shadow-[0_4px_24px_rgba(0,0,0,0.4)]"
@@ -104,7 +104,7 @@ const Header = () => {
           }}
         >
           <div className="flex w-full items-center justify-between transition-all duration-500 ease-out xl:w-[12%]">
-            <a
+            <Link
               href="/"
               title="Home"
               className="transition-transform duration-500 ease-out hover:scale-105 active:scale-95"
@@ -123,7 +123,7 @@ const Header = () => {
                 height={50}
                 className="h-18 w-24 transition-opacity duration-300 dark:hidden"
               />
-            </a>
+            </Link>
 
             {/* <!-- Hamburger Toggle BTN --> */}
             <button
@@ -182,11 +182,11 @@ const Header = () => {
                   >
                     {menuItem.submenu ? (
                       <>
-                        <button className="flex cursor-pointer items-center justify-between gap-3 text-base font-bold uppercase tracking-wider text-white transition-all duration-500 ease-out hover:translate-x-1 hover:bg-gradient-to-r hover:from-indigo-400 hover:via-purple-400 hover:to-pink-400 hover:bg-clip-text hover:text-transparent">
+                        <button className="flex cursor-pointer items-center justify-between gap-3 text-sm font-bold uppercase tracking-wider text-white transition-all duration-500 ease-out hover:translate-x-1 hover:bg-gradient-to-r hover:from-indigo-400 hover:via-purple-400 hover:to-pink-400 hover:bg-clip-text hover:text-transparent">
                           {menuItem.title}
                           <span className="transition-transform duration-500 ease-out group-hover:rotate-180 group-hover:scale-110">
                             <svg
-                              className="h-3 w-3 cursor-pointer fill-white transition-all duration-500 ease-out group-hover:fill-indigo-400"
+                              className="h-2.5 w-2.5 cursor-pointer fill-white transition-all duration-500 ease-out group-hover:fill-indigo-400"
                               xmlns="http://www.w3.org/2000/svg"
                               viewBox="0 0 512 512"
                             >
@@ -211,7 +211,7 @@ const Header = () => {
                               >
                                 <Link
                                   href={item.path || "#"}
-                                  className="text-sm font-bold uppercase tracking-wide text-white/80 transition-all duration-500 ease-out hover:bg-gradient-to-r hover:from-indigo-400 hover:via-purple-400 hover:to-pink-400 hover:bg-clip-text hover:text-transparent"
+                                  className="text-xs font-bold uppercase tracking-wide text-white/80 transition-all duration-500 ease-out hover:bg-gradient-to-r hover:from-indigo-400 hover:via-purple-400 hover:to-pink-400 hover:bg-clip-text hover:text-transparent"
                                   style={{
                                     fontFamily:
                                       "'Orbitron', 'Rajdhani', 'Exo 2', sans-serif",
@@ -227,7 +227,7 @@ const Header = () => {
                     ) : (
                       <Link
                         href={`${menuItem.path}`}
-                        className={`relative inline-block text-base font-bold uppercase tracking-wider transition-all duration-500 ease-out hover:translate-y-[-2px] hover:scale-105 active:scale-95 ${
+                        className={`relative inline-block text-sm font-bold uppercase tracking-wider transition-all duration-500 ease-out hover:translate-y-[-2px] hover:scale-105 active:scale-95 ${
                           pathUrl === menuItem.path
                             ? "bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent drop-shadow-[0_0_8px_rgba(99,102,241,0.5)]"
                             : "text-white hover:bg-gradient-to-r hover:from-indigo-400 hover:via-purple-400 hover:to-pink-400 hover:bg-clip-text hover:text-transparent"

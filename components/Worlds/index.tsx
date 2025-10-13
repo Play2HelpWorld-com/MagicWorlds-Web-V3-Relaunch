@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import {
   Play,
   Pause,
@@ -254,7 +254,7 @@ const EpicGamingShowcase: React.FC = () => {
         videoElement.removeEventListener("pause", handlePauseEvent);
       };
     }
-  }, [activeIndex, isInitialLoad, loadingProgress]);
+  }, [activeIndex, isInitialLoad, loadingProgress, handleNextVideo]);
 
   // Setup thumbnail hover effects
   useEffect(() => {
@@ -302,74 +302,8 @@ const EpicGamingShowcase: React.FC = () => {
     });
   }, [videos, videoCategory]);
 
-  // Video playback controls
-  const handleVideoSelect = async (index: number) => {
-    // Already selected
-    if (index === activeIndex) {
-      handlePlayPause();
-      return;
-    }
-
-    // Pause current video first to prevent AbortError
-    if (videoRef.current && isPlaying) {
-      videoRef.current.pause();
-    }
-
-    setVideoReady(false);
-    setCurrentTime(0);
-    setIsPlaying(false);
-
-    // Animate out current video
-    await mainVideoControls.start({
-      opacity: 0,
-      scale: 0.95,
-      transition: { duration: 0.3 },
-    });
-
-    // Set new video
-    setActiveIndex(index);
-
-    // Animate in new video
-    await mainVideoControls.start({
-      opacity: 1,
-      scale: 1,
-      transition: { duration: 0.5, ease: "easeOut" },
-    });
-
-    // Animate title
-    titleControls
-      .start({
-        opacity: 0,
-        y: 20,
-        transition: { duration: 0.2 },
-      })
-      .then(() => {
-        setTimeout(() => {
-          titleControls.start({
-            opacity: 1,
-            y: 0,
-            transition: { duration: 0.4, ease: "easeOut" },
-          });
-        }, 300);
-      });
-
-    // Try to play the new video
-    if (videoRef.current) {
-      // Let's wait for the video to be ready
-      const checkAndPlay = () => {
-        if (videoRef.current && videoReady) {
-          attemptPlayback();
-        } else {
-          // Try again in a moment
-          setTimeout(checkAndPlay, 100);
-        }
-      };
-
-      checkAndPlay();
-    }
-  };
-
-  const attemptPlayback = async () => {
+  // Video playback helper functions (must be defined before handleVideoSelect)
+  const attemptPlayback = useCallback(async () => {
     if (!videoRef.current || !videoReady) return;
 
     try {
@@ -379,9 +313,9 @@ const EpicGamingShowcase: React.FC = () => {
       console.error("Play error:", error);
       setIsPlaying(false);
     }
-  };
+  }, [videoReady]);
 
-  const handlePlayPause = () => {
+  const handlePlayPause = useCallback(() => {
     if (videoRef.current && videoReady) {
       if (isPlaying) {
         videoRef.current.pause();
@@ -400,7 +334,78 @@ const EpicGamingShowcase: React.FC = () => {
         }
       }
     }
-  };
+  }, [videoReady, isPlaying]);
+
+  // Video playback controls
+  const handleVideoSelect = useCallback(
+    async (index: number) => {
+      // Already selected
+      if (index === activeIndex) {
+        handlePlayPause();
+        return;
+      }
+
+      // Pause current video first to prevent AbortError
+      if (videoRef.current && isPlaying) {
+        videoRef.current.pause();
+      }
+
+      setVideoReady(false);
+      setCurrentTime(0);
+      setIsPlaying(false);
+
+      // Animate out current video
+      await mainVideoControls.start({
+        opacity: 0,
+        scale: 0.95,
+        transition: { duration: 0.3 },
+      });
+
+      // Set new video
+      setActiveIndex(index);
+
+      // Animate in new video
+      await mainVideoControls.start({
+        opacity: 1,
+        scale: 1,
+        transition: { duration: 0.5, ease: "easeOut" },
+      });
+
+      // Animate title
+      titleControls
+        .start({
+          opacity: 0,
+          y: 20,
+          transition: { duration: 0.2 },
+        })
+        .then(() => {
+          setTimeout(() => {
+            titleControls.start({
+              opacity: 1,
+              y: 0,
+              transition: { duration: 0.4, ease: "easeOut" },
+            });
+          }, 300);
+        });
+
+      // Try to play the new video
+      if (videoRef.current) {
+        // Let's wait for the video to be ready
+        const checkAndPlay = () => {
+          if (videoRef.current && videoReady) {
+            attemptPlayback();
+          } else {
+            // Try again in a moment
+            setTimeout(checkAndPlay, 100);
+          }
+        };
+
+        checkAndPlay();
+      }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    },
+    [activeIndex, isPlaying, mainVideoControls, titleControls, videoReady],
+  );
 
   const handleMuteToggle = () => {
     if (videoRef.current) {
@@ -431,10 +436,10 @@ const EpicGamingShowcase: React.FC = () => {
     }
   };
 
-  const handleNextVideo = () => {
+  const handleNextVideo = useCallback(() => {
     const newIndex = (activeIndex + 1) % videos.length;
     handleVideoSelect(newIndex);
-  };
+  }, [activeIndex, videos.length, handleVideoSelect]);
 
   const handlePrevVideo = () => {
     const newIndex = (activeIndex - 1 + videos.length) % videos.length;

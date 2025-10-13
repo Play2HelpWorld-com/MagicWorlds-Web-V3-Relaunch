@@ -118,7 +118,7 @@ const Integration = () => {
     <section className="relative overflow-hidden py-24 lg:py-32">
       {/* Animated Background */}
       <motion.div
-        className="absolute inset-0 z-0 bg-gradient-to-br from-gray-900/10 via-slate-900/20 to-blue-900/15 bg-[length:400%_400%]"
+        className="absolute inset-0 z-0 bg-transparent bg-[length:400%_400%]"
         variants={backgroundVariants}
         initial="initial"
         animate="animate"

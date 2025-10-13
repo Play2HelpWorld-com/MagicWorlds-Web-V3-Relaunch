@@ -14,15 +14,15 @@ const Signin = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const saveTokensToLocal = useSaveTokens();
   const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-  })
+    email: "",
+    password: "",
+  });
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
-    })
-  }
+      [e.target.name]: e.target.value,
+    });
+  };
 
   const handleEmailSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -32,20 +32,20 @@ const Signin = () => {
       const baseUrl = process.env.NEXT_PUBLIC_BACKEND_BASE_URL;
       const Tokens = await axios.post(`${baseUrl}/api/users/signin/`, {
         email: formData.email,
-        password: formData.password
-      })
+        password: formData.password,
+      });
       saveTokensToLocal(Tokens.data);
     } catch (err) {
       if (err instanceof Error) {
         if (axios.isAxiosError(err) && err.response) {
           setError(err.response.data.error);
-          console.log('the error is', err);
+          console.log("the error is", err);
         } else {
-          setError('An unexpected error occurred');
+          setError("An unexpected error occurred");
           console.log(err);
         }
       } else {
-        setError('An unexpected error occurred');
+        setError("An unexpected error occurred");
         console.log(err);
       }
     } finally {
@@ -97,7 +97,7 @@ const Signin = () => {
             </h2>
             <div className="flex flex-col">
               <div className="flex flex-col items-center gap-2">
-                <GoogleSignInButton type='SignIn' />
+                <GoogleSignInButton type="SignIn" />
                 <FacebookSignInButton type="SignIn" />
                 <MicrosoftSignInButton type="SingIn" />
               </div>
@@ -111,14 +111,14 @@ const Signin = () => {
             </div>
 
             <form>
-              <div className="mb-7.5 flex flex-col gap-7.5 lg:mb-12.5 items-center">
+              <div className="mb-7.5 flex flex-col items-center gap-7.5 lg:mb-12.5">
                 <input
                   type="text"
                   placeholder="Email"
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                  className="max-w-[350px] p-2 w-full border-b border-stroke !bg-white focus:border-waterloo focus:placeholder:text-black focus-visible:outline-none dark:border-strokedark dark:!bg-black dark:focus:border-manatee dark:focus:placeholder:text-white lg:w-1/2"
+                  className="w-full max-w-[350px] border-b border-stroke !bg-white p-2 focus:border-waterloo focus:placeholder:text-black focus-visible:outline-none dark:border-strokedark dark:!bg-black dark:focus:border-manatee dark:focus:placeholder:text-white lg:w-1/2"
                 />
 
                 <input
@@ -127,10 +127,12 @@ const Signin = () => {
                   name="password"
                   value={formData.password}
                   onChange={handleChange}
-                  className="max-w-[350px] p-2 w-full border-b border-stroke !bg-white focus:border-waterloo focus:placeholder:text-black focus-visible:outline-none dark:border-strokedark dark:!bg-black dark:focus:border-manatee dark:focus:placeholder:text-white lg:w-1/2"
+                  className="w-full max-w-[350px] border-b border-stroke !bg-white p-2 focus:border-waterloo focus:placeholder:text-black focus-visible:outline-none dark:border-strokedark dark:!bg-black dark:focus:border-manatee dark:focus:placeholder:text-white lg:w-1/2"
                 />
                 {error && (
-                  <p className="text-red-500 text-sm text-center mt-4">{error}</p>
+                  <p className="mt-4 text-center text-sm text-red-500">
+                    {error}
+                  </p>
                 )}
               </div>
 
@@ -142,7 +144,7 @@ const Signin = () => {
                       type="checkbox"
                       className="peer sr-only"
                     />
-                    <span className="border-gray-300 bg-gray-100 text-blue-600 dark:border-gray-600 dark:bg-gray-700 group mt-1 flex h-5 min-w-[20px] items-center justify-center rounded peer-checked:bg-primary">
+                    <span className="group mt-1 flex h-5 min-w-[20px] items-center justify-center rounded border-gray-300 bg-gray-100 text-blue-600 peer-checked:bg-primary dark:border-gray-600 dark:bg-gray-700">
                       <svg
                         className="opacity-0 peer-checked:group-[]:opacity-100"
                         width="10"
@@ -197,7 +199,7 @@ const Signin = () => {
 
               <div className="mt-12.5 border-t border-stroke py-5 text-center dark:border-strokedark">
                 <p>
-                  Don't have an account?{" "}
+                  Don&apos;t have an account?{" "}
                   <Link
                     className="text-black hover:text-primary dark:text-white hover:dark:text-primary"
                     href="/accounts/signup"

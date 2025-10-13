@@ -27,45 +27,48 @@ const FeaturesTab = () => {
   const gamingFeaturesData = [
     {
       id: "tabOne",
-      title: "Immersive Gaming Experience",
+      buttonText: "Sign Up",
+      title: "Sign Up & Join",
+      description:
+        "Create your free account in seconds and become part of the Magic Worlds community. Quick registration gets you instant access to our gaming platform and charitable impact system.",
+      benefits: [
+        "Fast and secure account creation",
+        "No credit card required to start",
+        "Personalized gaming profile and dashboard",
+        "Connect with friends and join communities",
+      ],
+      image: "/images/features/signup.gif",
+      altText: "Sign Up Illustration",
+    },
+    {
+      id: "tabTwo",
+      buttonText: "Start Playing",
+      title: "Start Playing",
       description:
         "Jump into a world of excitement with our curated collection of games. From action-packed adventures to mind-bending puzzles, discover new experiences and challenge your skills.",
       benefits: [
         "Access to magic worlds games across all genres",
-        "Exclusive in-game rewards and power-ups",
         "Real-time multiplayer with friends and global leaderboards",
         "Cross-platform synchronization for seamless gaming",
+        "New games added regularly to keep things fresh",
       ],
-      image: "/images/features/gaming-experience.jpg",
+      image: "/images/features/gameplay.gif",
       altText: "Gaming Experience Illustration",
     },
     {
-      id: "tabTwo",
-      title: "Level Up & Earn Rewards",
+      id: "tabThree",
+      buttonText: "Earn Rewards",
+      title: "Earn Rewards",
       description:
         "Every minute of gameplay earns you valuable points. Complete challenges, unlock achievements, and watch your score multiply with consecutive daily play streaks.",
       benefits: [
         "Daily challenges with escalating point rewards",
         "Achievement system with rare collectible badges",
         "Weekly tournaments with premium prize pools",
-        "Special events with limited-time point multipliers",
+        "Convert points to charity donations or exclusive rewards",
       ],
-      image: "/images/features/rewards-system.jpg",
+      image: "/images/features/rewards.gif",
       altText: "Rewards System Illustration",
-    },
-    {
-      id: "tabThree",
-      title: "Gaming For Good",
-      description:
-        "Turn your passion for gaming into real-world impact. Convert your earned points into charitable donations, with 100% of the value going to causes you care about.",
-      benefits: [
-        "Support over 150 verified global charities",
-        "Track your donation impact with real-time metrics",
-        "Join community-wide donation challenges",
-        "Earn exclusive recognition badges for charitable milestones",
-      ],
-      image: "/images/features/charity-gaming.jpg",
-      altText: "Charity Gaming Illustration",
     },
   ];
 
@@ -107,7 +110,7 @@ const FeaturesTab = () => {
   };
 
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-gray-900 to-black py-24">
+    <section className="relative overflow-hidden bg-transparent py-24">
       {/* Background game-themed elements */}
       <div className="absolute left-0 top-0 h-full w-full overflow-hidden">
         <div className="absolute left-10 top-10 h-20 w-20 animate-pulse rounded-full bg-purple-600 opacity-20 blur-3xl"></div>
@@ -148,12 +151,38 @@ const FeaturesTab = () => {
           transition={{ duration: 0.6 }}
           className="mb-16 text-center"
         >
-          <h2 className="mb-4 text-4xl font-bold text-white md:text-5xl">
-            <span className="inline-block bg-gradient-to-r from-purple-400 to-pink-600 bg-clip-text text-transparent">
+          {/* Badge */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="mb-6 inline-flex items-center gap-2 rounded-full border border-purple-500/30 bg-gradient-to-r from-purple-500/10 via-fuchsia-500/10 to-purple-500/10 px-4 py-2 backdrop-blur-sm"
+          >
+            <motion.div
+              animate={{ scale: [1, 1.2, 1] }}
+              transition={{ duration: 2, repeat: Infinity }}
+              className="h-2 w-2 rounded-full bg-purple-500 shadow-[0_0_8px_rgba(168,85,247,0.8)]"
+            />
+            <span className="font-rajdhani text-sm font-bold uppercase tracking-widest text-purple-400">
+              Game Features
+            </span>
+          </motion.div>
+
+          <h2 className="mb-4 font-orbitron text-4xl font-black uppercase tracking-tight text-white md:text-5xl lg:text-6xl">
+            <span className="inline-block bg-gradient-to-r from-white via-purple-200 to-white bg-clip-text text-transparent drop-shadow-[0_0_30px_rgba(168,85,247,0.3)]">
               Choose Your Adventure
             </span>
           </h2>
-          <p className="mx-auto max-w-2xl text-gray-300">
+
+          {/* Decorative line */}
+          <motion.div
+            initial={{ scaleX: 0 }}
+            animate={{ scaleX: 1 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="mx-auto mb-6 h-1 w-24 bg-gradient-to-r from-transparent via-purple-500 to-transparent"
+          />
+
+          <p className="mx-auto max-w-2xl font-rajdhani text-base font-medium text-gray-300 md:text-lg">
             Enter a new dimension of gaming with our revolutionary features
             designed to enhance your experience, reward your dedication, and
             make a positive impact.
@@ -220,13 +249,13 @@ const FeaturesTab = () => {
               </div>
 
               <span
-                className={`text-base font-medium ${currentTab === feature.id ? "text-white" : "text-gray-300"}`}
+                className={`font-rajdhani text-sm font-bold uppercase tracking-wider transition-colors duration-300 ${currentTab === feature.id ? "text-white" : "text-gray-300"}`}
               >
-                {feature.title.split(" ")[0]}
+                {feature.buttonText}
               </span>
 
               {/* Animated selection indicator */}
-              {currentTab === feature.id && (
+              {/* {currentTab === feature.id && (
                 <motion.div
                   layoutId="activeTab"
                   className="absolute -bottom-1 left-0 right-0 h-1 bg-gradient-to-r from-purple-500 to-pink-500"
@@ -234,7 +263,7 @@ const FeaturesTab = () => {
                   animate={{ width: "100%" }}
                   transition={{ duration: 0.3 }}
                 />
-              )}
+              )} */}
             </motion.button>
           ))}
         </motion.div>
@@ -262,84 +291,29 @@ const FeaturesTab = () => {
                       transition={{ duration: 0.6, delay: 0.2 }}
                     >
                       <div className="relative h-64 w-full overflow-hidden rounded-2xl border-2 border-purple-800/50 shadow-lg shadow-purple-900/20 sm:h-80 md:h-96">
-                        {/* For demo purposes, using a colored div instead of actual image */}
-                        <div
-                          className={`absolute inset-0 bg-gradient-to-br
-                        ${
-                          feature.id === "tabOne"
-                            ? "from-blue-900 to-violet-800"
-                            : feature.id === "tabTwo"
-                              ? "from-amber-700 to-red-800"
-                              : "from-emerald-800 to-teal-900"
-                        }`}
-                        >
-                          {/* Game-themed overlay elements */}
-                          <div className="absolute inset-0 opacity-20">
-                            <div className="absolute left-0 top-0 grid h-full w-full grid-cols-6 grid-rows-6">
-                              {Array(36)
-                                .fill(null)
-                                .map((_, i) => (
-                                  <div
-                                    key={i}
-                                    className="border border-white/5"
-                                  ></div>
-                                ))}
-                            </div>
-                          </div>
-
-                          {/* Feature specific game elements */}
-                          {feature.id === "tabOne" && (
-                            <>
-                              <div
-                                className="absolute left-1/4 top-1/4 h-16 w-16 animate-bounce rounded-lg bg-white/20"
-                                style={{ animationDuration: "3s" }}
-                              ></div>
-                              <div className="absolute bottom-1/3 right-1/3 h-20 w-20 animate-pulse rounded-full bg-purple-500/30"></div>
-                            </>
-                          )}
-
-                          {feature.id === "tabTwo" && (
-                            <>
-                              <div
-                                className="absolute left-1/2 top-1/2 h-24 w-24 -translate-x-1/2 -translate-y-1/2 transform animate-ping rounded-full border-4 border-yellow-400/50"
-                                style={{ animationDuration: "3s" }}
-                              ></div>
-                              <div className="absolute right-1/4 top-1/3 h-12 w-12 rotate-45 animate-pulse bg-orange-500/40"></div>
-                            </>
-                          )}
-
-                          {feature.id === "tabThree" && (
-                            <>
-                              <div className="absolute bottom-1/4 left-1/4 h-20 w-20 animate-pulse rounded-lg border-4 border-green-400/40"></div>
-                              <div
-                                className="absolute right-1/4 top-1/4 h-16 w-16 animate-bounce rounded-full bg-teal-500/30"
-                                style={{ animationDuration: "4s" }}
-                              ></div>
-                            </>
-                          )}
-                        </div>
-
-                        {/* Central icon representation */}
-                        <div className="absolute inset-0 flex items-center justify-center">
-                          <div
-                            className={`flex h-24 w-24 items-center justify-center rounded-full bg-black/30 backdrop-blur-sm
-                          ${
-                            feature.id === "tabOne"
-                              ? "text-blue-400"
-                              : feature.id === "tabTwo"
-                                ? "text-amber-400"
-                                : "text-emerald-400"
-                          }`}
-                          >
-                            <span className="text-5xl">
-                              {feature.id === "tabOne"
-                                ? "🎮"
+                        {/* GIF Background with fallback gradient */}
+                        <div className="absolute inset-0">
+                          <Image
+                            src={
+                              feature.id === "tabOne"
+                                ? "/3d/signup.gif"
                                 : feature.id === "tabTwo"
-                                  ? "🏆"
-                                  : "🌍"}
-                            </span>
-                          </div>
+                                  ? "/3d/gameplay.gif"
+                                  : "/3d/rewards.gif"
+                            }
+                            alt={feature.altText}
+                            fill
+                            className="object-cover"
+                            unoptimized // Important for GIFs to maintain animation
+                            priority
+                          />
+
+                          {/* Gradient overlay for better text readability if needed */}
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                         </div>
+
+                        {/* Optional: Game-themed frame decoration */}
+                        <div className="absolute inset-0 rounded-2xl border-2 border-purple-500/20" />
                       </div>
                     </motion.div>
 
@@ -350,9 +324,11 @@ const FeaturesTab = () => {
                         variants={contentVariants}
                         initial="hidden"
                         animate="visible"
-                        className="mb-4 text-3xl font-bold text-white"
+                        className="mb-4 font-orbitron text-3xl font-black uppercase tracking-tight text-white md:text-4xl"
                       >
-                        {feature.title}
+                        <span className="bg-gradient-to-r from-white via-purple-200 to-white bg-clip-text text-transparent">
+                          {feature.title}
+                        </span>
                       </motion.h3>
 
                       <motion.p
@@ -360,7 +336,7 @@ const FeaturesTab = () => {
                         variants={contentVariants}
                         initial="hidden"
                         animate="visible"
-                        className="mb-6 text-gray-300"
+                        className="mb-6 font-rajdhani text-base font-medium leading-relaxed text-gray-300 md:text-lg"
                       >
                         {feature.description}
                       </motion.p>
@@ -370,53 +346,62 @@ const FeaturesTab = () => {
                         variants={contentVariants}
                         initial="hidden"
                         animate="visible"
-                        className="space-y-4"
+                        className="mb-6 grid gap-3 sm:grid-cols-2"
                       >
-                        <h4 className="mb-3 text-lg font-semibold text-purple-400">
-                          Key Features:
-                        </h4>
-                        <ul className="space-y-3">
-                          {feature.benefits.map((benefit, i) => (
-                            <motion.li
-                              key={i}
-                              custom={i + 4}
-                              variants={contentVariants}
-                              initial="hidden"
-                              animate="visible"
-                              className="flex items-start gap-3"
-                            >
-                              <div className="mt-1 flex-shrink-0">
+                        {feature.benefits.map((benefit, i) => (
+                          <motion.div
+                            key={i}
+                            custom={i + 4}
+                            variants={contentVariants}
+                            initial="hidden"
+                            animate="visible"
+                            className="group relative overflow-hidden rounded-xl border border-purple-500/20 bg-gradient-to-br from-purple-900/20 to-transparent p-4 backdrop-blur-sm transition-all duration-300 hover:border-purple-500/40 hover:from-purple-900/30"
+                          >
+                            {/* Glow effect on hover */}
+                            <div className="absolute -right-10 -top-10 h-20 w-20 rounded-full bg-purple-500/20 opacity-0 blur-2xl transition-opacity duration-300 group-hover:opacity-100" />
+
+                            <div className="relative flex items-start gap-3">
+                              {/* Animated glow dot */}
+                              <motion.div
+                                animate={{
+                                  scale: [1, 1.2, 1],
+                                  opacity: [0.6, 1, 0.6],
+                                }}
+                                transition={{
+                                  duration: 2,
+                                  repeat: Infinity,
+                                  ease: "easeInOut",
+                                  delay: i * 0.2,
+                                }}
+                                className="relative mt-2 flex-shrink-0"
+                              >
                                 <div
-                                  className={`flex h-5 w-5 items-center justify-center rounded
-                                ${
-                                  feature.id === "tabOne"
-                                    ? "bg-blue-500"
-                                    : feature.id === "tabTwo"
-                                      ? "bg-amber-500"
-                                      : "bg-emerald-500"
-                                }`}
-                                >
-                                  <svg
-                                    width="12"
-                                    height="12"
-                                    viewBox="0 0 12 12"
-                                    fill="none"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                  >
-                                    <path
-                                      d="M10 3L4.5 8.5L2 6"
-                                      stroke="white"
-                                      strokeWidth="2"
-                                      strokeLinecap="round"
-                                      strokeLinejoin="round"
-                                    />
-                                  </svg>
-                                </div>
-                              </div>
-                              <span className="text-gray-200">{benefit}</span>
-                            </motion.li>
-                          ))}
-                        </ul>
+                                  className={`h-2 w-2 rounded-full ${
+                                    feature.id === "tabOne"
+                                      ? "bg-blue-400"
+                                      : feature.id === "tabTwo"
+                                        ? "bg-amber-400"
+                                        : "bg-emerald-400"
+                                  }`}
+                                />
+                                {/* Outer glow ring */}
+                                <div
+                                  className={`absolute inset-0 -m-1 rounded-full opacity-50 blur-sm ${
+                                    feature.id === "tabOne"
+                                      ? "bg-blue-400"
+                                      : feature.id === "tabTwo"
+                                        ? "bg-amber-400"
+                                        : "bg-emerald-400"
+                                  }`}
+                                />
+                              </motion.div>
+
+                              <span className="font-rajdhani text-[15px] font-medium leading-relaxed text-gray-200 md:text-base">
+                                {benefit}
+                              </span>
+                            </div>
+                          </motion.div>
+                        ))}
                       </motion.div>
 
                       {/* CTA button with hover effects */}
@@ -428,7 +413,7 @@ const FeaturesTab = () => {
                         className="mt-8"
                       >
                         <button
-                          className={`group relative overflow-hidden rounded-lg px-8 py-3 font-medium text-white transition-all duration-300
+                          className={`group relative overflow-hidden rounded-lg px-8 py-3 font-rajdhani text-sm font-bold uppercase tracking-wider text-white transition-all duration-300 md:text-base
                           ${
                             feature.id === "tabOne"
                               ? "bg-blue-600 hover:bg-blue-700"
@@ -444,10 +429,10 @@ const FeaturesTab = () => {
                           {/* Button text */}
                           <span className="relative z-10">
                             {feature.id === "tabOne"
-                              ? "Start Playing"
+                              ? "Sign Up Now"
                               : feature.id === "tabTwo"
-                                ? "View Rewards"
-                                : "Make Impact"}
+                                ? "Start Playing"
+                                : "View Rewards"}
                           </span>
                         </button>
                       </motion.div>
