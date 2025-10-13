@@ -1028,7 +1028,7 @@ const About = () => {
       </section>
 
       {/* <!-- ===== Testimonials Section ===== --> */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-black to-gray-900 py-20">
+      <section className="relative overflow-hidden bg-transparent py-20">
         <div className="absolute inset-0 z-0">
           {/* Animated Stars Background */}
           {Array.from({ length: 50 }).map((_, index) => (
@@ -1239,7 +1239,7 @@ const About = () => {
       </section>
 
       {/* <!-- ===== CTA Section ===== --> */}
-      <section className="relative overflow-hidden bg-black py-16">
+      <section className="relative overflow-hidden bg-transparent py-16">
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
