@@ -1287,7 +1287,7 @@ const About = () => {
             whileInView="visible"
             transition={{ duration: 0.8, delay: 0.2 }}
             viewport={{ once: true }}
-            className="relative overflow-hidden rounded-2xl border border-purple-800/30 bg-gradient-to-br from-gray-900 to-black p-8 md:p-12"
+            className="relative overflow-hidden rounded-2xl border border-purple-800/30 bg-gradient-to-br from-gray-900 via-purple-950/20 to-black p-8 md:p-12"
           >
             {/* Animated Corner Elements */}
             <div className="absolute left-0 top-0 h-24 w-24 -translate-x-1/2 -translate-y-1/2">
