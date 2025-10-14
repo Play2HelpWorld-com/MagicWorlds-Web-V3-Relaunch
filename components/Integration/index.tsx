@@ -89,8 +89,7 @@ const Integration = () => {
       name: "VR WORLDS",
       color: "#B14AED",
       gradient: "from-purple-500 to-violet-500",
-      description:
-        "Total immersion. 360° experience. Virtual reality redefined.",
+      description: "Coming to VR. 360° experience. Virtual reality redefined.",
       specs: ["Full VR", "Hand Tracking", "Haptic Feedback"],
       status: "Upcoming",
     },
