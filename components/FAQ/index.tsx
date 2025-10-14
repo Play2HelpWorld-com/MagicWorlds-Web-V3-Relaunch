@@ -1,404 +1,382 @@
 "use client";
 import { motion, AnimatePresence } from "framer-motion";
-import Image from "next/image";
-import { useState, useEffect } from "react";
-import { useTheme } from "next-themes";
-import gamingFaqData from "./faqData";
+import { useState } from "react";
+import {
+  Plus,
+  Minus,
+  Zap,
+  Shield,
+  Trophy,
+  Users,
+  Gamepad2,
+  Sparkles,
+} from "lucide-react";
 
-// Custom FAQItem component with gaming animations
+// FAQ data
+const faqData = [
+  {
+    id: 1,
+    icon: Gamepad2,
+    category: "Getting Started",
+    question: "What is Magic Worlds and how do I start playing?",
+    answer:
+      "Magic Worlds is a revolutionary cross-platform gaming universe where you can explore diverse realms, complete quests, and earn real rewards. To start: 1) Create your free account, 2) Choose your starting realm, 3) Customize your character, 4) Begin your adventure! Download available for Windows, macOS, Android, and Cloud streaming.",
+  },
+  {
+    id: 2,
+    icon: Trophy,
+    category: "Rewards & Tokens",
+    question: "How do I earn tokens and what can I do with them?",
+    answer:
+      "Earn $MAGIC tokens by completing quests, winning battles, discovering secrets, and participating in events. Use tokens to: unlock exclusive content, purchase premium items, trade on exchanges, stake for rewards, or convert to real-world value. The more you play, the more you earn!",
+  },
+  {
+    id: 3,
+    icon: Shield,
+    category: "Account & Security",
+    question: "Is my account and data secure?",
+    answer:
+      "Absolutely! We use military-grade encryption, secure cloud storage, and regular security audits. Your progress syncs across all devices with end-to-end encryption. We never sell your data, and you have full control over your privacy settings. Two-factor authentication (2FA) is available for extra protection.",
+  },
+  {
+    id: 4,
+    icon: Users,
+    category: "Multiplayer & Social",
+    question: "Can I play with friends on different devices?",
+    answer:
+      "Yes! Magic Worlds features full cross-platform play. Whether you're on PC, Mac, Android, iOS, VR, or Cloud, you can team up with friends anywhere. Create guilds, join raids, compete in tournaments, and communicate via voice or text chat. Your social features sync seamlessly across all platforms.",
+  },
+  {
+    id: 5,
+    icon: Sparkles,
+    category: "Premium Features",
+    question: "What's included in the Premium membership?",
+    answer:
+      "Premium unlocks: 2x token earning rate, exclusive realms and quests, premium cosmetics and skins, priority matchmaking, ad-free experience, early access to new content, monthly bonus tokens, and special events. Available at $9.99/month or save 20% with annual subscription.",
+  },
+  {
+    id: 6,
+    icon: Zap,
+    category: "Technical Support",
+    question: "What are the system requirements?",
+    answer:
+      "Windows/Mac: 8GB RAM, DirectX 11/Metal compatible GPU, 20GB storage. Android: Version 8.0+, 4GB RAM. iOS: iPhone 8 or newer, iPad 5th gen+. Cloud: Any device with stable internet (10Mbps+). VR: Compatible with Quest 2/3, PSVR2, and PC VR headsets. Minimum 60 FPS gameplay on all supported platforms.",
+  },
+];
+
+// FAQ Item Component
 const FAQItem = ({ faq, isActive, toggleFaq }) => {
-  const { id, question, answer } = faq;
-
-  // Animation variants
-  const itemVariants = {
-    closed: {
-      backgroundColor: "rgba(30, 41, 59, 0.6)",
-      borderColor: "rgba(71, 85, 105, 0.3)",
-    },
-    open: {
-      backgroundColor: "rgba(30, 41, 59, 0.8)",
-      borderColor: "rgba(14, 165, 233, 0.7)",
-    },
-  };
-
-  const contentVariants = {
-    closed: {
-      height: 0,
-      opacity: 0,
-      transition: { duration: 0.3, ease: [0.33, 1, 0.68, 1] },
-    },
-    open: {
-      height: "auto",
-      opacity: 1,
-      transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
-    },
-  };
-
-  const iconVariants = {
-    closed: { rotate: 0, scale: 1, color: "rgb(148, 163, 184)" },
-    open: { rotate: 45, scale: 1.2, color: "rgb(56, 189, 248)" },
-  };
+  const { id, icon: Icon, category, question, answer } = faq;
 
   return (
     <motion.div
-      className={`group relative mb-4 overflow-hidden rounded-xl border-2 backdrop-blur-sm ${
-        isActive ? "shadow-neon-blue" : "shadow-lg"
-      }`}
-      variants={itemVariants}
-      animate={isActive ? "open" : "closed"}
-      initial="closed"
-      transition={{ duration: 0.3 }}
+      className="group relative mb-4 overflow-hidden rounded-xl border border-white/10 bg-gradient-to-br from-gray-900/90 to-black/90 backdrop-blur-sm"
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5 }}
     >
+      {/* Glow effect on hover */}
+      <motion.div
+        className={`absolute -inset-0.5 -z-10 rounded-xl bg-gradient-to-r from-cyan-500/50 via-purple-500/50 to-pink-500/50 opacity-0 blur transition-opacity duration-500 ${
+          isActive ? "opacity-100" : "group-hover:opacity-70"
+        }`}
+      />
+
       {/* Question Button */}
       <button
-        className="flex w-full items-center justify-between px-5 py-4 text-left"
         onClick={() => toggleFaq(id)}
+        className="w-full px-6 py-5 text-left transition-all duration-300"
       >
-        <div className="flex items-center gap-3">
-          <motion.div
-            className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-800"
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <Image
-              src="/images/icon/play.png"
-              width={20}
-              height={20}
-              alt="Controller Icon"
-            />
-          </motion.div>
-          <h4 className="text-lg font-semibold text-slate-50">{question}</h4>
-        </div>
+        <div className="flex items-start justify-between gap-4">
+          <div className="flex flex-1 items-start gap-4">
+            {/* Icon */}
+            <motion.div
+              className={`flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-gradient-to-br ${
+                isActive
+                  ? "from-cyan-500 to-blue-500"
+                  : "from-gray-700 to-gray-800"
+              } transition-all duration-300`}
+              whileHover={{ scale: 1.1, rotate: 5 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Icon className="h-5 w-5 text-white" />
+            </motion.div>
 
-        {/* Plus/Minus Icon */}
-        <motion.div
-          className="text-2xl"
-          variants={iconVariants}
-          animate={isActive ? "open" : "closed"}
-        >
-          +
-        </motion.div>
+            {/* Question Content */}
+            <div className="flex-1">
+              {/* Category Badge */}
+              <motion.span
+                className={`mb-2 inline-block rounded-full px-3 py-1 font-orbitron text-xs font-bold uppercase tracking-wider ${
+                  isActive
+                    ? "bg-cyan-500/20 text-cyan-400"
+                    : "bg-gray-700/50 text-gray-400"
+                } transition-all duration-300`}
+              >
+                {category}
+              </motion.span>
+
+              {/* Question */}
+              <h3
+                className={`font-rajdhani text-lg font-bold transition-colors duration-300 ${
+                  isActive ? "text-white" : "text-gray-300"
+                }`}
+              >
+                {question}
+              </h3>
+            </div>
+          </div>
+
+          {/* Toggle Icon */}
+          <motion.div
+            className={`flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg transition-colors duration-300 ${
+              isActive ? "bg-cyan-500 text-white" : "bg-gray-800 text-gray-400"
+            }`}
+            animate={{ rotate: isActive ? 180 : 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            {isActive ? (
+              <Minus className="h-5 w-5" />
+            ) : (
+              <Plus className="h-5 w-5" />
+            )}
+          </motion.div>
+        </div>
       </button>
 
-      {/* Answer Content with Game-style typing animation */}
+      {/* Answer Content */}
       <AnimatePresence>
         {isActive && (
           <motion.div
-            variants={contentVariants}
-            initial="closed"
-            animate="open"
-            exit="closed"
-            className="px-5 pb-5"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            className="overflow-hidden"
           >
-            <div className="relative rounded-lg bg-slate-900/60 p-4">
-              <TypewriterText text={answer} />
-
-              {/* Decorative elements */}
-              <motion.div
-                className="absolute -right-2 -top-2 h-12 w-12 opacity-30"
-                animate={{
-                  rotate: [0, 360],
-                  opacity: [0.2, 0.4, 0.2],
-                }}
-                transition={{
-                  duration: 8,
-                  repeat: Infinity,
-                  ease: "linear",
-                }}
-              >
-                <Image
-                  src="/images/icon/watch.png"
-                  width={48}
-                  height={48}
-                  alt="Gear"
-                />
-              </motion.div>
+            <div className="border-t border-white/10 px-6 pb-6 pt-4">
+              <div className="ml-14">
+                <p className="font-rajdhani text-base leading-relaxed text-gray-400">
+                  {answer}
+                </p>
+              </div>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* Glowing border effect when active */}
-      {isActive && (
-        <motion.div
-          className="absolute inset-0 -z-10 rounded-xl opacity-40"
-          initial={{ opacity: 0 }}
-          animate={{
-            opacity: [0.2, 0.4, 0.2],
-            boxShadow: [
-              "0 0 5px 1px rgba(56, 189, 248, 0.3)",
-              "0 0 10px 2px rgba(56, 189, 248, 0.5)",
-              "0 0 5px 1px rgba(56, 189, 248, 0.3)",
-            ],
-          }}
-          transition={{
-            duration: 2,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        />
-      )}
+      {/* Bottom accent line */}
+      <motion.div
+        className="absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-cyan-500 via-purple-500 to-pink-500"
+        initial={{ width: 0 }}
+        animate={{ width: isActive ? "100%" : "0%" }}
+        transition={{ duration: 0.5 }}
+      />
     </motion.div>
-  );
-};
-
-// Typewriter effect component
-const TypewriterText = ({ text }) => {
-  const [displayedText, setDisplayedText] = useState("");
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  useEffect(() => {
-    if (currentIndex < text.length) {
-      const timer = setTimeout(() => {
-        setDisplayedText((prev) => prev + text[currentIndex]);
-        setCurrentIndex((prevIndex) => prevIndex + 1);
-      }, 15); // Speed of typing
-
-      return () => clearTimeout(timer);
-    }
-  }, [currentIndex, text]);
-
-  useEffect(() => {
-    // Reset when text changes
-    setDisplayedText("");
-    setCurrentIndex(0);
-  }, [text]);
-
-  return (
-    <div className="text-slate-300">
-      {displayedText}
-      {currentIndex < text.length && (
-        <motion.span
-          className="ml-1 inline-block h-4 w-2 bg-sky-400"
-          animate={{ opacity: [1, 0, 1] }}
-          transition={{ duration: 0.8, repeat: Infinity }}
-        />
-      )}
-    </div>
   );
 };
 
 // Main FAQ Component
 const FAQ = () => {
-  const [activeFaq, setActiveFaq] = useState(0);
-  const { theme } = useTheme();
+  const [activeId, setActiveId] = useState<number | null>(1);
 
-  const handleFaqToggle = (id) => {
-    activeFaq === id ? setActiveFaq(0) : setActiveFaq(id);
-  };
-
-  // Background particle effect
-  const ParticleBackground = () => {
-    return (
-      <div className="absolute inset-0 -z-10 overflow-hidden">
-        {[...Array(20)].map((_, index) => (
-          <motion.div
-            key={index}
-            className="absolute h-2 w-2 rounded-full bg-sky-500/30"
-            initial={{
-              x: Math.random() * 100 + "%",
-              y: Math.random() * 100 + "%",
-              opacity: Math.random() * 0.5 + 0.1,
-            }}
-            animate={{
-              y: [Math.random() * 100 + "%", Math.random() * 100 + "%"],
-              x: [Math.random() * 100 + "%", Math.random() * 100 + "%"],
-              opacity: [
-                Math.random() * 0.5 + 0.1,
-                Math.random() * 0.3,
-                Math.random() * 0.5 + 0.1,
-              ],
-            }}
-            transition={{
-              duration: 15 + Math.random() * 20,
-              repeat: Infinity,
-              ease: "linear",
-            }}
-          />
-        ))}
-      </div>
-    );
+  const toggleFaq = (id: number) => {
+    setActiveId(activeId === id ? null : id);
   };
 
   return (
-    <section className="relative overflow-hidden py-20 lg:py-28">
-      {/* Animated background */}
-      <ParticleBackground />
-
-      {/* Grid pattern overlay */}
-      <div className="-z-5 absolute inset-0 opacity-10">
-        <div className="bg-grid-pattern h-full w-full bg-repeat" />
+    <section className="relative overflow-hidden bg-black py-20 lg:py-32">
+      {/* Animated Grid Background */}
+      <div className="absolute inset-0 opacity-10">
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#1a1a1a_1px,transparent_1px),linear-gradient(to_bottom,#1a1a1a_1px,transparent_1px)] bg-[size:4rem_4rem]" />
       </div>
 
-      <div className="container relative mx-auto px-4 md:px-8">
-        <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
-          {/* Heading Section with Gaming Theme */}
+      {/* Gradient Overlay */}
+      <motion.div
+        className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 via-purple-500/5 to-pink-500/5"
+        animate={{
+          opacity: [0.3, 0.5, 0.3],
+        }}
+        transition={{
+          duration: 8,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+      />
+
+      <div className="relative z-10 mx-auto max-w-7xl px-4 md:px-8 2xl:px-0">
+        {/* Header Section */}
+        <div className="mb-16 text-center">
+          {/* Badge */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: "easeOut" }}
-            className="flex flex-col justify-center"
+            className="mb-6 inline-flex items-center gap-2 rounded-full border border-cyan-500/30 bg-cyan-500/10 px-4 py-2 backdrop-blur-sm"
+            initial={{ opacity: 0, scale: 0.8 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.2 }}
+            viewport={{ once: true }}
           >
-            <div className="mb-6 flex items-center">
-              <motion.div
-                className="mr-4 flex h-10 w-10 items-center justify-center rounded bg-gradient-to-br from-indigo-500 to-purple-600"
-                whileHover={{ scale: 1.1, rotate: 5 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <Image
-                  src="/images/icon/collect.png"
-                  width={24}
-                  height={24}
-                  alt="Gaming Headset"
-                />
-              </motion.div>
-              <h6 className="bg-gradient-to-r from-sky-400 to-indigo-400 bg-clip-text text-base font-bold uppercase tracking-widest text-transparent">
-                PLAYER SUPPORT
-              </h6>
-            </div>
+            <Sparkles className="h-4 w-4 text-cyan-400" />
+            <span className="font-orbitron text-xs font-bold uppercase tracking-wider text-cyan-400">
+              Player Support Hub
+            </span>
+          </motion.div>
 
-            <h2 className="mb-6 text-4xl font-bold leading-tight text-slate-50 lg:text-5xl">
-              Frequently Asked{" "}
-              <motion.span
-                className="relative inline-flex"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.5, duration: 0.5 }}
-              >
-                <span className="relative z-10">Questions</span>
-                <motion.span
-                  className="absolute -bottom-1 left-0 right-0 z-0 h-3 rounded-sm bg-gradient-to-r from-sky-500/70 to-indigo-500/70"
-                  initial={{ width: 0 }}
-                  animate={{ width: "100%" }}
-                  transition={{ delay: 0.7, duration: 0.8, ease: "easeOut" }}
-                />
-              </motion.span>
-            </h2>
+          {/* Title */}
+          <motion.h2
+            className="mb-6 font-orbitron text-4xl font-black uppercase leading-tight text-white md:text-5xl lg:text-6xl"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3, duration: 0.8 }}
+            viewport={{ once: true }}
+          >
+            <span className="bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
+              FREQUENTLY ASKED
+            </span>
+            <br />
+            <span className="text-white">QUESTIONS</span>
+          </motion.h2>
 
-            <p className="mb-8 max-w-md text-lg text-slate-300">
-              Level up your knowledge with our most commonly asked questions.
-              Can&apos;t find what you&apos;re looking for? Our support team is
-              ready to assist.
-            </p>
+          {/* Subtitle */}
+          <motion.p
+            className="mx-auto max-w-3xl font-rajdhani text-lg font-medium leading-relaxed text-gray-400 md:text-xl"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ delay: 0.5, duration: 0.8 }}
+            viewport={{ once: true }}
+          >
+            Get instant answers to your questions about gameplay, rewards,
+            technical requirements, and more. Can&apos;t find what you need? Our
+            support team is always ready to help.
+          </motion.p>
 
+          {/* Divider */}
+          <motion.div
+            className="mx-auto mt-8 h-1 w-32 rounded-full bg-gradient-to-r from-cyan-500 via-purple-500 to-pink-500"
+            initial={{ width: 0, opacity: 0 }}
+            whileInView={{ width: 128, opacity: 1 }}
+            transition={{ delay: 0.7, duration: 1 }}
+            viewport={{ once: true }}
+          />
+        </div>
+
+        {/* FAQ Grid */}
+        <div className="grid gap-6 lg:grid-cols-2">
+          {/* Left Column */}
+          <div className="space-y-4">
+            {faqData.slice(0, 3).map((faq) => (
+              <FAQItem
+                key={faq.id}
+                faq={faq}
+                isActive={activeId === faq.id}
+                toggleFaq={toggleFaq}
+              />
+            ))}
+          </div>
+
+          {/* Right Column */}
+          <div className="space-y-4">
+            {faqData.slice(3, 6).map((faq) => (
+              <FAQItem
+                key={faq.id}
+                faq={faq}
+                isActive={activeId === faq.id}
+                toggleFaq={toggleFaq}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* Support CTA Section */}
+        <motion.div
+          className="mt-16 rounded-2xl border border-white/10 bg-gradient-to-br from-gray-900/90 to-black/90 p-8 text-center backdrop-blur-sm md:p-12"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3, duration: 0.8 }}
+          viewport={{ once: true }}
+        >
+          {/* Glow Effect */}
+          <motion.div
+            className="absolute -inset-0.5 -z-10 rounded-2xl bg-gradient-to-r from-cyan-500/30 via-purple-500/30 to-pink-500/30 opacity-0 blur transition-opacity duration-500 group-hover:opacity-100"
+            animate={{
+              opacity: [0.3, 0.5, 0.3],
+            }}
+            transition={{
+              duration: 4,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          />
+
+          <motion.div
+            className="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-cyan-500 to-purple-500"
+            whileHover={{ scale: 1.1, rotate: 5 }}
+          >
+            <Users className="h-8 w-8 text-white" />
+          </motion.div>
+
+          <h3 className="mb-4 font-orbitron text-2xl font-black uppercase text-white md:text-3xl">
+            Still Have Questions?
+          </h3>
+
+          <p className="mx-auto mb-8 max-w-2xl font-rajdhani text-lg text-gray-400">
+            Join our thriving community of over 50,000 players on Discord. Get
+            instant help, share strategies, and connect with fellow gamers 24/7.
+          </p>
+
+          <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
             <motion.a
               href="https://discord.com/invite/NcNSaTVNdn"
-              className="group relative inline-flex max-w-fit items-center gap-2 overflow-hidden rounded-lg bg-gradient-to-r from-indigo-600 to-purple-600 px-6 py-3 font-medium text-white"
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.97 }}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group relative inline-flex items-center gap-3 overflow-hidden rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 px-8 py-4 font-orbitron text-sm font-bold uppercase tracking-wider text-white transition-all duration-300 hover:shadow-xl hover:shadow-cyan-500/50"
+              whileHover={{ scale: 1.05, y: -2 }}
+              whileTap={{ scale: 0.95 }}
             >
-              <span className="z-10">Join Discord Support</span>
-              <motion.span
-                className="absolute left-0 top-0 -z-10 h-full w-full opacity-0 backdrop-blur-sm"
-                whileHover={{ opacity: 0.15 }}
-              />
+              <Users className="h-5 w-5" />
+              <span>Join Discord</span>
               <motion.div
-                className="-z-5 absolute -right-2 h-16 w-16 translate-x-full transform rounded-full bg-white opacity-30"
+                className="absolute right-0 top-0 h-full w-full bg-white/20"
                 initial={{ x: "100%" }}
-                whileHover={{
-                  x: "-100%",
-                  transition: { duration: 0.6, ease: "easeOut" },
-                }}
+                whileHover={{ x: "-100%" }}
+                transition={{ duration: 0.5 }}
               />
-              <svg
-                className="h-5 w-5 transform transition-transform duration-300 ease-out group-hover:translate-x-1"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M17 8l4 4m0 0l-4 4m4-4H3"
-                />
-              </svg>
             </motion.a>
 
-            {/* Decorative game elements */}
-            <motion.div
-              className="absolute -bottom-8 -left-16 -z-1 h-64 w-64 rounded-full bg-gradient-to-r from-indigo-600/20 to-purple-600/20 blur-3xl"
-              animate={{
-                scale: [1, 1.2, 1],
-                opacity: [0.2, 0.3, 0.2],
-              }}
-              transition={{
-                duration: 8,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-            />
-          </motion.div>
-
-          {/* FAQ Items Container */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.7, delay: 0.2 }}
-            className="relative"
-          >
-            {/* Terminal-like container */}
-            <div className="relative overflow-hidden rounded-2xl border border-slate-700 bg-slate-900/70 backdrop-blur-sm">
-              {/* Terminal header */}
-              <div className="flex items-center border-b border-slate-700 bg-slate-800/80 px-4 py-3">
-                <div className="mr-2 h-3 w-3 rounded-full bg-red-500" />
-                <div className="mr-2 h-3 w-3 rounded-full bg-yellow-500" />
-                <div className="mr-4 h-3 w-3 rounded-full bg-green-500" />
-                <div className="text-sm font-medium text-slate-300">
-                  Player Support Console
-                </div>
-              </div>
-
-              <div className="p-4 md:p-6">
-                {/* FAQ Items */}
-                <AnimatePresence mode="wait">
-                  {gamingFaqData.map((faq) => (
-                    <FAQItem
-                      key={faq.id}
-                      faq={faq}
-                      isActive={activeFaq === faq.id}
-                      toggleFaq={handleFaqToggle}
-                    />
-                  ))}
-                </AnimatePresence>
-              </div>
-
-              {/* Terminal footer with blinking cursor */}
-              <div className="border-t border-slate-700 bg-slate-800/80 px-4 py-3">
-                <div className="flex items-center text-sm text-slate-400">
-                  <span>magicworldsonline2025@gmail.com:~$</span>
-                  <motion.span
-                    className="ml-1 h-4 w-2 bg-slate-400"
-                    animate={{ opacity: [1, 0, 1] }}
-                    transition={{ duration: 1, repeat: Infinity }}
-                  />
-                </div>
-              </div>
-            </div>
-
-            {/* Decorative elements */}
-            <motion.div
-              className="absolute -right-12 -top-12 -z-10 h-40 w-40"
-              animate={{
-                rotate: 360,
-                opacity: [0.1, 0.2, 0.1],
-              }}
-              transition={{
-                duration: 20,
-                repeat: Infinity,
-                ease: "linear",
-              }}
+            <motion.a
+              href="mailto:magicworldsonline2025@gmail.com"
+              className="group relative inline-flex items-center gap-3 overflow-hidden rounded-xl border-2 border-white/20 bg-white/5 px-8 py-4 font-orbitron text-sm font-bold uppercase tracking-wider text-white backdrop-blur-sm transition-all duration-300 hover:border-white/40 hover:bg-white/10"
+              whileHover={{ scale: 1.05, y: -2 }}
+              whileTap={{ scale: 0.95 }}
             >
-              <Image
-                src="/images/icon/vr.png"
-                width={160}
-                height={160}
-                alt="Circuit Pattern"
-              />
-            </motion.div>
-          </motion.div>
-        </div>
+              <Shield className="h-5 w-5" />
+              <span>Email Support</span>
+            </motion.a>
+          </div>
+        </motion.div>
       </div>
+
+      {/* Floating Particles */}
+      {[...Array(15)].map((_, i) => (
+        <motion.div
+          key={i}
+          className="pointer-events-none absolute h-1 w-1 rounded-full bg-cyan-500"
+          style={{
+            left: `${Math.random() * 100}%`,
+            top: `${Math.random() * 100}%`,
+          }}
+          animate={{
+            y: [0, -30, 0],
+            opacity: [0, 1, 0],
+            scale: [0, 1.5, 0],
+          }}
+          transition={{
+            duration: 3 + Math.random() * 2,
+            repeat: Infinity,
+            delay: Math.random() * 5,
+            ease: "easeInOut",
+          }}
+        />
+      ))}
     </section>
   );
 };

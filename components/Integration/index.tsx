@@ -50,27 +50,39 @@ const Integration = () => {
   const platforms = [
     {
       icon: Monitor,
-      name: "DESKTOP GAMING",
+      name: "WINDOWS",
       color: "#00D9FF",
       gradient: "from-cyan-500 to-blue-500",
       description: "Maximum performance. Ultra graphics. Competitive edge.",
       specs: ["4K Ready", "Ray Tracing", "144+ FPS"],
+      status: "Released",
+    },
+    {
+      icon: Monitor,
+      name: "MACOS",
+      color: "#A3A3A3",
+      gradient: "from-gray-400 to-gray-600",
+      description: "Optimized for Apple Silicon. Seamless performance.",
+      specs: ["M-Series", "Retina Display", "Metal API"],
+      status: "Released",
     },
     {
       icon: Smartphone,
-      name: "MOBILE QUEST",
-      color: "#FF3D71",
-      gradient: "from-rose-500 to-pink-500",
+      name: "ANDROID",
+      color: "#3DDC84",
+      gradient: "from-green-500 to-emerald-500",
       description: "Play anywhere. Quick sessions. Always connected.",
       specs: ["Touch Optimized", "5G Ready", "Low Latency"],
+      status: "Released",
     },
     {
-      icon: Gamepad2,
-      name: "CONSOLE NEXUS",
-      color: "#FFD600",
-      gradient: "from-yellow-500 to-amber-500",
-      description: "Living room ready. Controller support. Big screen action.",
-      specs: ["HDR Support", "60 FPS Lock", "Cross-Save"],
+      icon: Cloud,
+      name: "CLOUD STREAM",
+      color: "#00E5A0",
+      gradient: "from-emerald-500 to-teal-500",
+      description: "Zero downloads. Instant play. Game anywhere, anytime.",
+      specs: ["No Install", "Any Device", "1080p Stream"],
+      status: "Released",
     },
     {
       icon: Headset,
@@ -80,22 +92,16 @@ const Integration = () => {
       description:
         "Total immersion. 360° experience. Virtual reality redefined.",
       specs: ["Full VR", "Hand Tracking", "Haptic Feedback"],
+      status: "Upcoming",
     },
     {
-      icon: Cloud,
-      name: "CLOUD STREAM",
-      color: "#00E5A0",
-      gradient: "from-emerald-500 to-teal-500",
-      description: "Zero downloads. Instant play. Game anywhere, anytime.",
-      specs: ["No Install", "Any Device", "1080p Stream"],
-    },
-    {
-      icon: Globe,
-      name: "WEB PORTAL",
-      color: "#FF6B35",
-      gradient: "from-orange-500 to-red-500",
-      description: "Browser-based. No installation. Click and play.",
-      specs: ["WebGL 2.0", "No Download", "Universal"],
+      icon: Smartphone,
+      name: "IOS",
+      color: "#007AFF",
+      gradient: "from-blue-500 to-indigo-500",
+      description: "Coming to iPhone & iPad. Premium mobile experience.",
+      specs: ["App Store", "Game Center", "iCloud Sync"],
+      status: "Upcoming",
     },
   ];
 
@@ -241,28 +247,44 @@ const Integration = () => {
 
                 {/* Card */}
                 <div className="relative h-full overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-b from-gray-900/90 to-black/90 p-6 backdrop-blur-sm transition-all duration-500 group-hover:border-white/30">
-                  {/* Corner accent */}
-                  {/* <div className="absolute right-0 top-0 h-20 w-20 opacity-0 transition-opacity duration-500 group-hover:opacity-100">
-                    <div
-                      className={`absolute right-0 top-0 h-full w-full bg-gradient-to-bl ${platform.gradient} opacity-20`}
-                    />
+                  {/* Status Badge */}
+                  {/* <div className="absolute right-4 top-4">
+                    <span
+                      className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wide ${
+                        platform.status === "Released"
+                          ? "bg-emerald-500/20 text-emerald-400 ring-1 ring-emerald-500/40"
+                          : "bg-amber-500/20 text-amber-400 ring-1 ring-amber-500/40"
+                      }`}
+                    >
+                      <div
+                        className={`h-1.5 w-1.5 rounded-full ${
+                          platform.status === "Released"
+                            ? "animate-pulse bg-emerald-400"
+                            : "bg-amber-400"
+                        }`}
+                      />
+                      {platform.status}
+                    </span>
                   </div> */}
 
-                  {/* Icon container */}
-                  <motion.div
-                    className={`mb-4 inline-flex h-16 w-16 items-center justify-center rounded-xl bg-gradient-to-br ${platform.gradient} p-0.5`}
-                    animate={isActive ? { scale: [1, 1.1, 1] } : {}}
-                    transition={{ duration: 0.5 }}
-                  >
-                    <div className="flex h-full w-full items-center justify-center rounded-xl bg-black">
-                      <Icon className="h-8 w-8 text-white" />
-                    </div>
-                  </motion.div>
+                  {/* Icon and Title Row */}
+                  <div className="mb-4 flex items-center gap-4">
+                    {/* Icon container */}
+                    <motion.div
+                      className={`inline-flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-xl bg-gradient-to-br ${platform.gradient} p-0.5`}
+                      animate={isActive ? { scale: [1, 1.1, 1] } : {}}
+                      transition={{ duration: 0.5 }}
+                    >
+                      <div className="flex h-full w-full items-center justify-center rounded-xl bg-black">
+                        <Icon className="h-7 w-7 text-white" />
+                      </div>
+                    </motion.div>
 
-                  {/* Platform name */}
-                  <h3 className="mb-2 font-orbitron text-xl font-bold uppercase tracking-wide text-white">
-                    {platform.name}
-                  </h3>
+                    {/* Platform name */}
+                    <h3 className="font-orbitron text-xl font-bold uppercase tracking-wide text-white">
+                      {platform.name}
+                    </h3>
+                  </div>
 
                   {/* Description */}
                   <p className="mb-4 font-rajdhani text-sm font-medium leading-relaxed text-gray-400">
@@ -304,55 +326,6 @@ const Integration = () => {
         </div>
 
         {/* Features Bar */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-          className="mb-16 overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-r from-gray-900/50 via-gray-800/50 to-gray-900/50 backdrop-blur-sm"
-        >
-          <div className="grid grid-cols-2 gap-px bg-white/5 lg:grid-cols-4">
-            {features.map((feature, index) => {
-              const Icon = feature.icon;
-              return (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                  className="group relative bg-black/50 p-6 transition-colors duration-300 hover:bg-gray-900/80"
-                >
-                  {/* Icon */}
-                  <motion.div
-                    whileHover={{ rotate: 360, scale: 1.1 }}
-                    transition={{ duration: 0.6 }}
-                    className="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-cyan-500/20 to-purple-500/20"
-                  >
-                    <Icon className="h-5 w-5 text-cyan-400" />
-                  </motion.div>
-
-                  {/* Label */}
-                  <h4 className="mb-1 font-orbitron text-sm font-bold uppercase text-white">
-                    {feature.label}
-                  </h4>
-
-                  {/* Description */}
-                  <p className="font-rajdhani text-xs text-gray-500">
-                    {feature.description}
-                  </p>
-
-                  {/* Hover line */}
-                  <motion.div
-                    className="absolute bottom-0 left-0 h-0.5 w-0 bg-gradient-to-r from-cyan-500 to-purple-500"
-                    whileHover={{ width: "100%" }}
-                    transition={{ duration: 0.3 }}
-                  />
-                </motion.div>
-              );
-            })}
-          </div>
-        </motion.div>
 
         {/* Bottom CTA Section */}
         <motion.div
