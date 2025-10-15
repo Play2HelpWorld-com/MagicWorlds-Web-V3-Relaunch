@@ -227,7 +227,7 @@ const GameDownloads = () => {
 
           {/* Download Buttons */}
           <motion.div
-            className="flex flex-wrap items-center justify-center gap-4"
+            className="flex flex-wrap items-center justify-center gap-6"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.7 }}
@@ -238,23 +238,31 @@ const GameDownloads = () => {
               rel="noopener noreferrer"
             >
               <motion.button
-                className="group relative overflow-hidden rounded-xl bg-gradient-to-r from-cyan-500 to-blue-500 px-10 py-5 font-bold text-white shadow-2xl shadow-cyan-500/50"
+                className="group relative overflow-hidden rounded-2xl border-2 border-cyan-400/50 bg-gradient-to-br from-cyan-500 via-blue-500 to-cyan-600 px-12 py-6 font-bold text-white shadow-2xl shadow-cyan-500/60"
                 whileHover={{
-                  scale: 1.05,
-                  boxShadow: "0 0 40px rgba(6, 182, 212, 0.6)",
+                  scale: 1.08,
+                  boxShadow:
+                    "0 0 50px rgba(6, 182, 212, 0.8), 0 0 80px rgba(6, 182, 212, 0.4)",
+                  borderColor: "rgba(6, 182, 212, 1)",
                 }}
                 whileTap={{ scale: 0.95 }}
               >
                 <span className="relative z-10 flex items-center gap-3">
-                  <Monitor className="h-7 w-7" />
-                  <span className="text-xl">Windows</span>
+                  <Download className="h-7 w-7 animate-pulse" />
+                  <div className="flex flex-col items-start">
+                    <span className="text-xs uppercase tracking-wider opacity-90">
+                      Download for
+                    </span>
+                    <span className="text-2xl font-black">Windows</span>
+                  </div>
                 </span>
                 <motion.div
-                  className="absolute inset-0 bg-gradient-to-r from-cyan-400 to-blue-400"
-                  initial={{ x: "-100%" }}
-                  whileHover={{ x: 0 }}
-                  transition={{ duration: 0.3 }}
+                  className="absolute inset-0 bg-gradient-to-r from-cyan-300 via-blue-400 to-cyan-300"
+                  initial={{ x: "-100%", opacity: 0 }}
+                  whileHover={{ x: "100%", opacity: 0.3 }}
+                  transition={{ duration: 0.6 }}
                 />
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,rgba(6,182,212,0.3),transparent)]" />
               </motion.button>
             </a>
 
@@ -264,23 +272,31 @@ const GameDownloads = () => {
               rel="noopener noreferrer"
             >
               <motion.button
-                className="group relative overflow-hidden rounded-xl bg-gradient-to-r from-gray-600 to-gray-800 px-10 py-5 font-bold text-white shadow-2xl shadow-gray-500/50"
+                className="group relative overflow-hidden rounded-2xl border-2 border-gray-400/50 bg-gradient-to-br from-gray-700 via-gray-800 to-gray-900 px-12 py-6 font-bold text-white shadow-2xl shadow-gray-500/60"
                 whileHover={{
-                  scale: 1.05,
-                  boxShadow: "0 0 40px rgba(156, 163, 175, 0.6)",
+                  scale: 1.08,
+                  boxShadow:
+                    "0 0 50px rgba(156, 163, 175, 0.8), 0 0 80px rgba(156, 163, 175, 0.4)",
+                  borderColor: "rgba(156, 163, 175, 1)",
                 }}
                 whileTap={{ scale: 0.95 }}
               >
                 <span className="relative z-10 flex items-center gap-3">
-                  <Monitor className="h-7 w-7" />
-                  <span className="text-xl">macOS</span>
+                  <Download className="h-7 w-7 animate-pulse" />
+                  <div className="flex flex-col items-start">
+                    <span className="text-xs uppercase tracking-wider opacity-90">
+                      Download for
+                    </span>
+                    <span className="text-2xl font-black">macOS</span>
+                  </div>
                 </span>
                 <motion.div
-                  className="absolute inset-0 bg-gradient-to-r from-gray-500 to-gray-700"
-                  initial={{ x: "-100%" }}
-                  whileHover={{ x: 0 }}
-                  transition={{ duration: 0.3 }}
+                  className="absolute inset-0 bg-gradient-to-r from-gray-400 via-gray-500 to-gray-400"
+                  initial={{ x: "-100%", opacity: 0 }}
+                  whileHover={{ x: "100%", opacity: 0.3 }}
+                  transition={{ duration: 0.6 }}
                 />
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,rgba(156,163,175,0.3),transparent)]" />
               </motion.button>
             </a>
 
@@ -290,23 +306,31 @@ const GameDownloads = () => {
               rel="noopener noreferrer"
             >
               <motion.button
-                className="group relative overflow-hidden rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 px-10 py-5 font-bold text-white shadow-2xl shadow-purple-500/50"
+                className="group relative overflow-hidden rounded-2xl border-2 border-purple-400/50 bg-gradient-to-br from-purple-600 via-pink-600 to-purple-700 px-12 py-6 font-bold text-white shadow-2xl shadow-purple-500/60"
                 whileHover={{
-                  scale: 1.05,
-                  boxShadow: "0 0 40px rgba(168, 85, 247, 0.6)",
+                  scale: 1.08,
+                  boxShadow:
+                    "0 0 50px rgba(168, 85, 247, 0.8), 0 0 80px rgba(168, 85, 247, 0.4)",
+                  borderColor: "rgba(168, 85, 247, 1)",
                 }}
                 whileTap={{ scale: 0.95 }}
               >
                 <span className="relative z-10 flex items-center gap-3">
-                  <Smartphone className="h-7 w-7" />
-                  <span className="text-xl">Android</span>
+                  <Download className="h-7 w-7 animate-pulse" />
+                  <div className="flex flex-col items-start">
+                    <span className="text-xs uppercase tracking-wider opacity-90">
+                      Download for
+                    </span>
+                    <span className="text-2xl font-black">Android</span>
+                  </div>
                 </span>
                 <motion.div
-                  className="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-500"
-                  initial={{ x: "-100%" }}
-                  whileHover={{ x: 0 }}
-                  transition={{ duration: 0.3 }}
+                  className="absolute inset-0 bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400"
+                  initial={{ x: "-100%", opacity: 0 }}
+                  whileHover={{ x: "100%", opacity: 0.3 }}
+                  transition={{ duration: 0.6 }}
                 />
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,rgba(168,85,247,0.3),transparent)]" />
               </motion.button>
             </a>
           </motion.div>
