@@ -15,7 +15,6 @@ import {
   Users,
   Star,
   TrendingUp,
-  Eye,
 } from "lucide-react";
 import { motion, AnimatePresence, useAnimation } from "framer-motion";
 
@@ -23,11 +22,8 @@ interface GameplayVideo {
   id: string;
   title: string;
   genre: string;
-  duration: string;
   videoUrl: string;
   thumbnailUrl: string;
-  views: string;
-  uploadDate: string;
 }
 
 // Static video data
@@ -35,152 +31,86 @@ const GAMEPLAY_VIDEOS: GameplayVideo[] = [
   {
     id: "1",
     title: "Learning World: AI Tutor Mastery",
-    genre: "Educational RPG",
-    duration: "12:45",
+    genre: "Educational",
     videoUrl: "/videos/worlds/gameplay-1.mp4",
     thumbnailUrl: "/images/thumbnails/gameplay-1.jpg",
-    views: "1.2M",
-    uploadDate: "2 days ago",
   },
   {
     id: "2",
     title: "Sport World: Extreme Soccer Showdown",
     genre: "Sports",
-    duration: "8:32",
     videoUrl: "/videos/worlds/gameplay-2.mp4",
     thumbnailUrl: "/images/thumbnails/gameplay-2.jpg",
-    views: "845K",
-    uploadDate: "1 week ago",
   },
   {
     id: "3",
     title: "AI World: Cybernetic Battle Arena",
-    genre: "Sci-Fi Strategy",
-    duration: "15:07",
+    genre: "Adventure",
     videoUrl: "/videos/worlds/gameplay-3.mp4",
     thumbnailUrl: "/images/thumbnails/gameplay-3.jpg",
-    views: "3.7M",
-    uploadDate: "3 days ago",
   },
   {
     id: "4",
     title: "Music World: Ultimate DJ Remix Challenge",
-    genre: "Rhythm",
-    duration: "10:21",
+    genre: "Music",
     videoUrl: "/videos/worlds/gameplay-4.mp4",
     thumbnailUrl: "/images/thumbnails/gameplay-4.jpg",
-    views: "698K",
-    uploadDate: "5 hours ago",
   },
   {
     id: "5",
     title: "Farm World: Epic Harvest Season",
     genre: "Simulation",
-    duration: "6:18",
     videoUrl: "/videos/worlds/gameplay-5.mp4",
     thumbnailUrl: "/images/thumbnails/gameplay-5.jpg",
-    views: "2.1M",
-    uploadDate: "2 weeks ago",
   },
   {
     id: "6",
     title: "Magic Worlds: The Grand Sorcerer's Quest",
-    genre: "Fantasy RPG",
-    duration: "9:45",
+    genre: "Adventure",
     videoUrl: "/videos/worlds/gameplay-6.mp4",
     thumbnailUrl: "/images/thumbnails/gameplay-6.jpg",
-    views: "1.5M",
-    uploadDate: "1 day ago",
   },
   {
     id: "7",
     title: "Space World: Alien Galaxy Exploration",
-    genre: "Sci-Fi Adventure",
-    duration: "7:33",
+    genre: "Adventure",
     videoUrl: "/videos/worlds/gameplay-7.mp4",
     thumbnailUrl: "/images/thumbnails/gameplay-7.jpg",
-    views: "922K",
-    uploadDate: "4 days ago",
   },
   {
     id: "8",
     title: "War World: Battle of the Titans",
-    genre: "FPS",
-    duration: "14:22",
+    genre: "Sports",
     videoUrl: "/videos/worlds/gameplay-8.mp4",
     thumbnailUrl: "/images/thumbnails/gameplay-8.jpg",
-    views: "1.8M",
-    uploadDate: "12 hours ago",
   },
   {
     id: "9",
     title: "Racing World: Hyperdrive Grand Prix",
-    genre: "Racing",
-    duration: "11:09",
+    genre: "Sports",
     videoUrl: "/videos/worlds/gameplay-9.mp4",
     thumbnailUrl: "/images/thumbnails/gameplay-9.jpg",
-    views: "762K",
-    uploadDate: "3 weeks ago",
   },
   {
     id: "10",
     title: "Survival World: Island Escape Challenge",
-    genre: "Survival",
-    duration: "5:47",
+    genre: "Adventure",
     videoUrl: "/videos/worlds/gameplay-10.mp4",
     thumbnailUrl: "/images/thumbnails/gameplay-10.jpg",
-    views: "4.2M",
-    uploadDate: "Just now",
   },
   {
     id: "11",
     title: "AI World: Sentient Machine Revolution",
-    genre: "Sci-Fi RPG",
-    duration: "16:38",
+    genre: "Adventure",
     videoUrl: "/videos/worlds/gameplay-11.mp4",
     thumbnailUrl: "/images/thumbnails/gameplay-11.jpg",
-    views: "552K",
-    uploadDate: "8 hours ago",
   },
   {
     id: "12",
     title: "Music World: Battle of the Bands",
-    genre: "Rhythm",
-    duration: "13:15",
+    genre: "Music",
     videoUrl: "/videos/worlds/gameplay-12.mp4",
     thumbnailUrl: "/images/thumbnails/gameplay-12.jpg",
-    views: "1.1M",
-    uploadDate: "Yesterday",
-  },
-  {
-    id: "13",
-    title: "Learning World: History's Greatest Mysteries",
-    genre: "Educational",
-    duration: "10:00",
-    videoUrl: "/videos/worlds/gameplay-1.mp4",
-    thumbnailUrl: "/images/thumbnails/gameplay-1.jpg",
-    views: "890K",
-    uploadDate: "2 days ago",
-  },
-  {
-    id: "14",
-    title: "Farm World: The Great Animal Rescue",
-    genre: "Simulation",
-    duration: "8:15",
-    videoUrl: "/videos/worlds/gameplay-2.mp4",
-    thumbnailUrl: "/images/thumbnails/gameplay-2.jpg",
-    views: "1.3M",
-    uploadDate: "1 week ago",
-  },
-  {
-    id: "15",
-    title: "Magic Worlds: Wizard's Tower Defense",
-    genre: "Tower Defense",
-    duration: "12:30",
-    videoUrl: "/videos/worlds/gameplay-3.mp4",
-    thumbnailUrl: "/images/thumbnails/gameplay-3.jpg",
-    views: "2.4M",
-    uploadDate: "3 days ago",
   },
 ];
 
@@ -638,17 +568,11 @@ const EpicGamingShowcase: React.FC = () => {
   // Categories for filtering
   const categories = [
     "All",
-    "Fantasy RPG",
     "Educational",
     "Sports",
-    "Sci-Fi Strategy",
-    "Rhythm",
-    "Simulation",
     "Adventure",
-    "FPS",
-    "Racing",
-    "Survival",
-    "Tower Defense",
+    "Music",
+    "Simulation",
   ];
 
   // Calculate progress percentage safely
@@ -752,43 +676,16 @@ const EpicGamingShowcase: React.FC = () => {
             whileHover={{ scale: 1.05 }}
             transition={{ type: "spring", stiffness: 300 }}
           >
-            <Trophy className="h-10 w-10 text-yellow-400" />
+            {/* <Trophy className="h-10 w-10 text-yellow-400" /> */}
             <h1 className="bg-gradient-to-r from-purple-400 via-fuchsia-400 to-cyan-400 bg-clip-text font-orbitron text-6xl font-black uppercase tracking-wider text-transparent">
               Worlds Vault
             </h1>
-            <Trophy className="h-10 w-10 text-yellow-400" />
+            {/* <Trophy className="h-10 w-10 text-yellow-400" /> */}
           </motion.div>
           <p className="mx-auto max-w-3xl font-rajdhani text-xl font-medium text-gray-300">
             Dive into epic gameplay moments from across the multiverse. Watch,
             explore, and experience the magic! 🎮
           </p>
-
-          {/* Stats Bar */}
-          <motion.div
-            className="mx-auto mt-8 flex max-w-2xl justify-center gap-6"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.7 }}
-          >
-            <div className="flex items-center gap-2 rounded-full border border-purple-500/30 bg-purple-500/10 px-6 py-3 backdrop-blur-sm">
-              <Eye className="h-5 w-5 text-cyan-400" />
-              <span className="font-rajdhani text-sm font-bold text-white">
-                {videos.length} Videos
-              </span>
-            </div>
-            <div className="flex items-center gap-2 rounded-full border border-fuchsia-500/30 bg-fuchsia-500/10 px-6 py-3 backdrop-blur-sm">
-              <Users className="h-5 w-5 text-fuchsia-400" />
-              <span className="font-rajdhani text-sm font-bold text-white">
-                2.5M Views
-              </span>
-            </div>
-            <div className="flex items-center gap-2 rounded-full border border-yellow-500/30 bg-yellow-500/10 px-6 py-3 backdrop-blur-sm">
-              <Star className="h-5 w-5 text-yellow-400" />
-              <span className="font-rajdhani text-sm font-bold text-white">
-                4.8 Rating
-              </span>
-            </div>
-          </motion.div>
         </motion.div>
 
         {/* Category Selection */}
@@ -899,13 +796,6 @@ const EpicGamingShowcase: React.FC = () => {
                         <span className="flex items-center gap-1 rounded-full border border-purple-400/30 bg-purple-500/20 px-3 py-1 text-purple-200 backdrop-blur-sm">
                           <TrendingUp className="h-4 w-4" />
                           {videos[activeIndex]?.genre}
-                        </span>
-                        <span className="flex items-center gap-1 text-gray-300">
-                          <Eye className="h-4 w-4" />
-                          {videos[activeIndex]?.views} views
-                        </span>
-                        <span className="text-gray-400">
-                          {videos[activeIndex]?.uploadDate}
                         </span>
                       </div>
                     </motion.div>
@@ -1066,11 +956,6 @@ const EpicGamingShowcase: React.FC = () => {
                       {/* Gradient Overlay */}
                       <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent opacity-60 group-hover:opacity-40" />
 
-                      {/* Duration Badge */}
-                      <div className="absolute bottom-3 right-3 rounded-lg border border-white/20 bg-black/80 px-2 py-1 font-rajdhani text-xs font-bold text-white backdrop-blur-sm">
-                        {video.duration}
-                      </div>
-
                       {/* Active Indicator */}
                       {isActive && (
                         <motion.div
@@ -1123,17 +1008,6 @@ const EpicGamingShowcase: React.FC = () => {
                       {/* Genre Badge */}
                       <div className="mb-3 inline-block rounded-full border border-purple-500/30 bg-purple-500/10 px-3 py-1 font-rajdhani text-xs font-bold uppercase text-purple-300">
                         {video.genre}
-                      </div>
-
-                      {/* Stats */}
-                      <div className="flex items-center justify-between border-t border-white/5 pt-3 font-rajdhani text-xs">
-                        <span className="flex items-center gap-1 text-gray-400">
-                          <Eye className="h-3 w-3" />
-                          {video.views}
-                        </span>
-                        <span className="text-gray-500">
-                          {video.uploadDate}
-                        </span>
                       </div>
                     </div>
 
@@ -1229,15 +1103,6 @@ const EpicGamingShowcase: React.FC = () => {
                       <span className="flex items-center gap-2 rounded-full border border-purple-500/30 bg-purple-500/10 px-4 py-2 font-rajdhani text-sm font-bold text-purple-300">
                         <TrendingUp className="h-4 w-4" />
                         {videos[activeIndex]?.genre}
-                      </span>
-                      <span className="flex items-center gap-2 text-gray-300">
-                        <Eye className="h-4 w-4" />
-                        <span className="font-rajdhani font-medium">
-                          {videos[activeIndex]?.views} views
-                        </span>
-                      </span>
-                      <span className="font-rajdhani text-sm text-gray-400">
-                        {videos[activeIndex]?.uploadDate}
                       </span>
                     </div>
                   </div>
