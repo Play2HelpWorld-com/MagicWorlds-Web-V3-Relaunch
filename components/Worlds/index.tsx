@@ -30,9 +30,163 @@ interface GameplayVideo {
   uploadDate: string;
 }
 
+// Static video data
+const GAMEPLAY_VIDEOS: GameplayVideo[] = [
+  {
+    id: "1",
+    title: "Learning World: AI Tutor Mastery",
+    genre: "Educational RPG",
+    duration: "12:45",
+    videoUrl: "/videos/worlds/gameplay-1.mp4",
+    thumbnailUrl: "/images/thumbnails/gameplay-1.jpg",
+    views: "1.2M",
+    uploadDate: "2 days ago",
+  },
+  {
+    id: "2",
+    title: "Sport World: Extreme Soccer Showdown",
+    genre: "Sports",
+    duration: "8:32",
+    videoUrl: "/videos/worlds/gameplay-2.mp4",
+    thumbnailUrl: "/images/thumbnails/gameplay-2.jpg",
+    views: "845K",
+    uploadDate: "1 week ago",
+  },
+  {
+    id: "3",
+    title: "AI World: Cybernetic Battle Arena",
+    genre: "Sci-Fi Strategy",
+    duration: "15:07",
+    videoUrl: "/videos/worlds/gameplay-3.mp4",
+    thumbnailUrl: "/images/thumbnails/gameplay-3.jpg",
+    views: "3.7M",
+    uploadDate: "3 days ago",
+  },
+  {
+    id: "4",
+    title: "Music World: Ultimate DJ Remix Challenge",
+    genre: "Rhythm",
+    duration: "10:21",
+    videoUrl: "/videos/worlds/gameplay-4.mp4",
+    thumbnailUrl: "/images/thumbnails/gameplay-4.jpg",
+    views: "698K",
+    uploadDate: "5 hours ago",
+  },
+  {
+    id: "5",
+    title: "Farm World: Epic Harvest Season",
+    genre: "Simulation",
+    duration: "6:18",
+    videoUrl: "/videos/worlds/gameplay-5.mp4",
+    thumbnailUrl: "/images/thumbnails/gameplay-5.jpg",
+    views: "2.1M",
+    uploadDate: "2 weeks ago",
+  },
+  {
+    id: "6",
+    title: "Magic Worlds: The Grand Sorcerer's Quest",
+    genre: "Fantasy RPG",
+    duration: "9:45",
+    videoUrl: "/videos/worlds/gameplay-6.mp4",
+    thumbnailUrl: "/images/thumbnails/gameplay-6.jpg",
+    views: "1.5M",
+    uploadDate: "1 day ago",
+  },
+  {
+    id: "7",
+    title: "Space World: Alien Galaxy Exploration",
+    genre: "Sci-Fi Adventure",
+    duration: "7:33",
+    videoUrl: "/videos/worlds/gameplay-7.mp4",
+    thumbnailUrl: "/images/thumbnails/gameplay-7.jpg",
+    views: "922K",
+    uploadDate: "4 days ago",
+  },
+  {
+    id: "8",
+    title: "War World: Battle of the Titans",
+    genre: "FPS",
+    duration: "14:22",
+    videoUrl: "/videos/worlds/gameplay-8.mp4",
+    thumbnailUrl: "/images/thumbnails/gameplay-8.jpg",
+    views: "1.8M",
+    uploadDate: "12 hours ago",
+  },
+  {
+    id: "9",
+    title: "Racing World: Hyperdrive Grand Prix",
+    genre: "Racing",
+    duration: "11:09",
+    videoUrl: "/videos/worlds/gameplay-9.mp4",
+    thumbnailUrl: "/images/thumbnails/gameplay-9.jpg",
+    views: "762K",
+    uploadDate: "3 weeks ago",
+  },
+  {
+    id: "10",
+    title: "Survival World: Island Escape Challenge",
+    genre: "Survival",
+    duration: "5:47",
+    videoUrl: "/videos/worlds/gameplay-10.mp4",
+    thumbnailUrl: "/images/thumbnails/gameplay-10.jpg",
+    views: "4.2M",
+    uploadDate: "Just now",
+  },
+  {
+    id: "11",
+    title: "AI World: Sentient Machine Revolution",
+    genre: "Sci-Fi RPG",
+    duration: "16:38",
+    videoUrl: "/videos/worlds/gameplay-11.mp4",
+    thumbnailUrl: "/images/thumbnails/gameplay-11.jpg",
+    views: "552K",
+    uploadDate: "8 hours ago",
+  },
+  {
+    id: "12",
+    title: "Music World: Battle of the Bands",
+    genre: "Rhythm",
+    duration: "13:15",
+    videoUrl: "/videos/worlds/gameplay-12.mp4",
+    thumbnailUrl: "/images/thumbnails/gameplay-12.jpg",
+    views: "1.1M",
+    uploadDate: "Yesterday",
+  },
+  {
+    id: "13",
+    title: "Learning World: History's Greatest Mysteries",
+    genre: "Educational",
+    duration: "10:00",
+    videoUrl: "/videos/worlds/gameplay-1.mp4",
+    thumbnailUrl: "/images/thumbnails/gameplay-1.jpg",
+    views: "890K",
+    uploadDate: "2 days ago",
+  },
+  {
+    id: "14",
+    title: "Farm World: The Great Animal Rescue",
+    genre: "Simulation",
+    duration: "8:15",
+    videoUrl: "/videos/worlds/gameplay-2.mp4",
+    thumbnailUrl: "/images/thumbnails/gameplay-2.jpg",
+    views: "1.3M",
+    uploadDate: "1 week ago",
+  },
+  {
+    id: "15",
+    title: "Magic Worlds: Wizard's Tower Defense",
+    genre: "Tower Defense",
+    duration: "12:30",
+    videoUrl: "/videos/worlds/gameplay-3.mp4",
+    thumbnailUrl: "/images/thumbnails/gameplay-3.jpg",
+    views: "2.4M",
+    uploadDate: "3 days ago",
+  },
+];
+
 const EpicGamingShowcase: React.FC = () => {
   // State management
-  const [videos, setVideos] = useState<GameplayVideo[]>([]);
+  const [videos] = useState<GameplayVideo[]>(GAMEPLAY_VIDEOS);
   const [activeIndex, setActiveIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(true); // Muted by default to prevent autoplay issues
@@ -102,98 +256,6 @@ const EpicGamingShowcase: React.FC = () => {
       setIsPlaying(false);
     }
   };
-
-  // Generate video data
-  useEffect(() => {
-    const gameTitles = [
-      { title: "Learning World: AI Tutor Mastery", genre: "Educational RPG" },
-      { title: "Sport World: Extreme Soccer Showdown", genre: "Sports" },
-      {
-        title: "AI World: Cybernetic Battle Arena",
-        genre: "Sci-Fi Strategy",
-      },
-      { title: "Music World: Ultimate DJ Remix Challenge", genre: "Rhythm" },
-      { title: "Farm World: Epic Harvest Season", genre: "Simulation" },
-      {
-        title: "Magic Worlds: The Grand Sorcerer's Quest",
-        genre: "Fantasy RPG",
-      },
-      {
-        title: "Space World: Alien Galaxy Exploration",
-        genre: "Sci-Fi Adventure",
-      },
-      { title: "War World: Battle of the Titans", genre: "FPS" },
-      { title: "Racing World: Hyperdrive Grand Prix", genre: "Racing" },
-      { title: "Survival World: Island Escape Challenge", genre: "Survival" },
-      { title: "AI World: Sentient Machine Revolution", genre: "Sci-Fi RPG" },
-      { title: "Music World: Battle of the Bands", genre: "Rhythm" },
-      {
-        title: "Learning World: History's Greatest Mysteries",
-        genre: "Educational",
-      },
-      { title: "Farm World: The Great Animal Rescue", genre: "Simulation" },
-      {
-        title: "Magic Worlds: Wizard's Tower Defense",
-        genre: "Tower Defense",
-      },
-    ];
-
-    const durations = [
-      "12:45",
-      "8:32",
-      "15:07",
-      "10:21",
-      "6:18",
-      "9:45",
-      "7:33",
-      "14:22",
-      "11:09",
-      "5:47",
-      "16:38",
-      "13:15",
-    ];
-    const viewCounts = [
-      "1.2M",
-      "845K",
-      "3.7M",
-      "698K",
-      "2.1M",
-      "1.5M",
-      "922K",
-      "1.8M",
-      "762K",
-      "4.2M",
-      "552K",
-      "1.1M",
-    ];
-    const uploadDates = [
-      "2 days ago",
-      "1 week ago",
-      "3 days ago",
-      "5 hours ago",
-      "2 weeks ago",
-      "1 day ago",
-      "4 days ago",
-      "12 hours ago",
-      "3 weeks ago",
-      "Just now",
-      "8 hours ago",
-      "Yesterday",
-    ];
-
-    const generatedVideos = gameTitles.map((game, i) => ({
-      id: (i + 1).toString(),
-      title: game.title,
-      genre: game.genre,
-      duration: durations[i] || "10:00",
-      videoUrl: `/videos/worlds/gameplay-${(i % 12) + 1}.mp4`,
-      thumbnailUrl: `/images/thumbnails/gameplay-${(i % 12) + 1}.jpg`,
-      views: viewCounts[i] || "1M",
-      uploadDate: uploadDates[i] || "Recently",
-    }));
-
-    setVideos(generatedVideos);
-  }, []);
 
   // Handle video loading and time updates
   useEffect(() => {
