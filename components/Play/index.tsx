@@ -124,14 +124,14 @@ const GameDownloads = () => {
   const game = GAMES[0]; // Primary game
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-black font-rajdhani text-white">
+    <div className="relative min-h-screen overflow-hidden bg-transparent font-rajdhani text-white">
       {/* Animated Grid Background */}
-      <div className="fixed inset-0 opacity-20">
+      {/* <div className="fixed inset-0 opacity-20">
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#1a1a1a_1px,transparent_1px),linear-gradient(to_bottom,#1a1a1a_1px,transparent_1px)] bg-[size:4rem_4rem]" />
-      </div>
+      </div> */}
 
       {/* Gradient Overlays */}
-      <motion.div
+      {/* <motion.div
         className="fixed inset-0 bg-gradient-to-br from-cyan-500/10 via-purple-500/10 to-pink-500/10"
         animate={{
           opacity: [0.3, 0.6, 0.3],
@@ -141,7 +141,7 @@ const GameDownloads = () => {
           repeat: Infinity,
           easeIn: "easeInOut",
         }}
-      />
+      /> */}
 
       <FloatingParticles />
 
@@ -526,20 +526,47 @@ const GameDownloads = () => {
       {/* System Requirements Section */}
       <section className="relative py-20 lg:py-32">
         <div className="relative z-10 mx-auto max-w-7xl px-4 md:px-8">
-          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-cyan-500/30 bg-cyan-500/10 px-4 py-2 backdrop-blur-sm">
-            <Cpu className="h-4 w-4 text-cyan-400" />
-            <span className="font-orbitron text-xs font-bold uppercase tracking-wider text-cyan-400">
-              System Requirements
-            </span>
-          </div>
+          {/* Section Header */}
+          <div className="mb-16 text-center">
+            <motion.div
+              className="mb-6 inline-flex items-center gap-2 rounded-full border border-cyan-500/30 bg-cyan-500/10 px-6 py-3 backdrop-blur-sm"
+              initial={{ opacity: 0, scale: 0.8 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.2 }}
+              viewport={{ once: true }}
+            >
+              <Cpu className="h-5 w-5 text-cyan-400" />
+              <span className="font-orbitron text-sm font-bold uppercase tracking-wider text-cyan-400">
+                System Requirements
+              </span>
+            </motion.div>
 
-          <h2 className="mb-8 font-orbitron text-3xl font-black uppercase text-white md:text-4xl">
-            Ready to Play?
-          </h2>
+            <motion.h2
+              className="mb-6 font-orbitron text-4xl font-black uppercase text-white md:text-5xl"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+              viewport={{ once: true }}
+            >
+              <span className="bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
+                Ready to Play?
+              </span>
+            </motion.h2>
+
+            <motion.p
+              className="mx-auto max-w-2xl text-lg text-gray-400"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 }}
+              viewport={{ once: true }}
+            >
+              Check if your system meets the requirements for an optimal gaming
+              experience
+            </motion.p>
+          </div>
 
           <div className="grid gap-12 lg:grid-cols-2">
             {/* Left Column - Requirements */}
-
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -547,45 +574,76 @@ const GameDownloads = () => {
               viewport={{ once: true }}
             >
               {/* Platform Tabs */}
-              <div className="mb-6 flex flex-wrap gap-3">
-                {(["windows", "macos", "android"] as const).map((platform) => (
-                  <motion.button
-                    key={platform}
-                    className={`rounded-lg px-6 py-3 font-bold capitalize transition-all ${
-                      selectedPlatform === platform
-                        ? "bg-gradient-to-r from-cyan-500 to-blue-500 text-white shadow-lg shadow-cyan-500/50"
-                        : "border border-white/20 bg-white/5 text-gray-400 hover:text-white"
-                    }`}
-                    onClick={() => setSelectedPlatform(platform)}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    {platform === "macos" ? "macOS" : platform}
-                  </motion.button>
-                ))}
+              <div className="mb-8 flex flex-wrap gap-4">
+                {(["windows", "macos", "android"] as const).map((platform) => {
+                  const platformColors = {
+                    windows: "from-cyan-500 to-blue-500 shadow-cyan-500/50",
+                    macos: "from-gray-500 to-slate-600 shadow-gray-500/50",
+                    android: "from-purple-500 to-pink-500 shadow-purple-500/50",
+                  };
+
+                  return (
+                    <motion.button
+                      key={platform}
+                      className={`relative overflow-hidden rounded-xl px-8 py-4 font-bold capitalize transition-all ${
+                        selectedPlatform === platform
+                          ? `bg-gradient-to-r ${platformColors[platform]} text-white shadow-lg`
+                          : "border-2 border-white/10 bg-white/5 text-gray-400 hover:border-white/30 hover:text-white"
+                      }`}
+                      onClick={() => setSelectedPlatform(platform)}
+                      whileHover={{ scale: 1.05, y: -2 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <span className="relative z-10">
+                        {platform === "macos" ? "macOS" : platform}
+                      </span>
+                      {selectedPlatform === platform && (
+                        <motion.div
+                          className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent"
+                          initial={{ x: "-100%" }}
+                          animate={{ x: "100%" }}
+                          transition={{ duration: 1, repeat: Infinity }}
+                        />
+                      )}
+                    </motion.button>
+                  );
+                })}
               </div>
 
               {/* Requirements List */}
-              <div className="space-y-4">
-                {Object.entries(game.requirements[selectedPlatform]).map(
-                  ([key, value], index) => (
-                    <motion.div
-                      key={`${selectedPlatform}-${key}`}
-                      className="flex items-start gap-4 rounded-xl border border-white/10 bg-white/5 p-4 backdrop-blur-sm"
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: index * 0.05 }}
-                    >
-                      <CheckCircle2 className="h-5 w-5 flex-shrink-0 text-cyan-400" />
-                      <div>
-                        <p className="font-bold capitalize text-white">
-                          {key.replace(/([A-Z])/g, " $1")}
-                        </p>
-                        <p className="text-sm text-gray-400">{value}</p>
-                      </div>
-                    </motion.div>
-                  ),
-                )}
+              <div className="space-y-3">
+                <AnimatePresence mode="wait">
+                  {Object.entries(game.requirements[selectedPlatform]).map(
+                    ([key, value], index) => (
+                      <motion.div
+                        key={`${selectedPlatform}-${key}`}
+                        className="group relative overflow-hidden rounded-xl border border-white/10 bg-gradient-to-br from-white/5 to-white/[0.02] p-5 backdrop-blur-sm transition-all hover:border-cyan-500/30 hover:bg-white/10"
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        exit={{ opacity: 0, x: 20 }}
+                        transition={{ delay: index * 0.05 }}
+                        whileHover={{ x: 5 }}
+                      >
+                        <div className="flex items-start gap-4">
+                          <div className="mt-1 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-cyan-500/20 to-cyan-500/5">
+                            <CheckCircle2 className="h-5 w-5 text-cyan-400" />
+                          </div>
+                          <div className="flex-1">
+                            <p className="mb-1 font-orbitron text-sm font-bold uppercase tracking-wide text-white">
+                              {key.replace(/([A-Z])/g, " $1")}
+                            </p>
+                            <p className="text-gray-400">{value}</p>
+                          </div>
+                        </div>
+                        <motion.div
+                          className="absolute inset-0 bg-gradient-to-r from-cyan-500/5 to-transparent"
+                          initial={{ opacity: 0 }}
+                          whileHover={{ opacity: 1 }}
+                        />
+                      </motion.div>
+                    ),
+                  )}
+                </AnimatePresence>
               </div>
             </motion.div>
 
@@ -597,44 +655,133 @@ const GameDownloads = () => {
               transition={{ delay: 0.2 }}
               viewport={{ once: true }}
             >
-              <motion.div
-                className="rounded-2xl border border-white/10 bg-gradient-to-br from-cyan-500/10 to-blue-500/10 p-8 backdrop-blur-sm"
-                key={selectedPlatform}
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.3 }}
-              >
-                <HardDrive className="mb-4 h-12 w-12 text-cyan-400" />
-                <h3 className="mb-2 font-orbitron text-2xl font-bold text-white">
-                  {game.size[selectedPlatform]}
-                </h3>
-                <p className="text-gray-400">
-                  {selectedPlatform === "macos"
-                    ? "macOS"
-                    : selectedPlatform.charAt(0).toUpperCase() +
-                      selectedPlatform.slice(1)}{" "}
-                  Download Size
-                </p>
-              </motion.div>
+              <AnimatePresence mode="wait">
+                <motion.div
+                  className="group relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-cyan-500/10 via-blue-500/10 to-cyan-500/5 p-8 backdrop-blur-sm"
+                  key={selectedPlatform}
+                  initial={{ opacity: 0, scale: 0.95, y: 20 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.95, y: -20 }}
+                  transition={{ duration: 0.4 }}
+                  whileHover={{ y: -5 }}
+                >
+                  <motion.div
+                    className="mb-6 inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-cyan-500/30 to-cyan-500/10 shadow-lg shadow-cyan-500/20"
+                    whileHover={{ rotate: 360, scale: 1.1 }}
+                    transition={{ duration: 0.6 }}
+                  >
+                    <HardDrive className="h-8 w-8 text-cyan-400" />
+                  </motion.div>
+                  <h3 className="mb-2 font-orbitron text-3xl font-black text-white">
+                    {game.size[selectedPlatform]}
+                  </h3>
+                  <p className="text-lg text-gray-400">
+                    {selectedPlatform === "macos"
+                      ? "macOS"
+                      : selectedPlatform.charAt(0).toUpperCase() +
+                        selectedPlatform.slice(1)}{" "}
+                    Download Size
+                  </p>
+                  <div className="mt-4 h-1 w-full overflow-hidden rounded-full bg-white/10">
+                    <motion.div
+                      className="h-full bg-gradient-to-r from-cyan-400 to-blue-400"
+                      initial={{ width: 0 }}
+                      whileInView={{ width: "100%" }}
+                      transition={{ duration: 1, delay: 0.5 }}
+                    />
+                  </div>
+                </motion.div>
+              </AnimatePresence>
 
-              <div className="rounded-2xl border border-white/10 bg-gradient-to-br from-purple-500/10 to-pink-500/10 p-8 backdrop-blur-sm">
-                <Users className="mb-4 h-12 w-12 text-purple-400" />
-                <h3 className="mb-2 font-orbitron text-2xl font-bold text-white">
+              <motion.div
+                className="group relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-purple-500/10 via-pink-500/10 to-purple-500/5 p-8 backdrop-blur-sm"
+                whileHover={{ y: -5 }}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3 }}
+                viewport={{ once: true }}
+              >
+                <motion.div
+                  className="mb-6 inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-purple-500/30 to-purple-500/10 shadow-lg shadow-purple-500/20"
+                  whileHover={{ scale: 1.1 }}
+                >
+                  <Users className="h-8 w-8 text-purple-400" />
+                </motion.div>
+                <h3 className="mb-2 font-orbitron text-3xl font-black text-white">
                   {(game.activeUsers / 1000000).toFixed(1)}M+
                 </h3>
-                <p className="text-gray-400">Active Players Worldwide</p>
-              </div>
+                <p className="text-lg text-gray-400">
+                  Active Players Worldwide
+                </p>
+                <div className="mt-4 flex items-center gap-2">
+                  <Globe className="h-5 w-5 text-purple-400" />
+                  <span className="text-sm text-purple-400">Growing Daily</span>
+                </div>
+              </motion.div>
 
-              <div className="rounded-2xl border border-white/10 bg-gradient-to-br from-pink-500/10 to-amber-500/10 p-8 backdrop-blur-sm">
-                <Star className="mb-4 h-12 w-12 text-yellow-400" />
-                <h3 className="mb-2 font-orbitron text-2xl font-bold text-white">
+              <motion.div
+                className="group relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-pink-500/10 via-amber-500/10 to-pink-500/5 p-8 backdrop-blur-sm"
+                whileHover={{ y: -5 }}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4 }}
+                viewport={{ once: true }}
+              >
+                <motion.div
+                  className="mb-6 inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-yellow-500/30 to-yellow-500/10 shadow-lg shadow-yellow-500/20"
+                  whileHover={{ rotate: [0, -10, 10, -10, 0], scale: 1.1 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <Star className="h-8 w-8 text-yellow-400" />
+                </motion.div>
+                <h3 className="mb-2 font-orbitron text-3xl font-black text-white">
                   {game.rating}/5.0
                 </h3>
-                <p className="text-gray-400">Community Rating</p>
-              </div>
+                <p className="text-lg text-gray-400">Community Rating</p>
+                <div className="mt-4 flex gap-1">
+                  {[...Array(5)].map((_, i) => (
+                    <motion.div
+                      key={i}
+                      initial={{ opacity: 0, scale: 0 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: 0.6 + i * 0.1 }}
+                      viewport={{ once: true }}
+                    >
+                      <Star className="h-5 w-5 fill-yellow-400 text-yellow-400" />
+                    </motion.div>
+                  ))}
+                </div>
+              </motion.div>
             </motion.div>
           </div>
         </div>
+
+        {/* Decorative Gradient Orbs */}
+        <motion.div
+          className="absolute left-0 top-1/4 h-96 w-96 rounded-full bg-cyan-500/20 blur-3xl"
+          animate={{
+            scale: [1, 1.2, 1],
+            opacity: [0.2, 0.4, 0.2],
+          }}
+          transition={{
+            duration: 6,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+        <motion.div
+          className="absolute bottom-1/4 right-0 h-96 w-96 rounded-full bg-purple-500/20 blur-3xl"
+          animate={{
+            scale: [1, 1.3, 1],
+            opacity: [0.2, 0.4, 0.2],
+          }}
+          transition={{
+            duration: 6,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 3,
+          }}
+        />
       </section>
 
       {/* CTA Section */}
