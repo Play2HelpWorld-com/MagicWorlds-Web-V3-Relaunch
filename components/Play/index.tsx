@@ -526,25 +526,26 @@ const GameDownloads = () => {
       {/* System Requirements Section */}
       <section className="relative py-20 lg:py-32">
         <div className="relative z-10 mx-auto max-w-7xl px-4 md:px-8">
+          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-cyan-500/30 bg-cyan-500/10 px-4 py-2 backdrop-blur-sm">
+            <Cpu className="h-4 w-4 text-cyan-400" />
+            <span className="font-orbitron text-xs font-bold uppercase tracking-wider text-cyan-400">
+              System Requirements
+            </span>
+          </div>
+
+          <h2 className="mb-8 font-orbitron text-3xl font-black uppercase text-white md:text-4xl">
+            Ready to Play?
+          </h2>
+
           <div className="grid gap-12 lg:grid-cols-2">
             {/* Left Column - Requirements */}
+
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.2 }}
               viewport={{ once: true }}
             >
-              <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-cyan-500/30 bg-cyan-500/10 px-4 py-2 backdrop-blur-sm">
-                <Cpu className="h-4 w-4 text-cyan-400" />
-                <span className="font-orbitron text-xs font-bold uppercase tracking-wider text-cyan-400">
-                  System Requirements
-                </span>
-              </div>
-
-              <h2 className="mb-8 font-orbitron text-3xl font-black uppercase text-white md:text-4xl">
-                Ready to Play?
-              </h2>
-
               {/* Platform Tabs */}
               <div className="mb-6 flex flex-wrap gap-3">
                 {(["windows", "macos", "android"] as const).map((platform) => (
