@@ -10,6 +10,12 @@ import {
   Fullscreen,
   Maximize2,
   X,
+  Gamepad2,
+  Trophy,
+  Users,
+  Star,
+  TrendingUp,
+  Eye,
 } from "lucide-react";
 import { motion, AnimatePresence, useAnimation } from "framer-motion";
 
@@ -587,18 +593,51 @@ const EpicGamingShowcase: React.FC = () => {
   const progressPercentage = duration > 0 ? (currentTime / duration) * 100 : 0;
 
   return (
-    <div className="relative min-h-screen w-full bg-gradient-to-b from-black via-purple-950/20 to-black pt-20 text-white">
+    <div className="relative min-h-screen w-full overflow-hidden bg-black text-white">
+      {/* Animated Background */}
+      <div className="absolute inset-0">
+        {/* Grid Pattern */}
+        <div className="absolute inset-0 opacity-20">
+          <div
+            className="h-full w-full"
+            style={{
+              backgroundImage: `
+                linear-gradient(rgba(139, 92, 246, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(139, 92, 246, 0.1) 1px, transparent 1px)
+              `,
+              backgroundSize: "50px 50px",
+            }}
+          />
+        </div>
+
+        {/* Gradient Orbs */}
+        <div className="absolute left-0 top-0 h-[500px] w-[500px] rounded-full bg-purple-600/30 blur-[120px]" />
+        <div className="absolute right-0 top-1/4 h-[400px] w-[400px] rounded-full bg-fuchsia-600/30 blur-[120px]" />
+        <div className="absolute bottom-0 left-1/3 h-[600px] w-[600px] rounded-full bg-cyan-600/20 blur-[120px]" />
+      </div>
+
       {/* Loading Screen */}
       <AnimatePresence>
         {loadingProgress < 100 && (
           <motion.div
-            className="absolute inset-0 bottom-96 top-0 z-50 mb-96 flex flex-col items-center justify-center bg-black"
+            className="absolute inset-0 z-50 flex flex-col items-center justify-center bg-gradient-to-br from-black via-purple-950 to-black"
             initial={{ opacity: 1 }}
             animate={loaderControls}
             exit={{ opacity: 0, transition: { duration: 0.5 } }}
           >
             <motion.div
-              className="relative h-2 w-64 overflow-hidden rounded-full bg-gray-800"
+              className="mb-8 flex items-center gap-3"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6 }}
+            >
+              <Gamepad2 className="h-12 w-12 text-purple-400" />
+              <h2 className="bg-gradient-to-r from-purple-400 via-fuchsia-400 to-cyan-400 bg-clip-text text-3xl font-black text-transparent">
+                LOADING WORLDS
+              </h2>
+            </motion.div>
+            <motion.div
+              className="relative h-3 w-80 overflow-hidden rounded-full bg-gray-800/50 ring-1 ring-purple-500/30"
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{
                 opacity: 1,
@@ -607,56 +646,120 @@ const EpicGamingShowcase: React.FC = () => {
               }}
             >
               <motion.div
-                className="absolute h-full rounded-full bg-gradient-to-r from-purple-500 to-fuchsia-500"
+                className="absolute h-full rounded-full bg-gradient-to-r from-purple-500 via-fuchsia-500 to-cyan-500"
                 variants={progressBarVariants}
                 initial="initial"
                 animate="animate"
                 custom={loadingProgress}
               />
+              <motion.div
+                className="absolute inset-0 rounded-full bg-gradient-to-r from-transparent via-white/20 to-transparent"
+                animate={{
+                  x: ["-100%", "200%"],
+                }}
+                transition={{
+                  duration: 1.5,
+                  repeat: Infinity,
+                  ease: "linear",
+                }}
+              />
             </motion.div>
+            <motion.p
+              className="mt-4 text-sm font-medium text-purple-300"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.6 }}
+            >
+              {loadingProgress}% Complete
+            </motion.p>
           </motion.div>
         )}
       </AnimatePresence>
 
       {/* Main Content */}
-      <div className="relative z-10 mx-auto max-w-7xl px-4 pt-16">
+      <div className="relative z-10 mx-auto max-w-7xl px-4 pb-16 pt-32">
         {/* Header */}
         <motion.div
-          className="mb-12 text-center"
+          className="mb-16 text-center"
           initial={{ opacity: 0, y: -30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.5 }}
         >
-          <h1 className="mb-4 bg-gradient-to-r from-purple-400 to-fuchsia-500 bg-clip-text text-5xl font-extrabold tracking-tight text-transparent">
-            MAGIC WORLDS VAULT
-          </h1>
-          <p className="mx-auto max-w-2xl text-lg text-gray-300">
-            Explore extraordinary gaming moments from our Magic Worlds, captured
-            in stunning detail
+          <motion.div
+            className="mb-4 flex items-center justify-center gap-3"
+            whileHover={{ scale: 1.05 }}
+            transition={{ type: "spring", stiffness: 300 }}
+          >
+            <Trophy className="h-10 w-10 text-yellow-400" />
+            <h1 className="bg-gradient-to-r from-purple-400 via-fuchsia-400 to-cyan-400 bg-clip-text font-orbitron text-6xl font-black uppercase tracking-wider text-transparent">
+              Worlds Vault
+            </h1>
+            <Trophy className="h-10 w-10 text-yellow-400" />
+          </motion.div>
+          <p className="mx-auto max-w-3xl font-rajdhani text-xl font-medium text-gray-300">
+            Dive into epic gameplay moments from across the multiverse. Watch,
+            explore, and experience the magic! 🎮
           </p>
+
+          {/* Stats Bar */}
+          <motion.div
+            className="mx-auto mt-8 flex max-w-2xl justify-center gap-6"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.7 }}
+          >
+            <div className="flex items-center gap-2 rounded-full border border-purple-500/30 bg-purple-500/10 px-6 py-3 backdrop-blur-sm">
+              <Eye className="h-5 w-5 text-cyan-400" />
+              <span className="font-rajdhani text-sm font-bold text-white">
+                {videos.length} Videos
+              </span>
+            </div>
+            <div className="flex items-center gap-2 rounded-full border border-fuchsia-500/30 bg-fuchsia-500/10 px-6 py-3 backdrop-blur-sm">
+              <Users className="h-5 w-5 text-fuchsia-400" />
+              <span className="font-rajdhani text-sm font-bold text-white">
+                2.5M Views
+              </span>
+            </div>
+            <div className="flex items-center gap-2 rounded-full border border-yellow-500/30 bg-yellow-500/10 px-6 py-3 backdrop-blur-sm">
+              <Star className="h-5 w-5 text-yellow-400" />
+              <span className="font-rajdhani text-sm font-bold text-white">
+                4.8 Rating
+              </span>
+            </div>
+          </motion.div>
         </motion.div>
 
         {/* Category Selection */}
         <motion.div
-          className="mb-8 overflow-x-auto"
+          className="mb-12 overflow-x-auto"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.7 }}
         >
-          <div className="flex space-x-2 pb-2">
-            {categories.map((category) => (
+          <div className="flex gap-3 pb-2">
+            {categories.map((category, index) => (
               <motion.button
                 key={category}
-                className={`whitespace-nowrap rounded-full px-4 py-2 text-sm font-medium transition-all ${
+                className={`group relative overflow-hidden whitespace-nowrap rounded-xl px-6 py-3 font-rajdhani text-sm font-bold uppercase tracking-wide transition-all ${
                   videoCategory === category
-                    ? "bg-purple-600 text-white"
-                    : "bg-gray-800 text-gray-300 hover:bg-gray-700"
+                    ? "bg-gradient-to-r from-purple-600 to-fuchsia-600 text-white shadow-lg shadow-purple-500/50"
+                    : "border border-white/10 bg-white/5 text-gray-300 hover:border-purple-500/50 hover:text-white"
                 }`}
                 onClick={() => setVideoCategory(category)}
-                whileHover={{ scale: 1.05 }}
+                whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.8 + index * 0.05 }}
               >
-                {category}
+                {videoCategory === category && (
+                  <motion.div
+                    className="absolute inset-0 bg-gradient-to-r from-purple-600 to-fuchsia-600"
+                    layoutId="activeCategory"
+                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                  />
+                )}
+                <span className="relative z-10">{category}</span>
               </motion.button>
             ))}
           </div>
@@ -665,19 +768,22 @@ const EpicGamingShowcase: React.FC = () => {
         {/* Featured Video */}
         <motion.div
           ref={showcaseRef}
-          className="mb-12"
+          className="mb-16"
           initial={{ opacity: 1 }}
           animate={mainVideoControls}
         >
           {videos.length > 0 && (
-            <div className="relative overflow-hidden rounded-xl bg-gradient-to-r from-purple-900/10 to-fuchsia-900/10 p-1">
+            <div className="group relative overflow-hidden rounded-2xl border border-purple-500/30 bg-gradient-to-br from-purple-900/20 via-black to-fuchsia-900/20 p-1 shadow-2xl shadow-purple-500/20">
+              {/* Glowing Border Animation */}
+              <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-purple-500 via-fuchsia-500 to-cyan-500 opacity-0 blur-xl transition-opacity duration-500 group-hover:opacity-30" />
+
               <motion.div
-                className="relative aspect-video w-full overflow-hidden rounded-lg"
+                className="relative aspect-video w-full overflow-hidden rounded-xl bg-black"
                 transition={{ type: "spring", stiffness: 300, damping: 30 }}
               >
                 <video
                   ref={videoRef}
-                  className="h-full w-full rounded-lg object-contain"
+                  className="h-full w-full rounded-xl object-contain"
                   src={videos[activeIndex]?.videoUrl}
                   poster={
                     !videoReady ? videos[activeIndex]?.thumbnailUrl : undefined
@@ -690,105 +796,150 @@ const EpicGamingShowcase: React.FC = () => {
                 {/* Play button overlay when paused */}
                 {!isPlaying && videoReady && (
                   <div
-                    className="absolute inset-0 flex cursor-pointer items-center justify-center bg-black/30 transition-opacity hover:bg-black/40"
+                    className="absolute inset-0 flex cursor-pointer items-center justify-center bg-gradient-to-t from-black/80 via-black/40 to-transparent transition-all duration-300 hover:from-black/90 hover:via-black/60"
                     onClick={handlePlayPause}
                   >
                     <motion.div
-                      className="flex h-16 w-16 items-center justify-center rounded-full bg-purple-600/80 text-white"
-                      whileHover={{ scale: 1.1 }}
-                      whileTap={{ scale: 0.95 }}
+                      className="flex h-24 w-24 items-center justify-center rounded-full bg-gradient-to-r from-purple-600 to-fuchsia-600 shadow-2xl shadow-purple-500/50"
+                      whileHover={{ scale: 1.15 }}
+                      whileTap={{ scale: 0.9 }}
+                      animate={{
+                        boxShadow: [
+                          "0 0 20px rgba(168, 85, 247, 0.5)",
+                          "0 0 40px rgba(168, 85, 247, 0.8)",
+                          "0 0 20px rgba(168, 85, 247, 0.5)",
+                        ],
+                      }}
+                      transition={{
+                        duration: 2,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                      }}
                     >
-                      <Play size={30} />
+                      <Play size={40} className="ml-2 text-white" />
                     </motion.div>
                   </div>
                 )}
 
-                {/* Video Controls Overlay - always visible on mobile, visible on hover for desktop */}
-                <div className="absolute inset-0 flex flex-col justify-between bg-gradient-to-t from-black/80 to-transparent p-4 opacity-0 transition-opacity duration-300 hover:opacity-100 md:opacity-0 md:hover:opacity-100">
+                {/* Video Controls Overlay */}
+                <div className="absolute inset-0 flex flex-col justify-between bg-gradient-to-t from-black via-transparent to-black/40 p-6 opacity-0 transition-opacity duration-300 hover:opacity-100">
                   {/* Top Controls */}
-                  <div className="flex justify-between">
+                  <div className="flex items-start justify-between">
                     <motion.div
                       animate={titleControls}
                       initial={{ opacity: 0, y: 20 }}
+                      className="max-w-2xl"
                     >
-                      <h3 className="text-2xl font-bold text-white drop-shadow-lg">
+                      <h3 className="mb-2 font-orbitron text-3xl font-black uppercase text-white drop-shadow-2xl">
                         {videos[activeIndex]?.title}
                       </h3>
-                      <p className="text-sm text-gray-300">
-                        {videos[activeIndex]?.genre} •{" "}
-                        {videos[activeIndex]?.views} views •{" "}
-                        {videos[activeIndex]?.uploadDate}
-                      </p>
+                      <div className="flex flex-wrap items-center gap-4 font-rajdhani text-sm font-medium">
+                        <span className="flex items-center gap-1 rounded-full border border-purple-400/30 bg-purple-500/20 px-3 py-1 text-purple-200 backdrop-blur-sm">
+                          <TrendingUp className="h-4 w-4" />
+                          {videos[activeIndex]?.genre}
+                        </span>
+                        <span className="flex items-center gap-1 text-gray-300">
+                          <Eye className="h-4 w-4" />
+                          {videos[activeIndex]?.views} views
+                        </span>
+                        <span className="text-gray-400">
+                          {videos[activeIndex]?.uploadDate}
+                        </span>
+                      </div>
                     </motion.div>
-                    <button
-                      className="rounded-full bg-gray-800/50 p-2 text-white transition-all hover:bg-gray-700"
+                    <motion.button
+                      className="rounded-full border border-white/20 bg-black/60 p-3 text-white backdrop-blur-sm transition-all hover:border-purple-400 hover:bg-black/80"
                       onClick={handleOpenModal}
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.9 }}
                     >
-                      <Maximize2 size={20} />
-                    </button>
+                      <Maximize2 size={24} />
+                    </motion.button>
                   </div>
 
                   {/* Bottom Controls */}
-                  <div className="space-y-2">
+                  <div className="space-y-3">
                     {/* Progress Bar */}
                     <div
                       ref={progressBarRef}
-                      className="group relative h-2 w-full cursor-pointer rounded-full bg-gray-700"
+                      className="group/bar relative h-2 w-full cursor-pointer overflow-hidden rounded-full bg-white/10 backdrop-blur-sm"
                       onClick={handleSeek}
                     >
-                      <div
-                        className="absolute h-full origin-left rounded-full bg-purple-500"
+                      <motion.div
+                        className="absolute h-full origin-left rounded-full bg-gradient-to-r from-purple-500 via-fuchsia-500 to-cyan-500"
                         style={{ width: `${progressPercentage}%` }}
+                        animate={{
+                          boxShadow: [
+                            "0 0 10px rgba(168, 85, 247, 0.5)",
+                            "0 0 20px rgba(168, 85, 247, 0.8)",
+                            "0 0 10px rgba(168, 85, 247, 0.5)",
+                          ],
+                        }}
+                        transition={{
+                          duration: 2,
+                          repeat: Infinity,
+                          ease: "easeInOut",
+                        }}
                       />
-                      <div
-                        className="absolute bottom-0 h-4 w-4 -translate-x-1/2 translate-y-1/2 rounded-full bg-purple-300 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                      <motion.div
+                        className="absolute h-4 w-4 -translate-x-1/2 translate-y-[-25%] rounded-full border-2 border-white bg-gradient-to-r from-purple-500 to-fuchsia-500 opacity-0 shadow-lg transition-opacity duration-200 group-hover/bar:opacity-100"
                         style={{ left: `${progressPercentage}%` }}
                       />
                     </div>
 
                     {/* Control Buttons */}
                     <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-4">
-                        <button
-                          className="rounded-full bg-gray-800/50 p-2 text-white transition-all hover:bg-gray-700"
+                      <div className="flex items-center gap-3">
+                        <motion.button
+                          className="rounded-full border border-white/20 bg-black/60 p-3 text-white backdrop-blur-sm transition-all hover:border-purple-400 hover:bg-purple-600"
                           onClick={handlePlayPause}
                           disabled={!videoReady}
+                          whileHover={{ scale: 1.1 }}
+                          whileTap={{ scale: 0.9 }}
                         >
                           {isPlaying ? <Pause size={20} /> : <Play size={20} />}
-                        </button>
-                        <button
-                          className="rounded-full bg-gray-800/50 p-2 text-white transition-all hover:bg-gray-700"
+                        </motion.button>
+                        <motion.button
+                          className="rounded-full border border-white/20 bg-black/60 p-3 text-white backdrop-blur-sm transition-all hover:border-fuchsia-400 hover:bg-fuchsia-600"
                           onClick={handleMuteToggle}
+                          whileHover={{ scale: 1.1 }}
+                          whileTap={{ scale: 0.9 }}
                         >
                           {isMuted ? (
                             <VolumeX size={20} />
                           ) : (
                             <Volume2 size={20} />
                           )}
-                        </button>
-                        <span className="text-sm text-gray-300">
+                        </motion.button>
+                        <span className="min-w-[100px] font-rajdhani text-sm font-bold text-white">
                           {formatTime(currentTime)} / {formatTime(duration)}
                         </span>
                       </div>
-                      <div className="flex items-center space-x-4">
-                        <button
-                          className="rounded-full bg-gray-800/50 p-2 text-white transition-all hover:bg-gray-700"
+                      <div className="flex items-center gap-2">
+                        <motion.button
+                          className="rounded-full border border-white/20 bg-black/60 p-3 text-white backdrop-blur-sm transition-all hover:border-cyan-400 hover:bg-cyan-600"
                           onClick={handlePrevVideo}
+                          whileHover={{ scale: 1.1 }}
+                          whileTap={{ scale: 0.9 }}
                         >
                           <ChevronLeft size={20} />
-                        </button>
-                        <button
-                          className="rounded-full bg-gray-800/50 p-2 text-white transition-all hover:bg-gray-700"
+                        </motion.button>
+                        <motion.button
+                          className="rounded-full border border-white/20 bg-black/60 p-3 text-white backdrop-blur-sm transition-all hover:border-cyan-400 hover:bg-cyan-600"
                           onClick={handleNextVideo}
+                          whileHover={{ scale: 1.1 }}
+                          whileTap={{ scale: 0.9 }}
                         >
                           <ChevronRight size={20} />
-                        </button>
-                        <button
-                          className="rounded-full bg-gray-800/50 p-2 text-white transition-all hover:bg-gray-700"
+                        </motion.button>
+                        <motion.button
+                          className="rounded-full border border-white/20 bg-black/60 p-3 text-white backdrop-blur-sm transition-all hover:border-yellow-400 hover:bg-yellow-600"
                           onClick={handleFullScreen}
+                          whileHover={{ scale: 1.1 }}
+                          whileTap={{ scale: 0.9 }}
                         >
                           <Fullscreen size={20} />
-                        </button>
+                        </motion.button>
                       </div>
                     </div>
                   </div>
@@ -806,10 +957,16 @@ const EpicGamingShowcase: React.FC = () => {
           animate="visible"
           transition={{ delay: 0.8 }}
         >
-          <div className="mb-4">
-            <h2 className="text-2xl font-bold text-white">
-              More Epic Gameplay
-            </h2>
+          <div className="mb-8 flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <Gamepad2 className="h-8 w-8 text-purple-400" />
+              <h2 className="font-orbitron text-3xl font-black uppercase text-white">
+                Epic Gameplay Collection
+              </h2>
+            </div>
+            <span className="font-rajdhani text-sm font-medium text-gray-400">
+              {filteredVideos.length} Videos Available
+            </span>
           </div>
 
           {/* Grid layout for videos */}
@@ -826,45 +983,112 @@ const EpicGamingShowcase: React.FC = () => {
                   initial="rest"
                 >
                   <motion.div
-                    className={`h-full overflow-hidden rounded-lg ${
-                      isActive ? "ring-2 ring-purple-500" : "bg-gray-900"
-                    } shadow-lg`}
+                    className={`group relative h-full cursor-pointer overflow-hidden rounded-xl border transition-all ${
+                      isActive
+                        ? "border-purple-500 bg-gradient-to-br from-purple-900/40 to-fuchsia-900/40 shadow-2xl shadow-purple-500/50"
+                        : "border-white/10 bg-gradient-to-br from-gray-900/80 to-black hover:border-purple-500/50 hover:shadow-xl hover:shadow-purple-500/30"
+                    }`}
                     variants={cardHoverVariants}
                     onClick={() => handleVideoSelect(videoIndex)}
                   >
+                    {/* Video Thumbnail */}
                     <div className="relative aspect-video w-full overflow-hidden">
                       <video
-                        className="h-full w-full object-cover"
+                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
                         src={video.videoUrl}
                         muted
                         loop
                         playsInline
                       />
-                      <div className="absolute bottom-2 right-2 rounded bg-black/70 px-2 py-1 text-xs text-white">
+
+                      {/* Gradient Overlay */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent opacity-60 group-hover:opacity-40" />
+
+                      {/* Duration Badge */}
+                      <div className="absolute bottom-3 right-3 rounded-lg border border-white/20 bg-black/80 px-2 py-1 font-rajdhani text-xs font-bold text-white backdrop-blur-sm">
                         {video.duration}
                       </div>
+
+                      {/* Active Indicator */}
                       {isActive && (
-                        <div className="absolute inset-0 flex items-center justify-center bg-purple-600/30">
-                          <div className="rounded-full bg-white/90 p-1">
+                        <motion.div
+                          className="absolute inset-0 flex items-center justify-center bg-purple-600/40 backdrop-blur-sm"
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          transition={{ duration: 0.3 }}
+                        >
+                          <motion.div
+                            className="flex h-16 w-16 items-center justify-center rounded-full border-4 border-white bg-gradient-to-r from-purple-600 to-fuchsia-600 shadow-2xl"
+                            animate={{
+                              scale: [1, 1.1, 1],
+                              rotate: [0, 5, -5, 0],
+                            }}
+                            transition={{
+                              duration: 2,
+                              repeat: Infinity,
+                              ease: "easeInOut",
+                            }}
+                          >
                             {isPlaying ? (
-                              <Pause size={24} className="text-purple-600" />
+                              <Pause size={28} className="text-white" />
                             ) : (
-                              <Play size={24} className="text-purple-600" />
+                              <Play size={28} className="ml-1 text-white" />
                             )}
+                          </motion.div>
+                        </motion.div>
+                      )}
+
+                      {/* Hover Play Icon */}
+                      {!isActive && (
+                        <motion.div
+                          className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                          initial={{ scale: 0.8 }}
+                          whileHover={{ scale: 1 }}
+                        >
+                          <div className="flex h-14 w-14 items-center justify-center rounded-full border-2 border-white/30 bg-white/10 backdrop-blur-sm">
+                            <Play size={24} className="ml-1 text-white" />
                           </div>
-                        </div>
+                        </motion.div>
                       )}
                     </div>
-                    <div className="p-4">
-                      <h3 className="mb-1 line-clamp-1 text-lg font-semibold text-white">
+
+                    {/* Video Info */}
+                    <div className="p-5">
+                      <h3 className="mb-2 line-clamp-2 font-rajdhani text-lg font-bold text-white transition-colors group-hover:text-purple-300">
                         {video.title}
                       </h3>
-                      <p className="text-sm text-gray-400">{video.genre}</p>
-                      <div className="mt-2 flex items-center justify-between text-xs text-gray-500">
-                        <span>{video.views} views</span>
-                        <span>{video.uploadDate}</span>
+
+                      {/* Genre Badge */}
+                      <div className="mb-3 inline-block rounded-full border border-purple-500/30 bg-purple-500/10 px-3 py-1 font-rajdhani text-xs font-bold uppercase text-purple-300">
+                        {video.genre}
+                      </div>
+
+                      {/* Stats */}
+                      <div className="flex items-center justify-between border-t border-white/5 pt-3 font-rajdhani text-xs">
+                        <span className="flex items-center gap-1 text-gray-400">
+                          <Eye className="h-3 w-3" />
+                          {video.views}
+                        </span>
+                        <span className="text-gray-500">
+                          {video.uploadDate}
+                        </span>
                       </div>
                     </div>
+
+                    {/* Active Glow Effect */}
+                    {isActive && (
+                      <motion.div
+                        className="absolute -inset-0.5 -z-10 rounded-xl bg-gradient-to-r from-purple-600 via-fuchsia-600 to-purple-600 opacity-75 blur-lg"
+                        animate={{
+                          opacity: [0.5, 0.8, 0.5],
+                        }}
+                        transition={{
+                          duration: 2,
+                          repeat: Infinity,
+                          ease: "easeInOut",
+                        }}
+                      />
+                    )}
                   </motion.div>
                 </motion.div>
               );
@@ -874,15 +1098,15 @@ const EpicGamingShowcase: React.FC = () => {
 
         {/* Footer */}
         <motion.div
-          className="mb-12 text-center text-gray-500"
+          className="mt-20 text-center"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.2, duration: 0.8 }}
         >
-          {/* <p className="text-sm">
-            © 2025 Magic Worlds Vault. All gameplay footage is for
-            demonstration purposes only.
-          </p> */}
+          <div className="mx-auto mb-6 h-px w-64 bg-gradient-to-r from-transparent via-purple-500/50 to-transparent" />
+          <p className="font-rajdhani text-sm text-gray-500">
+            Powered by Magic Worlds • All gameplay footage captured in real-time
+          </p>
         </motion.div>
       </div>
 
@@ -890,29 +1114,37 @@ const EpicGamingShowcase: React.FC = () => {
       <AnimatePresence>
         {showModal && (
           <motion.div
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/90"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-md"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
+            onClick={handleCloseModal}
           >
             <motion.div
-              className="relative w-full max-w-4xl rounded-xl bg-gray-900 p-1"
-              initial={{ scale: 0.9 }}
-              animate={{ scale: 1 }}
-              exit={{ scale: 0.9 }}
+              className="relative w-full max-w-6xl border border-purple-500/30 bg-gradient-to-br from-purple-900/20 via-black to-fuchsia-900/20 p-2 shadow-2xl shadow-purple-500/30"
+              initial={{ scale: 0.9, y: 50 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.9, y: 50 }}
               transition={{ type: "spring", damping: 25, stiffness: 300 }}
+              onClick={(e) => e.stopPropagation()}
+              style={{ borderRadius: "24px" }}
             >
-              <div className="absolute right-4 top-4 z-10">
-                <button
-                  onClick={handleCloseModal}
-                  className="rounded-full bg-black/50 p-2 text-white transition-all hover:bg-black/80"
-                >
-                  <X size={24} />
-                </button>
-              </div>
+              {/* Glowing Border */}
+              <div className="absolute -inset-1 -z-10 rounded-3xl bg-gradient-to-r from-purple-600 via-fuchsia-600 to-cyan-600 opacity-20 blur-2xl" />
 
-              <div className="relative aspect-video w-full">
+              {/* Close Button */}
+              <motion.button
+                onClick={handleCloseModal}
+                className="absolute -right-4 -top-4 z-20 rounded-full border-2 border-white/20 bg-gradient-to-r from-purple-600 to-fuchsia-600 p-3 text-white shadow-2xl backdrop-blur-sm transition-all hover:scale-110 hover:border-white/40"
+                whileHover={{ rotate: 90 }}
+                whileTap={{ scale: 0.9 }}
+              >
+                <X size={24} />
+              </motion.button>
+
+              {/* Video Container */}
+              <div className="relative aspect-video w-full overflow-hidden rounded-2xl">
                 <video
                   ref={modalVideoRef}
                   className="h-full w-full object-contain"
@@ -924,19 +1156,56 @@ const EpicGamingShowcase: React.FC = () => {
                 />
               </div>
 
-              <div className="p-6">
-                <h2 className="mb-2 text-2xl font-bold text-white">
-                  {videos[activeIndex]?.title}
-                </h2>
-                <p className="mb-4 text-gray-300">
-                  {videos[activeIndex]?.genre} • {videos[activeIndex]?.views}{" "}
-                  views • {videos[activeIndex]?.uploadDate}
-                </p>
-                <p className="text-gray-400">
-                  Experience the thrill of this incredible gameplay moment from
-                  our Magic Worlds collection. Each video showcases the best
-                  moments from the most exciting games in our library.
-                </p>
+              {/* Video Info */}
+              <div className="mt-4 rounded-xl border border-white/10 bg-black/40 p-6 backdrop-blur-sm">
+                <div className="mb-4 flex items-start justify-between">
+                  <div className="flex-1">
+                    <h2 className="mb-3 font-orbitron text-3xl font-black uppercase text-white">
+                      {videos[activeIndex]?.title}
+                    </h2>
+                    <div className="flex flex-wrap items-center gap-3">
+                      <span className="flex items-center gap-2 rounded-full border border-purple-500/30 bg-purple-500/10 px-4 py-2 font-rajdhani text-sm font-bold text-purple-300">
+                        <TrendingUp className="h-4 w-4" />
+                        {videos[activeIndex]?.genre}
+                      </span>
+                      <span className="flex items-center gap-2 text-gray-300">
+                        <Eye className="h-4 w-4" />
+                        <span className="font-rajdhani font-medium">
+                          {videos[activeIndex]?.views} views
+                        </span>
+                      </span>
+                      <span className="font-rajdhani text-sm text-gray-400">
+                        {videos[activeIndex]?.uploadDate}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="flex gap-2">
+                    <motion.button
+                      className="rounded-xl border border-yellow-500/30 bg-yellow-500/10 p-3 text-yellow-400 transition-all hover:bg-yellow-500/20"
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <Star className="h-5 w-5" />
+                    </motion.button>
+                    <motion.button
+                      className="rounded-xl border border-cyan-500/30 bg-cyan-500/10 p-3 text-cyan-400 transition-all hover:bg-cyan-500/20"
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <Users className="h-5 w-5" />
+                    </motion.button>
+                  </div>
+                </div>
+
+                <div className="border-t border-white/10 pt-4">
+                  <p className="font-rajdhani text-base leading-relaxed text-gray-300">
+                    Experience the thrill of this incredible gameplay moment
+                    from our Magic Worlds collection. Immerse yourself in
+                    stunning visuals, epic battles, and unforgettable adventures
+                    across the multiverse. Each video showcases the best moments
+                    from the most exciting games in our library.
+                  </p>
+                </div>
               </div>
             </motion.div>
           </motion.div>
