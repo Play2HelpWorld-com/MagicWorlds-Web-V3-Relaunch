@@ -172,22 +172,22 @@ export default function Docs() {
   };
 
   return (
-    <section className="relative overflow-hidden bg-black py-20 lg:py-25 xl:py-30">
+    <section className="relative overflow-hidden bg-transparent py-20 lg:py-25 xl:py-30">
       {/* Animated Grid Background */}
       <div className="absolute inset-0 z-0">
-        <div
+        {/* <div
           className="h-full w-full opacity-20"
           style={{
             backgroundImage: `linear-gradient(rgba(139, 92, 246, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(139, 92, 246, 0.1) 1px, transparent 1px)`,
             backgroundSize: "50px 50px",
           }}
-        />
+        /> */}
       </div>
 
       {/* Gradient Orbs */}
-      <div className="absolute left-0 top-0 -z-10 h-[500px] w-[500px] rounded-full bg-purple-500 opacity-20 blur-[120px]" />
+      {/* <div className="absolute left-0 top-0 -z-10 h-[500px] w-[500px] rounded-full bg-purple-500 opacity-20 blur-[120px]" />
       <div className="absolute right-0 top-1/4 -z-10 h-[600px] w-[600px] rounded-full bg-fuchsia-500 opacity-20 blur-[120px]" />
-      <div className="absolute bottom-0 left-1/3 -z-10 h-[500px] w-[500px] rounded-full bg-cyan-500 opacity-20 blur-[120px]" />
+      <div className="absolute bottom-0 left-1/3 -z-10 h-[500px] w-[500px] rounded-full bg-cyan-500 opacity-20 blur-[120px]" /> */}
 
       {/* Header */}
       <div className="relative z-10 mb-16 text-center">

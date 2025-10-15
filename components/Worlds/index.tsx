@@ -579,11 +579,11 @@ const EpicGamingShowcase: React.FC = () => {
   const progressPercentage = duration > 0 ? (currentTime / duration) * 100 : 0;
 
   return (
-    <div className="relative min-h-screen w-full overflow-hidden bg-black text-white">
+    <div className="relative min-h-screen w-full overflow-hidden bg-transparent text-white">
       {/* Animated Background */}
       <div className="absolute inset-0">
         {/* Grid Pattern */}
-        <div className="absolute inset-0 opacity-20">
+        {/* <div className="absolute inset-0 opacity-20">
           <div
             className="h-full w-full"
             style={{
@@ -594,12 +594,12 @@ const EpicGamingShowcase: React.FC = () => {
               backgroundSize: "50px 50px",
             }}
           />
-        </div>
+        </div> */}
 
         {/* Gradient Orbs */}
-        <div className="absolute left-0 top-0 h-[500px] w-[500px] rounded-full bg-purple-600/30 blur-[120px]" />
+        {/* <div className="absolute left-0 top-0 h-[500px] w-[500px] rounded-full bg-purple-600/30 blur-[120px]" />
         <div className="absolute right-0 top-1/4 h-[400px] w-[400px] rounded-full bg-fuchsia-600/30 blur-[120px]" />
-        <div className="absolute bottom-0 left-1/3 h-[600px] w-[600px] rounded-full bg-cyan-600/20 blur-[120px]" />
+        <div className="absolute bottom-0 left-1/3 h-[600px] w-[600px] rounded-full bg-cyan-600/20 blur-[120px]" /> */}
       </div>
 
       {/* Loading Screen */}
