@@ -254,7 +254,8 @@ const EpicGamingShowcase: React.FC = () => {
         videoElement.removeEventListener("pause", handlePauseEvent);
       };
     }
-  }, [activeIndex, isInitialLoad, loadingProgress, handleNextVideo]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeIndex, isInitialLoad, loadingProgress]);
 
   // Setup thumbnail hover effects
   useEffect(() => {
@@ -336,6 +337,17 @@ const EpicGamingShowcase: React.FC = () => {
     }
   }, [videoReady, isPlaying]);
 
+  const handleNextVideo = useCallback(() => {
+    const newIndex = (activeIndex + 1) % videos.length;
+    handleVideoSelect(newIndex);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeIndex, videos.length]);
+
+  const handlePrevVideo = () => {
+    const newIndex = (activeIndex - 1 + videos.length) % videos.length;
+    handleVideoSelect(newIndex);
+  };
+
   // Video playback controls
   const handleVideoSelect = useCallback(
     async (index: number) => {
@@ -404,7 +416,15 @@ const EpicGamingShowcase: React.FC = () => {
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps
     },
-    [activeIndex, isPlaying, mainVideoControls, titleControls, videoReady],
+    [
+      activeIndex,
+      isPlaying,
+      mainVideoControls,
+      titleControls,
+      videoReady,
+      handlePlayPause,
+      attemptPlayback,
+    ],
   );
 
   const handleMuteToggle = () => {
@@ -434,16 +454,6 @@ const EpicGamingShowcase: React.FC = () => {
       }
       setIsFullScreen(!isFullScreen);
     }
-  };
-
-  const handleNextVideo = useCallback(() => {
-    const newIndex = (activeIndex + 1) % videos.length;
-    handleVideoSelect(newIndex);
-  }, [activeIndex, videos.length, handleVideoSelect]);
-
-  const handlePrevVideo = () => {
-    const newIndex = (activeIndex - 1 + videos.length) % videos.length;
-    handleVideoSelect(newIndex);
   };
 
   const handleOpenModal = () => {
