@@ -27,14 +27,19 @@ const GAMES = [
     tagline: "Enter the Realm of Infinite Possibilities",
     description:
       "An immersive fantasy adventure with stunning visuals and engaging storyline. Battle legendary creatures, forge powerful alliances, and become the hero of your own epic saga.",
-    platforms: ["windows", "android"],
+    platforms: ["windows", "macos", "android"],
     genre: ["RPG", "Adventure", "Multiplayer"],
-    size: "1.2 GB",
+    size: {
+      windows: "1.2 GB",
+      macos: "1.3 GB",
+      android: "950 MB",
+    },
     rating: 4.9,
     downloads: 5247823,
     activeUsers: 2500000,
     spotlight: true,
     windowsDownload: "https://magicworlds.itch.io/magic-world",
+    macosDownload: "https://magicworlds.itch.io/magic-world",
     androidDownload:
       "https://drive.google.com/file/d/141f8EDsJhFywxbtJ0KfJUH8HRarf3P4j/view?usp=drive_link",
     features: [
@@ -46,12 +51,33 @@ const GAMES = [
       "Full controller support",
     ],
     requirements: {
-      os: "Windows 10/11 64-bit",
-      processor: "Intel Core i5-6600K / AMD Ryzen 5 1600",
-      memory: "8 GB RAM",
-      graphics: "NVIDIA GTX 1060 / AMD Radeon RX 580",
-      storage: "1.2 GB available space",
-      directX: "Version 12",
+      windows: {
+        os: "Windows 10/11 64-bit",
+        processor: "Intel Core i5-6600K or equivalent",
+        memory: "8 GB RAM",
+        graphics: "NVIDIA GTX 1060 / AMD Radeon RX 580",
+        storage: "1.2 GB available space",
+        directX: "Version 12",
+        network: "Broadband Internet connection",
+      },
+      macos: {
+        os: "macOS 11 (Big Sur) or later",
+        processor: "Apple M1 or Intel Core i5",
+        memory: "8 GB RAM",
+        graphics: "Metal-compatible GPU with 2GB VRAM",
+        storage: "1.3 GB available space",
+        additional: "Rosetta 2 required for Intel Macs",
+        network: "Broadband Internet connection",
+      },
+      android: {
+        os: "Android 8.0 (Oreo) or higher",
+        processor: "Snapdragon 660 or equivalent",
+        memory: "4 GB RAM",
+        graphics: "Adreno 512 or Mali-G71",
+        storage: "950 MB available space",
+        additional: "OpenGL ES 3.1 or higher",
+        network: "WiFi or 4G/5G connection",
+      },
     },
   },
 ];
@@ -92,6 +118,9 @@ const GameDownloads = () => {
   const [selectedGame, setSelectedGame] = useState<null | (typeof GAMES)[0]>(
     null,
   );
+  const [selectedPlatform, setSelectedPlatform] = useState<
+    "windows" | "macos" | "android"
+  >("windows");
   const game = GAMES[0]; // Primary game
 
   return (
@@ -117,94 +146,88 @@ const GameDownloads = () => {
       <FloatingParticles />
 
       {/* Hero Section */}
-      <section className="relative min-h-screen px-4 pb-20 pt-32">
-        <div className="relative z-10 mx-auto max-w-7xl">
+      <section className="relative flex min-h-screen items-center justify-center px-4 pb-20 pt-32">
+        <div className="relative z-10 mx-auto max-w-7xl text-center">
           {/* Badge */}
           <motion.div
-            className="mb-6 inline-flex items-center gap-2 rounded-full border border-cyan-500/30 bg-cyan-500/10 px-4 py-2 backdrop-blur-sm"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
+            className="mb-8 inline-flex items-center gap-2 rounded-full border border-cyan-500/30 bg-cyan-500/10 px-6 py-3 backdrop-blur-sm"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.2 }}
           >
-            <Zap className="h-4 w-4 text-cyan-400" />
-            <span className="font-orbitron text-xs font-bold uppercase tracking-wider text-cyan-400">
-              Now Available
+            <Gamepad2 className="h-5 w-5 text-cyan-400" />
+            <span className="font-orbitron text-sm font-bold uppercase tracking-wider text-cyan-400">
+              Featured Game
             </span>
           </motion.div>
 
           {/* Title */}
           <motion.h1
-            className="mb-6 font-orbitron text-6xl font-black uppercase leading-none md:text-8xl"
-            initial={{ opacity: 0, y: 20 }}
+            className="mb-6 font-orbitron text-6xl font-black uppercase leading-none md:text-8xl lg:text-9xl"
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
+            transition={{ delay: 0.3, duration: 0.8 }}
           >
-            <span className="bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text text-transparent drop-shadow-2xl">
               {game.title}
             </span>
           </motion.h1>
 
           {/* Tagline */}
           <motion.p
-            className="mb-8 text-2xl text-gray-300 md:text-3xl"
+            className="mb-6 text-2xl font-medium text-gray-300 md:text-3xl lg:text-4xl"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4 }}
+            transition={{ delay: 0.4, duration: 0.8 }}
           >
             {game.tagline}
           </motion.p>
 
           {/* Description */}
           <motion.p
-            className="mb-12 max-w-3xl text-lg leading-relaxed text-gray-400"
+            className="mx-auto mb-12 max-w-3xl text-lg leading-relaxed text-gray-400 md:text-xl"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5 }}
+            transition={{ delay: 0.5, duration: 0.8 }}
           >
             {game.description}
           </motion.p>
 
-          {/* Stats Grid */}
+          {/* Trailer */}
           <motion.div
-            className="mb-12 grid grid-cols-3 gap-4 md:gap-8"
+            className="mb-12 flex flex-wrap items-center justify-center gap-4"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6 }}
           >
-            <div className="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm">
-              <div className="mb-2 flex items-center gap-2">
-                <Star className="h-5 w-5 text-yellow-400" />
-                <span className="text-3xl font-bold text-white">
-                  {game.rating}
+            <motion.button
+              className="group relative overflow-hidden rounded-xl border-2 border-pink-500/50 bg-gradient-to-r from-pink-500/10 to-rose-500/10 px-8 py-4 font-bold text-white shadow-2xl shadow-pink-500/30 backdrop-blur-sm"
+              whileHover={{
+                scale: 1.05,
+                borderColor: "rgba(236, 72, 153, 0.8)",
+                boxShadow: "0 0 40px rgba(236, 72, 153, 0.6)",
+              }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => setSelectedGame(game)}
+            >
+              <span className="relative z-10 flex items-center gap-3">
+                <Play className="h-6 w-6 text-pink-400" />
+                <span className="bg-gradient-to-r from-pink-400 to-rose-400 bg-clip-text text-lg text-transparent">
+                  Watch Trailer
                 </span>
-              </div>
-              <p className="text-sm text-gray-400">User Rating</p>
-            </div>
-
-            <div className="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm">
-              <div className="mb-2 flex items-center gap-2">
-                <Download className="h-5 w-5 text-cyan-400" />
-                <span className="text-3xl font-bold text-white">
-                  {(game.downloads / 1000000).toFixed(1)}M
-                </span>
-              </div>
-              <p className="text-sm text-gray-400">Downloads</p>
-            </div>
-
-            <div className="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm">
-              <div className="mb-2 flex items-center gap-2">
-                <Users className="h-5 w-5 text-purple-400" />
-                <span className="text-3xl font-bold text-white">
-                  {(game.activeUsers / 1000000).toFixed(1)}M
-                </span>
-              </div>
-              <p className="text-sm text-gray-400">Active Players</p>
-            </div>
+              </span>
+              <motion.div
+                className="absolute inset-0 bg-gradient-to-r from-pink-500/20 to-rose-500/20"
+                initial={{ opacity: 0 }}
+                whileHover={{ opacity: 1 }}
+                transition={{ duration: 0.3 }}
+              />
+            </motion.button>
           </motion.div>
 
           {/* Download Buttons */}
           <motion.div
-            className="mb-12 flex flex-wrap gap-4"
+            className="flex flex-wrap items-center justify-center gap-4"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.7 }}
@@ -215,16 +238,45 @@ const GameDownloads = () => {
               rel="noopener noreferrer"
             >
               <motion.button
-                className="group relative overflow-hidden rounded-xl bg-gradient-to-r from-cyan-500 to-blue-500 px-8 py-4 font-bold text-white shadow-lg shadow-cyan-500/50"
-                whileHover={{ scale: 1.05 }}
+                className="group relative overflow-hidden rounded-xl bg-gradient-to-r from-cyan-500 to-blue-500 px-10 py-5 font-bold text-white shadow-2xl shadow-cyan-500/50"
+                whileHover={{
+                  scale: 1.05,
+                  boxShadow: "0 0 40px rgba(6, 182, 212, 0.6)",
+                }}
                 whileTap={{ scale: 0.95 }}
               >
                 <span className="relative z-10 flex items-center gap-3">
-                  <Monitor className="h-6 w-6" />
-                  <span className="text-lg">Download for Windows</span>
+                  <Monitor className="h-7 w-7" />
+                  <span className="text-xl">Windows</span>
                 </span>
                 <motion.div
                   className="absolute inset-0 bg-gradient-to-r from-cyan-400 to-blue-400"
+                  initial={{ x: "-100%" }}
+                  whileHover={{ x: 0 }}
+                  transition={{ duration: 0.3 }}
+                />
+              </motion.button>
+            </a>
+
+            <a
+              href={game.macosDownload}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <motion.button
+                className="group relative overflow-hidden rounded-xl bg-gradient-to-r from-gray-600 to-gray-800 px-10 py-5 font-bold text-white shadow-2xl shadow-gray-500/50"
+                whileHover={{
+                  scale: 1.05,
+                  boxShadow: "0 0 40px rgba(156, 163, 175, 0.6)",
+                }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <span className="relative z-10 flex items-center gap-3">
+                  <Monitor className="h-7 w-7" />
+                  <span className="text-xl">macOS</span>
+                </span>
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-r from-gray-500 to-gray-700"
                   initial={{ x: "-100%" }}
                   whileHover={{ x: 0 }}
                   transition={{ duration: 0.3 }}
@@ -238,55 +290,123 @@ const GameDownloads = () => {
               rel="noopener noreferrer"
             >
               <motion.button
-                className="group relative overflow-hidden rounded-xl border-2 border-white/20 bg-white/5 px-8 py-4 font-bold text-white backdrop-blur-sm"
+                className="group relative overflow-hidden rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 px-10 py-5 font-bold text-white shadow-2xl shadow-purple-500/50"
                 whileHover={{
                   scale: 1.05,
-                  borderColor: "rgba(255,255,255,0.4)",
+                  boxShadow: "0 0 40px rgba(168, 85, 247, 0.6)",
                 }}
                 whileTap={{ scale: 0.95 }}
               >
                 <span className="relative z-10 flex items-center gap-3">
-                  <Smartphone className="h-6 w-6" />
-                  <span className="text-lg">Download for Android</span>
+                  <Smartphone className="h-7 w-7" />
+                  <span className="text-xl">Android</span>
                 </span>
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-500"
+                  initial={{ x: "-100%" }}
+                  whileHover={{ x: 0 }}
+                  transition={{ duration: 0.3 }}
+                />
               </motion.button>
             </a>
           </motion.div>
 
-          {/* Platform Badges */}
+          {/* Genre Tags */}
           <motion.div
-            className="flex flex-wrap gap-3"
+            className="mt-12 flex flex-wrap items-center justify-center gap-3"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.8 }}
           >
-            <div className="flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-2 backdrop-blur-sm">
-              <Monitor className="h-4 w-4 text-cyan-400" />
-              <span className="text-sm font-medium">Windows</span>
-            </div>
-            <div className="flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-2 backdrop-blur-sm">
-              <Smartphone className="h-4 w-4 text-green-400" />
-              <span className="text-sm font-medium">Android</span>
-            </div>
-            <div className="flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-2 backdrop-blur-sm">
-              <Globe className="h-4 w-4 text-purple-400" />
-              <span className="text-sm font-medium">Cross-Platform</span>
-            </div>
-          </motion.div>
-
-          {/* Scroll Indicator */}
-          <motion.div
-            className="absolute bottom-8 left-1/2 -translate-x-1/2"
-            animate={{ y: [0, 10, 0] }}
-            transition={{ duration: 2, repeat: Infinity }}
-          >
-            <ChevronDown className="h-8 w-8 text-gray-400" />
+            {game.genre.map((tag, index) => (
+              <span
+                key={index}
+                className="rounded-full border border-purple-500/30 bg-purple-500/10 px-4 py-2 font-orbitron text-sm font-bold text-purple-400 backdrop-blur-sm"
+              >
+                {tag}
+              </span>
+            ))}
           </motion.div>
         </div>
 
-        {/* Decorative Elements */}
-        <div className="absolute right-0 top-1/4 h-96 w-96 rounded-full bg-cyan-500/20 blur-3xl" />
-        <div className="absolute bottom-1/4 left-0 h-96 w-96 rounded-full bg-purple-500/20 blur-3xl" />
+        {/* Decorative Elements - Enhanced */}
+        <motion.div
+          className="absolute right-0 top-1/4 h-96 w-96 rounded-full bg-cyan-500/30 blur-3xl"
+          animate={{
+            scale: [1, 1.2, 1],
+            opacity: [0.3, 0.5, 0.3],
+          }}
+          transition={{
+            duration: 5,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+        <motion.div
+          className="absolute bottom-1/4 left-0 h-96 w-96 rounded-full bg-purple-500/30 blur-3xl"
+          animate={{
+            scale: [1, 1.2, 1],
+            opacity: [0.3, 0.5, 0.3],
+          }}
+          transition={{
+            duration: 5,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 2.5,
+          }}
+        />
+        <motion.div
+          className="absolute left-1/2 top-1/2 h-64 w-64 -translate-x-1/2 -translate-y-1/2 rounded-full bg-pink-500/20 blur-3xl"
+          animate={{
+            scale: [1, 1.3, 1],
+            opacity: [0.2, 0.4, 0.2],
+          }}
+          transition={{
+            duration: 4,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 1.5,
+          }}
+        />
+
+        {/* Video Popup Modal */}
+        <AnimatePresence>
+          {selectedGame && (
+            <motion.div
+              className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setSelectedGame(null)}
+            >
+              <motion.div
+                className="relative w-full max-w-5xl"
+                initial={{ scale: 0.9, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.9, opacity: 0 }}
+                onClick={(e) => e.stopPropagation()}
+              >
+                <button
+                  className="absolute -right-4 -top-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-sm hover:bg-white/20"
+                  onClick={() => setSelectedGame(null)}
+                >
+                  ✕
+                </button>
+                <div className="aspect-video w-full overflow-hidden rounded-2xl border border-white/10 bg-black shadow-2xl">
+                  <iframe
+                    width="100%"
+                    height="100%"
+                    src="https://www.youtube.com/embed/GxKMphK3Bg0?si=C4Qju3KGseDubrkB?autoplay=1"
+                    title="Game Trailer"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                    className="h-full w-full"
+                  />
+                </div>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </section>
 
       {/* Features Section */}
@@ -401,16 +521,35 @@ const GameDownloads = () => {
                 Ready to Play?
               </h2>
 
+              {/* Platform Tabs */}
+              <div className="mb-6 flex flex-wrap gap-3">
+                {(["windows", "macos", "android"] as const).map((platform) => (
+                  <motion.button
+                    key={platform}
+                    className={`rounded-lg px-6 py-3 font-bold capitalize transition-all ${
+                      selectedPlatform === platform
+                        ? "bg-gradient-to-r from-cyan-500 to-blue-500 text-white shadow-lg shadow-cyan-500/50"
+                        : "border border-white/20 bg-white/5 text-gray-400 hover:text-white"
+                    }`}
+                    onClick={() => setSelectedPlatform(platform)}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    {platform === "macos" ? "macOS" : platform}
+                  </motion.button>
+                ))}
+              </div>
+
+              {/* Requirements List */}
               <div className="space-y-4">
-                {Object.entries(game.requirements).map(
+                {Object.entries(game.requirements[selectedPlatform]).map(
                   ([key, value], index) => (
                     <motion.div
-                      key={key}
+                      key={`${selectedPlatform}-${key}`}
                       className="flex items-start gap-4 rounded-xl border border-white/10 bg-white/5 p-4 backdrop-blur-sm"
                       initial={{ opacity: 0, x: -20 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      transition={{ delay: index * 0.1 }}
-                      viewport={{ once: true }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: index * 0.05 }}
                     >
                       <CheckCircle2 className="h-5 w-5 flex-shrink-0 text-cyan-400" />
                       <div>
@@ -433,13 +572,25 @@ const GameDownloads = () => {
               transition={{ delay: 0.2 }}
               viewport={{ once: true }}
             >
-              <div className="rounded-2xl border border-white/10 bg-gradient-to-br from-cyan-500/10 to-blue-500/10 p-8 backdrop-blur-sm">
+              <motion.div
+                className="rounded-2xl border border-white/10 bg-gradient-to-br from-cyan-500/10 to-blue-500/10 p-8 backdrop-blur-sm"
+                key={selectedPlatform}
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.3 }}
+              >
                 <HardDrive className="mb-4 h-12 w-12 text-cyan-400" />
                 <h3 className="mb-2 font-orbitron text-2xl font-bold text-white">
-                  {game.size}
+                  {game.size[selectedPlatform]}
                 </h3>
-                <p className="text-gray-400">Total Download Size</p>
-              </div>
+                <p className="text-gray-400">
+                  {selectedPlatform === "macos"
+                    ? "macOS"
+                    : selectedPlatform.charAt(0).toUpperCase() +
+                      selectedPlatform.slice(1)}{" "}
+                  Download Size
+                </p>
+              </motion.div>
 
               <div className="rounded-2xl border border-white/10 bg-gradient-to-br from-purple-500/10 to-pink-500/10 p-8 backdrop-blur-sm">
                 <Users className="mb-4 h-12 w-12 text-purple-400" />
