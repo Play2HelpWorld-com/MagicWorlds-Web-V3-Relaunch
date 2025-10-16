@@ -606,7 +606,7 @@ const EpicGamingShowcase: React.FC = () => {
       <AnimatePresence>
         {loadingProgress < 100 && (
           <motion.div
-            className="absolute inset-0 z-50 flex flex-col items-center justify-center bg-gradient-to-br from-black via-purple-950 to-black"
+            className="absolute inset-0 z-50 flex flex-col items-center justify-center bg-transparent to-black"
             initial={{ opacity: 1 }}
             animate={loaderControls}
             exit={{ opacity: 0, transition: { duration: 0.5 } }}
