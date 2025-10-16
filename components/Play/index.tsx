@@ -143,7 +143,7 @@ const GameDownloads = () => {
         }}
       /> */}
 
-      {/* <FloatingParticles /> */}
+      <FloatingParticles />
 
       {/* Hero Section */}
       <section className="relative flex min-h-screen items-center justify-center px-4 pb-20 pt-32">
