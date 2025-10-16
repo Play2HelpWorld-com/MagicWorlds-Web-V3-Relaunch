@@ -143,7 +143,7 @@ const GameDownloads = () => {
         }}
       /> */}
 
-      <FloatingParticles />
+      {/* <FloatingParticles /> */}
 
       {/* Hero Section */}
       <section className="relative flex min-h-screen items-center justify-center px-4 pb-20 pt-32">
@@ -354,7 +354,7 @@ const GameDownloads = () => {
         </div>
 
         {/* Decorative Elements - Enhanced */}
-        <motion.div
+        {/* <motion.div
           className="absolute right-0 top-1/4 h-96 w-96 rounded-full bg-cyan-500/30 blur-3xl"
           animate={{
             scale: [1, 1.2, 1],
@@ -391,7 +391,7 @@ const GameDownloads = () => {
             ease: "easeInOut",
             delay: 1.5,
           }}
-        />
+        /> */}
 
         {/* Video Popup Modal */}
         <AnimatePresence>
@@ -843,8 +843,8 @@ const GameDownloads = () => {
         </div>
 
         {/* Decorative Gradient Orbs */}
-        <div className="absolute left-1/4 top-0 h-64 w-64 rounded-full bg-cyan-500/20 blur-3xl" />
-        <div className="absolute bottom-0 right-1/4 h-64 w-64 rounded-full bg-purple-500/20 blur-3xl" />
+        {/* <div className="absolute left-1/4 top-0 h-64 w-64 rounded-full bg-cyan-500/20 blur-3xl" />
+        <div className="absolute bottom-0 right-1/4 h-64 w-64 rounded-full bg-purple-500/20 blur-3xl" /> */}
       </section>
     </div>
   );
