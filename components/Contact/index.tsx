@@ -2,6 +2,17 @@
 import React, { useState, useRef } from "react";
 import { motion } from "framer-motion";
 import emailjs from "@emailjs/browser";
+import {
+  Mail,
+  Phone,
+  MapPin,
+  Send,
+  Trophy,
+  Gamepad2,
+  Zap,
+  Check,
+  X,
+} from "lucide-react";
 
 const Contact = () => {
   // Form states
@@ -94,95 +105,69 @@ const Contact = () => {
   });
 
   return (
-    <motion.section
+    <section
       id="contact"
-      className="relative min-h-screen w-full overflow-hidden bg-gray-900 px-4 pb-4 pt-28 md:px-8 md:pb-12 md:pt-28"
-      variants={gradientVariants}
-      animate="animate"
+      className="relative overflow-hidden bg-transparent py-20 lg:py-25 xl:py-30"
     >
-      {/* Pixel grid background */}
-      <div className="absolute inset-0 z-0 opacity-20">
-        <div className="h-full w-full bg-[linear-gradient(rgba(132,90,223,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(132,90,223,0.1)_1px,transparent_1px)] bg-[size:20px_20px]"></div>
-      </div>
+      {/* Animated Grid Background */}
+      {/* <div className="absolute inset-0 z-0">
+        <div
+          className="h-full w-full opacity-20"
+          style={{
+            backgroundImage: `linear-gradient(rgba(139, 92, 246, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(139, 92, 246, 0.1) 1px, transparent 1px)`,
+            backgroundSize: "50px 50px",
+          }}
+        />
+      </div> */}
 
-      {/* Floating hexagons */}
-      <div className="absolute inset-0 z-0 overflow-hidden">
-        {[...Array(15)].map((_, i) => (
+      {/* Gradient Orbs */}
+      {/* <div className="absolute left-0 top-0 -z-10 h-[500px] w-[500px] rounded-full bg-purple-500 opacity-20 blur-[120px]" />
+      <div className="absolute right-0 top-1/4 -z-10 h-[600px] w-[600px] rounded-full bg-fuchsia-500 opacity-20 blur-[120px]" />
+      <div className="absolute bottom-0 left-1/3 -z-10 h-[500px] w-[500px] rounded-full bg-cyan-500 opacity-20 blur-[120px]" /> */}
+
+      <div className="container relative z-10 mx-auto w-full">
+        {/* Header */}
+        <div className="relative z-10 mb-16 text-center">
           <motion.div
-            key={i}
-            className="absolute bg-purple-600 opacity-10"
-            style={{
-              clipPath:
-                "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)",
-              width: Math.random() * 80 + 40 + "px",
-              height: Math.random() * 80 + 40 + "px",
-              left: Math.random() * 100 + "%",
-              top: Math.random() * 100 + "%",
-            }}
-            animate={{
-              y: [0, Math.random() * 100 - 50],
-              x: [0, Math.random() * 100 - 50],
-              rotate: [0, Math.random() * 360],
-            }}
-            transition={{
-              duration: Math.random() * 20 + 20,
-              repeat: Infinity,
-              repeatType: "reverse",
-              ease: "easeInOut",
-            }}
-          />
-        ))}
-      </div>
-
-      <div className="relative z-10 mx-auto max-w-6xl">
-        {/* Main header */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="mb-12 text-center"
-        >
-          <h1 className="font-gaming mb-2 text-5xl font-extrabold tracking-tight text-white md:text-6xl">
-            <span className="inline-block bg-gradient-to-r from-purple-400 via-violet-500 to-indigo-400 bg-clip-text text-transparent">
-              JOIN
-            </span>{" "}
-            OUR
-            <span className="inline-block bg-gradient-to-r from-indigo-400 via-violet-500 to-purple-400 bg-clip-text text-transparent">
-              {" "}
-              GUILD
-            </span>
-          </h1>
-          <div className="mx-auto my-4 h-1 w-32 rounded-full bg-gradient-to-r from-purple-500 via-violet-500 to-indigo-500"></div>
-          <p className="mx-auto max-w-xl text-lg text-purple-200">
-            Level up your gaming experience by joining our community. Send us a
-            message to unlock exclusive access to events, tournaments, and
-            rewards.
-          </p>
-        </motion.div>
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="mb-4 flex items-center justify-center gap-4"
+          >
+            {/* <Trophy className="h-12 w-12 text-yellow-400 drop-shadow-[0_0_15px_rgba(234,179,8,0.5)]" /> */}
+            <h2 className="bg-gradient-to-r from-purple-400 via-fuchsia-400 to-cyan-400 bg-clip-text font-orbitron text-6xl font-black uppercase text-transparent">
+              CONTACT US
+            </h2>
+            {/* <Trophy className="h-12 w-12 text-yellow-400 drop-shadow-[0_0_15px_rgba(234,179,8,0.5)]" /> */}
+          </motion.div>
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.3, duration: 0.6 }}
+            className="font-rajdhani text-xl text-gray-300"
+          >
+            Join our guild and unlock exclusive gaming experiences 🎮
+          </motion.p>
+        </div>
 
         <div className="flex flex-col gap-8 lg:flex-row">
           {/* Form section */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6 }}
             className="w-full lg:w-3/5"
           >
-            <div className="relative overflow-hidden rounded-2xl border border-purple-500/30 bg-gray-900/80 p-6 backdrop-blur-md md:p-8">
+            <div className="relative overflow-hidden rounded-2xl border border-purple-500/30 bg-black/40 p-8 backdrop-blur-lg">
               {/* Glow effects */}
-              <div className="absolute -left-20 -top-20 h-40 w-40 rounded-full bg-indigo-600/20 blur-3xl"></div>
-              <div className="absolute -bottom-20 -right-20 h-40 w-40 rounded-full bg-purple-600/20 blur-3xl"></div>
+              <div className="absolute -inset-0.5 -z-10 rounded-2xl bg-gradient-to-r from-purple-500 via-fuchsia-500 to-cyan-500 opacity-20 blur-xl" />
 
-              <h2 className="mb-6 flex items-center text-2xl font-bold text-white">
-                <motion.span
-                  animate={{ rotate: [0, -10, 0, 10, 0] }}
-                  transition={{ duration: 3, repeat: Infinity }}
-                  className="mr-3 text-3xl"
-                >
-                  🎮
-                </motion.span>
-                Send Message
-              </h2>
+              <div className="mb-6 flex items-center gap-3">
+                <Gamepad2 className="h-8 w-8 text-purple-400" />
+                <h3 className="font-orbitron text-2xl font-bold uppercase tracking-wider text-white">
+                  Send Message
+                </h3>
+              </div>
 
               {formState === "success" ? (
                 <motion.div
@@ -196,27 +181,14 @@ const Contact = () => {
                       rotate: [0, 5, 0, -5, 0],
                     }}
                     transition={{ duration: 2, repeat: Infinity }}
-                    className="mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-r from-purple-500 to-indigo-500"
+                    className="mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-r from-purple-500 to-fuchsia-500 shadow-lg shadow-purple-500/50"
                   >
-                    <svg
-                      className="h-10 w-10 text-white"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={3}
-                        d="M5 13l4 4L19 7"
-                      />
-                    </svg>
+                    <Check className="h-10 w-10 text-white" strokeWidth={3} />
                   </motion.div>
-                  <h3 className="mb-2 text-2xl font-bold text-white">
+                  <h3 className="mb-2 font-orbitron text-2xl font-bold uppercase text-white">
                     Quest Accepted!
                   </h3>
-                  <p className="text-lg text-purple-200">
+                  <p className="font-rajdhani text-lg text-gray-300">
                     Your message has been sent successfully. We&apos;ll respond
                     to your quest soon!
                   </p>
@@ -233,27 +205,14 @@ const Contact = () => {
                       rotate: [0, 5, 0, -5, 0],
                     }}
                     transition={{ duration: 2, repeat: Infinity }}
-                    className="mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-r from-red-500 to-pink-500"
+                    className="mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-r from-red-500 to-pink-500 shadow-lg shadow-red-500/50"
                   >
-                    <svg
-                      className="h-10 w-10 text-white"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={3}
-                        d="M6 18L18 6M6 6l12 12"
-                      />
-                    </svg>
+                    <X className="h-10 w-10 text-white" strokeWidth={3} />
                   </motion.div>
-                  <h3 className="mb-2 text-2xl font-bold text-white">
+                  <h3 className="mb-2 font-orbitron text-2xl font-bold uppercase text-white">
                     Connection Failed
                   </h3>
-                  <p className="text-lg text-purple-200">
+                  <p className="font-rajdhani text-lg text-gray-300">
                     There was an error sending your message. Please try again
                     later.
                   </p>
@@ -267,8 +226,8 @@ const Contact = () => {
                   <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
                     {/* Name Field */}
                     <motion.div
-                      whileTap={{ scale: 0.98 }}
-                      style={shimmerEffect("name")}
+                      whileHover={{ scale: 1.01 }}
+                      whileTap={{ scale: 0.99 }}
                       className="rounded-lg"
                     >
                       <input
@@ -279,15 +238,15 @@ const Contact = () => {
                         onFocus={() => handleFocus("name")}
                         onBlur={handleBlur}
                         placeholder="Character Name"
-                        className="w-full rounded-lg border border-purple-500/30 bg-gray-800/70 px-4 py-3 text-white transition-all placeholder:text-gray-400 focus:border-purple-400 focus:outline-none"
+                        className="w-full rounded-lg border border-purple-500/30 bg-black/60 px-4 py-3 font-rajdhani text-white transition-all placeholder:text-gray-500 focus:border-purple-400 focus:shadow-lg focus:shadow-purple-500/30 focus:outline-none"
                         required
                       />
                     </motion.div>
 
                     {/* Email Field */}
                     <motion.div
-                      whileTap={{ scale: 0.98 }}
-                      style={shimmerEffect("email")}
+                      whileHover={{ scale: 1.01 }}
+                      whileTap={{ scale: 0.99 }}
                       className="rounded-lg"
                     >
                       <input
@@ -298,15 +257,15 @@ const Contact = () => {
                         onFocus={() => handleFocus("email")}
                         onBlur={handleBlur}
                         placeholder="Email Address"
-                        className="w-full rounded-lg border border-purple-500/30 bg-gray-800/70 px-4 py-3 text-white transition-all placeholder:text-gray-400 focus:border-purple-400 focus:outline-none"
+                        className="w-full rounded-lg border border-purple-500/30 bg-black/60 px-4 py-3 font-rajdhani text-white transition-all placeholder:text-gray-500 focus:border-purple-400 focus:shadow-lg focus:shadow-purple-500/30 focus:outline-none"
                         required
                       />
                     </motion.div>
 
                     {/* Subject Field */}
                     <motion.div
-                      whileTap={{ scale: 0.98 }}
-                      style={shimmerEffect("subject")}
+                      whileHover={{ scale: 1.01 }}
+                      whileTap={{ scale: 0.99 }}
                       className="rounded-lg"
                     >
                       <input
@@ -317,15 +276,15 @@ const Contact = () => {
                         onFocus={() => handleFocus("subject")}
                         onBlur={handleBlur}
                         placeholder="Quest Type"
-                        className="w-full rounded-lg border border-purple-500/30 bg-gray-800/70 px-4 py-3 text-white transition-all placeholder:text-gray-400 focus:border-purple-400 focus:outline-none"
+                        className="w-full rounded-lg border border-purple-500/30 bg-black/60 px-4 py-3 font-rajdhani text-white transition-all placeholder:text-gray-500 focus:border-purple-400 focus:shadow-lg focus:shadow-purple-500/30 focus:outline-none"
                         required
                       />
                     </motion.div>
 
                     {/* Phone Field */}
                     <motion.div
-                      whileTap={{ scale: 0.98 }}
-                      style={shimmerEffect("phone")}
+                      whileHover={{ scale: 1.01 }}
+                      whileTap={{ scale: 0.99 }}
                       className="rounded-lg"
                     >
                       <input
@@ -336,15 +295,15 @@ const Contact = () => {
                         onFocus={() => handleFocus("phone")}
                         onBlur={handleBlur}
                         placeholder="Phone (Optional)"
-                        className="w-full rounded-lg border border-purple-500/30 bg-gray-800/70 px-4 py-3 text-white transition-all placeholder:text-gray-400 focus:border-purple-400 focus:outline-none"
+                        className="w-full rounded-lg border border-purple-500/30 bg-black/60 px-4 py-3 font-rajdhani text-white transition-all placeholder:text-gray-500 focus:border-purple-400 focus:shadow-lg focus:shadow-purple-500/30 focus:outline-none"
                       />
                     </motion.div>
                   </div>
 
                   {/* Message Field */}
                   <motion.div
-                    whileTap={{ scale: 0.99 }}
-                    style={shimmerEffect("message")}
+                    whileHover={{ scale: 1.005 }}
+                    whileTap={{ scale: 0.995 }}
                     className="rounded-lg"
                   >
                     <textarea
@@ -355,7 +314,7 @@ const Contact = () => {
                       onBlur={handleBlur}
                       rows={5}
                       placeholder="Describe your quest or message here..."
-                      className="w-full rounded-lg border border-purple-500/30 bg-gray-800/70 px-4 py-3 text-white transition-all placeholder:text-gray-400 focus:border-purple-400 focus:outline-none"
+                      className="w-full rounded-lg border border-purple-500/30 bg-black/60 px-4 py-3 font-rajdhani text-white transition-all placeholder:text-gray-500 focus:border-purple-400 focus:shadow-lg focus:shadow-purple-500/30 focus:outline-none"
                       required
                     ></textarea>
                   </motion.div>
@@ -375,25 +334,22 @@ const Contact = () => {
                         <motion.div
                           whileHover={{ scale: 1.05 }}
                           whileTap={{ scale: 0.95 }}
-                          className="mr-3 flex h-6 w-6 items-center justify-center rounded border-2 border-purple-500/50 bg-gray-800"
+                          className="mr-3 flex h-6 w-6 items-center justify-center rounded border-2 border-purple-500/50 bg-black/60"
                         >
                           {formData.terms && (
-                            <motion.svg
+                            <motion.div
                               initial={{ scale: 0 }}
                               animate={{ scale: 1 }}
-                              className="h-4 w-4 text-purple-500"
-                              fill="currentColor"
-                              viewBox="0 0 20 20"
+                              className="h-4 w-4"
                             >
-                              <path
-                                fillRule="evenodd"
-                                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                                clipRule="evenodd"
+                              <Check
+                                className="h-4 w-4 text-purple-400"
+                                strokeWidth={3}
                               />
-                            </motion.svg>
+                            </motion.div>
                           )}
                         </motion.div>
-                        <span className="text-sm text-gray-300 transition-colors group-hover:text-purple-300">
+                        <span className="font-rajdhani text-sm text-gray-300 transition-colors group-hover:text-purple-300">
                           I agree to join the guild and receive communications
                         </span>
                       </div>
@@ -402,86 +358,34 @@ const Contact = () => {
                     {/* Submit Button */}
                     <motion.button
                       whileHover={{
-                        scale: 1.03,
-                        boxShadow: "0 0 20px rgba(139, 92, 246, 0.5)",
+                        scale: 1.05,
                       }}
-                      whileTap={{ scale: 0.97 }}
+                      whileTap={{ scale: 0.95 }}
                       disabled={formState === "loading"}
                       type="submit"
-                      className="group relative overflow-hidden rounded-lg bg-gradient-to-r from-purple-600 to-indigo-600 px-6 py-3 font-bold text-white shadow-lg transition-all hover:from-purple-700 hover:to-indigo-700 disabled:opacity-70"
+                      className="group relative overflow-hidden rounded-xl border border-white/10 bg-gradient-to-r from-purple-600 to-fuchsia-600 px-8 py-3.5 font-rajdhani font-bold uppercase tracking-wide text-white shadow-lg shadow-purple-500/30 transition-all hover:border-purple-400/50 hover:shadow-purple-500/50 disabled:opacity-50"
                     >
                       <div className="relative z-10 flex items-center justify-center gap-2">
                         {formState === "loading" ? (
                           <>
-                            <svg
-                              className="h-5 w-5 animate-spin text-white"
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
+                            <motion.div
+                              animate={{ rotate: 360 }}
+                              transition={{
+                                duration: 1,
+                                repeat: Infinity,
+                                ease: "linear",
+                              }}
                             >
-                              <circle
-                                className="opacity-25"
-                                cx="12"
-                                cy="12"
-                                r="10"
-                                stroke="currentColor"
-                                strokeWidth="4"
-                              ></circle>
-                              <path
-                                className="opacity-75"
-                                fill="currentColor"
-                                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                              ></path>
-                            </svg>
+                              <Zap className="h-5 w-5 text-white" />
+                            </motion.div>
                             <span>SENDING...</span>
                           </>
                         ) : (
                           <>
                             <span>SEND MESSAGE</span>
-                            <motion.svg
-                              animate={{ x: [0, 4, 0] }}
-                              transition={{
-                                duration: 1.5,
-                                repeat: Infinity,
-                                repeatType: "loop",
-                              }}
-                              className="h-5 w-5 text-white"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              stroke="currentColor"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M14 5l7 7m0 0l-7 7m7-7H3"
-                              />
-                            </motion.svg>
+                            <Send className="h-5 w-5 transition-transform group-hover:translate-x-1" />
                           </>
                         )}
-                      </div>
-
-                      {/* Button particle effects */}
-                      <div className="absolute inset-0 z-0">
-                        {[...Array(5)].map((_, i) => (
-                          <motion.span
-                            key={i}
-                            className="absolute h-1 w-1 rounded-full bg-white"
-                            style={{
-                              top: Math.random() * 100 + "%",
-                              left: Math.random() * 100 + "%",
-                            }}
-                            animate={{
-                              scale: [0, 1, 0],
-                              opacity: [0, 0.5, 0],
-                            }}
-                            transition={{
-                              duration: 1,
-                              repeat: Infinity,
-                              delay: i * 0.2,
-                            }}
-                          />
-                        ))}
                       </div>
                     </motion.button>
                   </div>
@@ -492,132 +396,112 @@ const Contact = () => {
 
           {/* Connection Info Section */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
             className="w-full lg:w-2/5"
           >
-            <div className="flex h-full flex-col justify-between rounded-2xl border border-indigo-500/30 bg-gray-900/80 p-6 backdrop-blur-md md:p-8">
+            <div className="relative flex h-full flex-col overflow-hidden rounded-2xl border border-cyan-500/30 bg-black/40 p-8 backdrop-blur-lg">
               {/* Glow effect */}
-              <div className="absolute -bottom-20 -left-20 h-40 w-40 rounded-full bg-purple-600/20 blur-3xl"></div>
+              <div className="absolute -inset-0.5 -z-10 rounded-2xl bg-gradient-to-r from-cyan-500 via-purple-500 to-fuchsia-500 opacity-20 blur-xl" />
 
-              <div>
-                <h2 className="mb-6 flex items-center text-2xl font-bold text-white">
-                  <motion.span
-                    animate={{ y: [0, -5, 0] }}
-                    transition={{ duration: 2, repeat: Infinity }}
-                    className="mr-3 text-3xl"
-                  >
-                    🌐
-                  </motion.span>
-                  Connect With Us
-                </h2>
-
-                {/* Contact Cards */}
-                <div className="space-y-5">
-                  <motion.div
-                    whileHover={{ scale: 1.02, x: 5 }}
-                    className="rounded-lg border border-indigo-500/20 bg-gray-800/50 p-4"
-                  >
-                    <h3 className="mb-2 text-lg font-semibold text-indigo-400">
-                      Guild Headquarters
-                    </h3>
-                    <div className="space-y-1 text-gray-300">
-                      <p>3 Wetherell Road</p>
-                      <p>Hackney, London</p>
-                      <p>E9 7DB</p>
-                      <p>United Kingdom</p>
-                    </div>
-                  </motion.div>
-
-                  <motion.div
-                    whileHover={{ scale: 1.02, x: 5 }}
-                    className="rounded-lg border border-purple-500/20 bg-gray-800/50 p-4"
-                  >
-                    <h3 className="mb-2 text-lg font-semibold text-purple-400">
-                      Digital Contact
-                    </h3>
-                    <p className="mb-1 flex items-center text-gray-300">
-                      <svg
-                        className="mr-2 h-4 w-4"
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
-                      >
-                        <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
-                        <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
-                      </svg>
-                      magicworldsonline2025@gmail.com
-                    </p>
-                    <p className="flex items-center text-gray-300">
-                      <svg
-                        className="mr-2 h-4 w-4"
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
-                      >
-                        <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
-                      </svg>
-                      +44 7762 293742
-                    </p>
-                  </motion.div>
-
-                  <motion.div
-                    whileHover={{ scale: 1.02, x: 5 }}
-                    className="rounded-lg border border-violet-500/20 bg-gray-800/50 p-4"
-                  >
-                    <h3 className="mb-2 text-lg font-semibold text-violet-400">
-                      Server Times
-                    </h3>
-                    <div className="grid grid-cols-2 gap-2 text-gray-300">
-                      <p>Monday - Friday:</p>
-                      <p>24/7 Support</p>
-                      <p>Weekends:</p>
-                      <p>24/7 Support</p>
-                      <p>Tournament Days:</p>
-                      <p>Special Hours</p>
-                    </div>
-                  </motion.div>
-                </div>
+              <div className="mb-6 flex items-center gap-3">
+                <MapPin className="h-8 w-8 text-cyan-400" />
+                <h3 className="font-orbitron text-2xl font-bold uppercase tracking-wider text-white">
+                  Guild HQ
+                </h3>
               </div>
 
-              {/* Social Media & Map */}
-              <div className="mt-6">
-                <div className="mb-4 rounded-lg bg-gray-800/70 p-4">
-                  <h3 className="mb-2 text-lg font-semibold text-white">
-                    Guild Location
-                  </h3>
-                  <div className="relative h-32 overflow-hidden rounded-lg bg-indigo-900/30">
-                    {/* Stylized map with gaming theme */}
-                    <div className="absolute inset-0">
-                      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(139,92,246,0.3),transparent_70%)]"></div>
-                      <div className="grid h-full w-full grid-cols-12 grid-rows-6 gap-px opacity-30">
-                        {[...Array(72)].map((_, i) => (
-                          <div
-                            key={i}
-                            className="bg-purple-500/20 transition-colors hover:bg-purple-500/40"
-                          ></div>
-                        ))}
-                      </div>
-                      <motion.div
-                        animate={{
-                          scale: [1, 1.2, 1],
-                          opacity: [0.7, 1, 0.7],
-                        }}
-                        transition={{
-                          duration: 2,
-                          repeat: Infinity,
-                        }}
-                        className="absolute left-1/2 top-1/2 h-4 w-4 -translate-x-1/2 -translate-y-1/2 rounded-full bg-purple-500 shadow-[0_0_15px_5px_rgba(139,92,246,0.5)]"
-                      />
+              {/* Contact Cards */}
+              <div className="space-y-5">
+                <motion.div
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.4 }}
+                  whileHover={{ scale: 1.02, x: 5 }}
+                  className="rounded-xl border border-cyan-500/20 bg-black/50 p-5"
+                >
+                  <div className="mb-3 flex items-center gap-2">
+                    <MapPin className="h-5 w-5 text-cyan-400" />
+                    <h4 className="font-rajdhani text-lg font-bold uppercase tracking-wide text-cyan-400">
+                      Location
+                    </h4>
+                  </div>
+                  <div className="space-y-1 font-rajdhani text-gray-300">
+                    <p>3 Wetherell Road</p>
+                    <p>Hackney, London</p>
+                    <p>E9 7DB</p>
+                    <p>United Kingdom</p>
+                  </div>
+                </motion.div>
+
+                <motion.div
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.5 }}
+                  whileHover={{ scale: 1.02, x: 5 }}
+                  className="rounded-xl border border-purple-500/20 bg-black/50 p-5"
+                >
+                  <div className="mb-3 flex items-center gap-2">
+                    <Mail className="h-5 w-5 text-purple-400" />
+                    <h4 className="font-rajdhani text-lg font-bold uppercase tracking-wide text-purple-400">
+                      Digital
+                    </h4>
+                  </div>
+                  <div className="space-y-2 font-rajdhani text-gray-300">
+                    <p className="flex items-center gap-2">
+                      <Mail className="h-4 w-4 text-purple-400" />
+                      <span className="break-all">
+                        magicworldsonline2025@gmail.com
+                      </span>
+                    </p>
+                    <p className="flex items-center gap-2">
+                      <Phone className="h-4 w-4 text-purple-400" />
+                      +44 7762 293742
+                    </p>
+                  </div>
+                </motion.div>
+
+                <motion.div
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.6 }}
+                  whileHover={{ scale: 1.02, x: 5 }}
+                  className="rounded-xl border border-fuchsia-500/20 bg-black/50 p-5"
+                >
+                  <div className="mb-3 flex items-center gap-2">
+                    <Zap className="h-5 w-5 text-fuchsia-400" />
+                    <h4 className="font-rajdhani text-lg font-bold uppercase tracking-wide text-fuchsia-400">
+                      Server Status
+                    </h4>
+                  </div>
+                  <div className="space-y-2 font-rajdhani text-gray-300">
+                    <div className="flex justify-between">
+                      <span>Weekdays:</span>
+                      <span className="text-green-400">24/7 Online</span>
                     </div>
-                    <div className="absolute bottom-1 right-1 text-xs font-semibold text-purple-300">
-                      UNITED KINGDOM
+                    <div className="flex justify-between">
+                      <span>Weekends:</span>
+                      <span className="text-green-400">24/7 Online</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Response:</span>
+                      <span className="text-yellow-400">Fast</span>
                     </div>
                   </div>
-                </div>
+                </motion.div>
+              </div>
 
-                <h3 className="mb-2 text-center text-sm font-semibold uppercase tracking-wider text-gray-400">
+              {/* Social Media */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.7 }}
+                className="mt-8"
+              >
+                <h4 className="mb-4 text-center font-rajdhani text-sm font-bold uppercase tracking-wider text-gray-400">
                   Join Our Networks
-                </h3>
+                </h4>
                 <div className="flex justify-center gap-3">
                   {[
                     {
@@ -644,7 +528,7 @@ const Contact = () => {
                       href="#"
                       whileHover={{ scale: 1.1, y: -3 }}
                       whileTap={{ scale: 0.9 }}
-                      className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-800 text-gray-400 transition-colors hover:bg-indigo-600 hover:text-white"
+                      className={`flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-black/60 text-gray-400 transition-colors hover:text-white ${network.color}`}
                     >
                       <svg
                         className="h-5 w-5"
@@ -656,33 +540,12 @@ const Contact = () => {
                     </motion.a>
                   ))}
                 </div>
-              </div>
+              </motion.div>
             </div>
           </motion.div>
         </div>
       </div>
-
-      {/* Floating particles */}
-      {[...Array(20)].map((_, i) => (
-        <motion.div
-          key={i}
-          className="pointer-events-none absolute z-0 h-2 w-2 rounded-full bg-purple-500 opacity-20"
-          style={{
-            top: Math.random() * 100 + "%",
-            left: Math.random() * 100 + "%",
-          }}
-          animate={{
-            y: [0, -Math.random() * 100 - 50],
-            opacity: [0.2, 0.5, 0],
-          }}
-          transition={{
-            duration: Math.random() * 5 + 10,
-            repeat: Infinity,
-            repeatType: "loop",
-          }}
-        />
-      ))}
-    </motion.section>
+    </section>
   );
 };
 
