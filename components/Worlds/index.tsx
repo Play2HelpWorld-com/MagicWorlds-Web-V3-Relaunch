@@ -8,9 +8,6 @@ import {
   Maximize2,
   X,
   Gamepad2,
-  Trophy,
-  Users,
-  Star,
   TrendingUp,
 } from "lucide-react";
 import { motion, AnimatePresence, useAnimation } from "framer-motion";
@@ -633,7 +630,7 @@ const EpicGamingShowcase: React.FC = () => {
       <AnimatePresence>
         {showModal && (
           <motion.div
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-md"
+            className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-black/95 p-4 backdrop-blur-md"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -641,7 +638,9 @@ const EpicGamingShowcase: React.FC = () => {
             onClick={handleCloseModal}
           >
             <motion.div
-              className="relative w-full max-w-6xl border border-purple-500/30 bg-gradient-to-br from-purple-900/20 via-black to-fuchsia-900/20 p-2 shadow-2xl shadow-purple-500/30"
+              className={`relative my-auto w-full border border-purple-500/30 bg-gradient-to-br from-purple-900/20 via-black to-fuchsia-900/20 p-2 shadow-2xl shadow-purple-500/30 ${
+                videos[activeIndex]?.isShort ? "max-w-md" : "max-w-6xl"
+              }`}
               initial={{ scale: 0.9, y: 50 }}
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.9, y: 50 }}
@@ -655,7 +654,7 @@ const EpicGamingShowcase: React.FC = () => {
               {/* Close Button */}
               <motion.button
                 onClick={handleCloseModal}
-                className="absolute -right-4 -top-4 z-20 rounded-full border-2 border-white/20 bg-gradient-to-r from-purple-600 to-fuchsia-600 p-3 text-white shadow-2xl backdrop-blur-sm transition-all hover:scale-110 hover:border-white/40"
+                className="absolute -right-2 -top-2 z-20 rounded-full border-2 border-white/20 bg-gradient-to-r from-purple-600 to-fuchsia-600 p-3 text-white shadow-2xl backdrop-blur-sm transition-all hover:scale-110 hover:border-white/40 md:-right-4 md:-top-4"
                 whileHover={{ rotate: 90 }}
                 whileTap={{ scale: 0.9 }}
               >
@@ -666,7 +665,7 @@ const EpicGamingShowcase: React.FC = () => {
               <div
                 className={`relative overflow-hidden rounded-2xl ${
                   videos[activeIndex]?.isShort
-                    ? "mx-auto aspect-[9/16] max-w-md"
+                    ? "aspect-[9/16] max-h-[85vh] w-full"
                     : "aspect-video w-full"
                 }`}
               >
@@ -677,49 +676,6 @@ const EpicGamingShowcase: React.FC = () => {
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
                 />
-              </div>
-
-              {/* Video Info */}
-              <div className="mt-4 rounded-xl border border-white/10 bg-black/40 p-6 backdrop-blur-sm">
-                <div className="mb-4 flex items-start justify-between">
-                  <div className="flex-1">
-                    <h2 className="mb-3 font-orbitron text-3xl font-black uppercase text-white">
-                      {videos[activeIndex]?.title}
-                    </h2>
-                    <div className="flex flex-wrap items-center gap-3">
-                      <span className="flex items-center gap-2 rounded-full border border-purple-500/30 bg-purple-500/10 px-4 py-2 font-rajdhani text-sm font-bold text-purple-300">
-                        <TrendingUp className="h-4 w-4" />
-                        {videos[activeIndex]?.genre}
-                      </span>
-                    </div>
-                  </div>
-                  <div className="flex gap-2">
-                    <motion.button
-                      className="rounded-xl border border-yellow-500/30 bg-yellow-500/10 p-3 text-yellow-400 transition-all hover:bg-yellow-500/20"
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                    >
-                      <Star className="h-5 w-5" />
-                    </motion.button>
-                    <motion.button
-                      className="rounded-xl border border-cyan-500/30 bg-cyan-500/10 p-3 text-cyan-400 transition-all hover:bg-cyan-500/20"
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                    >
-                      <Users className="h-5 w-5" />
-                    </motion.button>
-                  </div>
-                </div>
-
-                <div className="border-t border-white/10 pt-4">
-                  <p className="font-rajdhani text-base leading-relaxed text-gray-300">
-                    Experience the thrill of this incredible gameplay moment
-                    from our Magic Worlds collection. Immerse yourself in
-                    stunning visuals, epic battles, and unforgettable adventures
-                    across the multiverse. Each video showcases the best moments
-                    from the most exciting games in our library.
-                  </p>
-                </div>
               </div>
             </motion.div>
           </motion.div>
