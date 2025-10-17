@@ -420,7 +420,7 @@ const GameDownloads = () => {
                   <iframe
                     width="100%"
                     height="100%"
-                    src="https://www.youtube.com/embed/GxKMphK3Bg0?si=C4Qju3KGseDubrkB?autoplay=1"
+                    src="https://www.youtube.com/embed/uYgyLtKgOVM?autoplay=1"
                     title="Game Trailer"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowFullScreen

@@ -1,13 +1,10 @@
 "use client";
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import Image from "next/image";
 import {
   Play,
-  Pause,
   ChevronLeft,
   ChevronRight,
-  Volume2,
-  VolumeX,
-  Fullscreen,
   Maximize2,
   X,
   Gamepad2,
@@ -22,95 +19,92 @@ interface GameplayVideo {
   id: string;
   title: string;
   genre: string;
-  videoUrl: string;
+  youtubeId: string;
+  isShort: boolean;
   thumbnailUrl: string;
 }
 
-// Static video data
+// Static video data with YouTube links
 const GAMEPLAY_VIDEOS: GameplayVideo[] = [
   {
+    id: "intro",
+    title: "Magic Worlds: Official Introduction",
+    genre: "Featured",
+    youtubeId: "uYgyLtKgOVM",
+    isShort: false,
+    thumbnailUrl: "https://img.youtube.com/vi/uYgyLtKgOVM/maxresdefault.jpg",
+  },
+  {
     id: "1",
-    title: "Learning World: AI Tutor Mastery",
-    genre: "Educational",
-    videoUrl: "/videos/worlds/gameplay-1.mp4",
-    thumbnailUrl: "/images/thumbnails/gameplay-1.jpg",
+    title: "Magic Worlds: Epic Adventure Gameplay",
+    genre: "Adventure",
+    youtubeId: "w9eI630A2GY",
+    isShort: false,
+    thumbnailUrl: "https://img.youtube.com/vi/w9eI630A2GY/maxresdefault.jpg",
   },
   {
     id: "2",
-    title: "Sport World: Extreme Soccer Showdown",
-    genre: "Sports",
-    videoUrl: "/videos/worlds/gameplay-2.mp4",
-    thumbnailUrl: "/images/thumbnails/gameplay-2.jpg",
+    title: "Magic Worlds: Exciting Moments",
+    genre: "Highlights",
+    youtubeId: "dzgfALG-OrE",
+    isShort: false,
+    thumbnailUrl: "https://img.youtube.com/vi/dzgfALG-OrE/maxresdefault.jpg",
   },
   {
-    id: "3",
-    title: "AI World: Cybernetic Battle Arena",
-    genre: "Adventure",
-    videoUrl: "/videos/worlds/gameplay-3.mp4",
-    thumbnailUrl: "/images/thumbnails/gameplay-3.jpg",
+    id: "short1",
+    title: "Quick Action: Battle Royale",
+    genre: "Shorts",
+    youtubeId: "o05-SYrCPLU",
+    isShort: true,
+    thumbnailUrl: "https://img.youtube.com/vi/o05-SYrCPLU/maxresdefault.jpg",
   },
   {
-    id: "4",
-    title: "Music World: Ultimate DJ Remix Challenge",
-    genre: "Music",
-    videoUrl: "/videos/worlds/gameplay-4.mp4",
-    thumbnailUrl: "/images/thumbnails/gameplay-4.jpg",
+    id: "short2",
+    title: "Epic Skill Showcase",
+    genre: "Shorts",
+    youtubeId: "lqpIUGUtRz8",
+    isShort: true,
+    thumbnailUrl: "https://img.youtube.com/vi/lqpIUGUtRz8/maxresdefault.jpg",
   },
   {
-    id: "5",
-    title: "Farm World: Epic Harvest Season",
-    genre: "Simulation",
-    videoUrl: "/videos/worlds/gameplay-5.mp4",
-    thumbnailUrl: "/images/thumbnails/gameplay-5.jpg",
+    id: "short3",
+    title: "Ultimate Combat Moves",
+    genre: "Shorts",
+    youtubeId: "GQ3RepGTo9I",
+    isShort: true,
+    thumbnailUrl: "https://img.youtube.com/vi/GQ3RepGTo9I/maxresdefault.jpg",
   },
   {
-    id: "6",
-    title: "Magic Worlds: The Grand Sorcerer's Quest",
-    genre: "Adventure",
-    videoUrl: "/videos/worlds/gameplay-6.mp4",
-    thumbnailUrl: "/images/thumbnails/gameplay-6.jpg",
+    id: "short4",
+    title: "Legendary Boss Fight",
+    genre: "Shorts",
+    youtubeId: "vHOq8TMqfOM",
+    isShort: true,
+    thumbnailUrl: "https://img.youtube.com/vi/vHOq8TMqfOM/maxresdefault.jpg",
   },
   {
-    id: "7",
-    title: "Space World: Alien Galaxy Exploration",
-    genre: "Adventure",
-    videoUrl: "/videos/worlds/gameplay-7.mp4",
-    thumbnailUrl: "/images/thumbnails/gameplay-7.jpg",
+    id: "short5",
+    title: "Insane Trick Shots",
+    genre: "Shorts",
+    youtubeId: "bG4OCs_seyw",
+    isShort: true,
+    thumbnailUrl: "https://img.youtube.com/vi/bG4OCs_seyw/maxresdefault.jpg",
   },
   {
-    id: "8",
-    title: "War World: Battle of the Titans",
-    genre: "Sports",
-    videoUrl: "/videos/worlds/gameplay-8.mp4",
-    thumbnailUrl: "/images/thumbnails/gameplay-8.jpg",
+    id: "short6",
+    title: "Pro Player Strategies",
+    genre: "Shorts",
+    youtubeId: "zKKna8L504Y",
+    isShort: true,
+    thumbnailUrl: "https://img.youtube.com/vi/zKKna8L504Y/maxresdefault.jpg",
   },
   {
-    id: "9",
-    title: "Racing World: Hyperdrive Grand Prix",
-    genre: "Sports",
-    videoUrl: "/videos/worlds/gameplay-9.mp4",
-    thumbnailUrl: "/images/thumbnails/gameplay-9.jpg",
-  },
-  {
-    id: "10",
-    title: "Survival World: Island Escape Challenge",
-    genre: "Adventure",
-    videoUrl: "/videos/worlds/gameplay-10.mp4",
-    thumbnailUrl: "/images/thumbnails/gameplay-10.jpg",
-  },
-  {
-    id: "11",
-    title: "AI World: Sentient Machine Revolution",
-    genre: "Adventure",
-    videoUrl: "/videos/worlds/gameplay-11.mp4",
-    thumbnailUrl: "/images/thumbnails/gameplay-11.jpg",
-  },
-  {
-    id: "12",
-    title: "Music World: Battle of the Bands",
-    genre: "Music",
-    videoUrl: "/videos/worlds/gameplay-12.mp4",
-    thumbnailUrl: "/images/thumbnails/gameplay-12.jpg",
+    id: "short7",
+    title: "Championship Highlights",
+    genre: "Shorts",
+    youtubeId: "fMZTqLuWST0",
+    isShort: true,
+    thumbnailUrl: "https://img.youtube.com/vi/fMZTqLuWST0/maxresdefault.jpg",
   },
 ];
 
@@ -118,30 +112,20 @@ const EpicGamingShowcase: React.FC = () => {
   // State management
   const [videos] = useState<GameplayVideo[]>(GAMEPLAY_VIDEOS);
   const [activeIndex, setActiveIndex] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [isMuted, setIsMuted] = useState(true); // Muted by default to prevent autoplay issues
-  const [isFullScreen, setIsFullScreen] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [loadingProgress, setLoadingProgress] = useState(0);
   const [videoCategory, setVideoCategory] = useState("All");
-  const [videoReady, setVideoReady] = useState(false);
-  const [currentTime, setCurrentTime] = useState(0);
-  const [duration, setDuration] = useState(0);
   const [isInitialLoad, setIsInitialLoad] = useState(true);
 
   // Refs
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const modalVideoRef = useRef<HTMLVideoElement>(null);
   const showcaseRef = useRef<HTMLDivElement>(null);
-  const progressBarRef = useRef<HTMLDivElement>(null);
-  const thumbnailRefs = useRef<Map<string, HTMLVideoElement>>(new Map());
 
   // Animation controls
   const mainVideoControls = useAnimation();
   const loaderControls = useAnimation();
   const titleControls = useAnimation();
 
-  // Simulate loading data
+  // Simulate loading screen
   useEffect(() => {
     const loadingInterval = setInterval(() => {
       setLoadingProgress((prev) => {
@@ -154,11 +138,7 @@ const EpicGamingShowcase: React.FC = () => {
               y: -50,
               transition: { duration: 0.8, ease: "easeInOut" },
             });
-
-            // Start playing the first video when loading is complete
-            if (isInitialLoad && videoRef.current && videoReady) {
-              attemptAutoplay();
-            }
+            setIsInitialLoad(false);
           }, 300);
         }
         return newProgress > 100 ? 100 : newProgress;
@@ -166,363 +146,63 @@ const EpicGamingShowcase: React.FC = () => {
     }, 100);
 
     return () => clearInterval(loadingInterval);
-  }, [loaderControls, isInitialLoad, videoReady]);
-
-  // Attempt autoplay with fallbacks
-  const attemptAutoplay = async () => {
-    if (!videoRef.current) return;
-
-    try {
-      // Always ensure it's muted for initial autoplay (browsers require this)
-      videoRef.current.muted = true;
-      setIsMuted(true);
-
-      await videoRef.current.play();
-      setIsPlaying(true);
-      setIsInitialLoad(false);
-    } catch (error) {
-      console.error("Autoplay failed:", error);
-      // If autoplay fails, at least get the video ready
-      setIsPlaying(false);
-    }
-  };
-
-  // Handle video loading and time updates
-  useEffect(() => {
-    if (videoRef.current) {
-      const videoElement = videoRef.current;
-
-      const handleCanPlay = () => {
-        setVideoReady(true);
-        setDuration(videoElement.duration || 0);
-
-        // If this is the initial load and loading is complete, try to play
-        if (isInitialLoad && loadingProgress >= 100) {
-          attemptAutoplay();
-        }
-      };
-
-      const handleTimeUpdate = () => {
-        setCurrentTime(videoElement.currentTime || 0);
-      };
-
-      const handleEnded = () => {
-        setIsPlaying(false);
-        handleNextVideo();
-      };
-
-      const handleLoadedMetadata = () => {
-        setDuration(videoElement.duration || 0);
-      };
-
-      const handlePlayEvent = () => {
-        setIsPlaying(true);
-      };
-
-      const handlePauseEvent = () => {
-        setIsPlaying(false);
-      };
-
-      // Set event listeners
-      videoElement.addEventListener("canplay", handleCanPlay);
-      videoElement.addEventListener("timeupdate", handleTimeUpdate);
-      videoElement.addEventListener("loadedmetadata", handleLoadedMetadata);
-      videoElement.addEventListener("ended", handleEnded);
-      videoElement.addEventListener("play", handlePlayEvent);
-      videoElement.addEventListener("pause", handlePauseEvent);
-
-      // Trigger a load for the video if needed
-      if (videoElement.readyState >= 2) {
-        // Already loaded enough
-        handleCanPlay();
-      } else {
-        videoElement.load();
-      }
-
-      return () => {
-        // Clean up event listeners
-        videoElement.removeEventListener("canplay", handleCanPlay);
-        videoElement.removeEventListener("timeupdate", handleTimeUpdate);
-        videoElement.removeEventListener(
-          "loadedmetadata",
-          handleLoadedMetadata,
-        );
-        videoElement.removeEventListener("ended", handleEnded);
-        videoElement.removeEventListener("play", handlePlayEvent);
-        videoElement.removeEventListener("pause", handlePauseEvent);
-      };
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeIndex, isInitialLoad, loadingProgress]);
-
-  // Setup thumbnail hover effects
-  useEffect(() => {
-    // Handle thumbnail hover videos
-    const thumbnailElements = Array.from(thumbnailRefs.current.values());
-    thumbnailElements.forEach((video) => {
-      if (!video) return;
-
-      const handleMouseEnter = () => {
-        if (video.paused) {
-          video.currentTime = 0;
-          const playPromise = video.play();
-          if (playPromise !== undefined) {
-            playPromise.catch((error) =>
-              console.error("Thumbnail play error:", error),
-            );
-          }
-        }
-      };
-
-      const handleMouseLeave = () => {
-        if (!video.paused) {
-          video.pause();
-          video.currentTime = 0;
-        }
-      };
-
-      video.addEventListener("mouseenter", handleMouseEnter);
-      video.parentElement?.addEventListener("mouseenter", handleMouseEnter);
-      video.addEventListener("mouseleave", handleMouseLeave);
-      video.parentElement?.addEventListener("mouseleave", handleMouseLeave);
-
-      return () => {
-        video.removeEventListener("mouseenter", handleMouseEnter);
-        video.parentElement?.removeEventListener(
-          "mouseenter",
-          handleMouseEnter,
-        );
-        video.removeEventListener("mouseleave", handleMouseLeave);
-        video.parentElement?.removeEventListener(
-          "mouseleave",
-          handleMouseLeave,
-        );
-      };
-    });
-  }, [videos, videoCategory]);
-
-  // Video playback helper functions (must be defined before handleVideoSelect)
-  const attemptPlayback = useCallback(async () => {
-    if (!videoRef.current || !videoReady) return;
-
-    try {
-      await videoRef.current.play();
-      setIsPlaying(true);
-    } catch (error) {
-      console.error("Play error:", error);
-      setIsPlaying(false);
-    }
-  }, [videoReady]);
-
-  const handlePlayPause = useCallback(() => {
-    if (videoRef.current && videoReady) {
-      if (isPlaying) {
-        videoRef.current.pause();
-        setIsPlaying(false);
-      } else {
-        const playPromise = videoRef.current.play();
-        if (playPromise !== undefined) {
-          playPromise
-            .then(() => {
-              setIsPlaying(true);
-            })
-            .catch((error) => {
-              console.error("Play error:", error);
-              setIsPlaying(false);
-            });
-        }
-      }
-    }
-  }, [videoReady, isPlaying]);
-
-  const handleNextVideo = useCallback(() => {
+  }, [loaderControls]);
+  // Simplified navigation handlers for YouTube embeds
+  const handleNextVideo = () => {
     const newIndex = (activeIndex + 1) % videos.length;
     handleVideoSelect(newIndex);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeIndex, videos.length]);
+  };
 
   const handlePrevVideo = () => {
     const newIndex = (activeIndex - 1 + videos.length) % videos.length;
     handleVideoSelect(newIndex);
   };
 
-  // Video playback controls
-  const handleVideoSelect = useCallback(
-    async (index: number) => {
-      // Already selected
-      if (index === activeIndex) {
-        handlePlayPause();
-        return;
-      }
+  // Simplified video selection with animation only
+  const handleVideoSelect = async (index: number) => {
+    if (index === activeIndex) return;
 
-      // Pause current video first to prevent AbortError
-      if (videoRef.current && isPlaying) {
-        videoRef.current.pause();
-      }
+    // Animate out current video
+    await mainVideoControls.start({
+      opacity: 0,
+      scale: 0.95,
+      transition: { duration: 0.3 },
+    });
 
-      setVideoReady(false);
-      setCurrentTime(0);
-      setIsPlaying(false);
+    // Set new video
+    setActiveIndex(index);
 
-      // Animate out current video
-      await mainVideoControls.start({
+    // Animate in new video
+    await mainVideoControls.start({
+      opacity: 1,
+      scale: 1,
+      transition: { duration: 0.5, ease: "easeOut" },
+    });
+
+    // Animate title
+    titleControls
+      .start({
         opacity: 0,
-        scale: 0.95,
-        transition: { duration: 0.3 },
+        y: 20,
+        transition: { duration: 0.2 },
+      })
+      .then(() => {
+        setTimeout(() => {
+          titleControls.start({
+            opacity: 1,
+            y: 0,
+            transition: { duration: 0.4, ease: "easeOut" },
+          });
+        }, 300);
       });
-
-      // Set new video
-      setActiveIndex(index);
-
-      // Animate in new video
-      await mainVideoControls.start({
-        opacity: 1,
-        scale: 1,
-        transition: { duration: 0.5, ease: "easeOut" },
-      });
-
-      // Animate title
-      titleControls
-        .start({
-          opacity: 0,
-          y: 20,
-          transition: { duration: 0.2 },
-        })
-        .then(() => {
-          setTimeout(() => {
-            titleControls.start({
-              opacity: 1,
-              y: 0,
-              transition: { duration: 0.4, ease: "easeOut" },
-            });
-          }, 300);
-        });
-
-      // Try to play the new video
-      if (videoRef.current) {
-        // Let's wait for the video to be ready
-        const checkAndPlay = () => {
-          if (videoRef.current && videoReady) {
-            attemptPlayback();
-          } else {
-            // Try again in a moment
-            setTimeout(checkAndPlay, 100);
-          }
-        };
-
-        checkAndPlay();
-      }
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    },
-    [
-      activeIndex,
-      isPlaying,
-      mainVideoControls,
-      titleControls,
-      videoReady,
-      handlePlayPause,
-      attemptPlayback,
-    ],
-  );
-
-  const handleMuteToggle = () => {
-    if (videoRef.current) {
-      videoRef.current.muted = !isMuted;
-      setIsMuted(!isMuted);
-
-      // Also update modal video if it exists
-      if (modalVideoRef.current) {
-        modalVideoRef.current.muted = !isMuted;
-      }
-    }
-  };
-
-  const handleFullScreen = () => {
-    if (videoRef.current) {
-      if (!isFullScreen) {
-        if (videoRef.current.requestFullscreen) {
-          videoRef.current.requestFullscreen();
-        } else if ((videoRef.current as any).webkitRequestFullscreen) {
-          (videoRef.current as any).webkitRequestFullscreen();
-        } else if ((videoRef.current as any).mozRequestFullScreen) {
-          (videoRef.current as any).mozRequestFullScreen();
-        } else if ((videoRef.current as any).msRequestFullscreen) {
-          (videoRef.current as any).msRequestFullscreen();
-        }
-      }
-      setIsFullScreen(!isFullScreen);
-    }
   };
 
   const handleOpenModal = () => {
-    // Pause the main video when opening modal
-    if (videoRef.current && isPlaying) {
-      videoRef.current.pause();
-      setIsPlaying(false);
-    }
     setShowModal(true);
-
-    // Ensure we sync the modal video with main video
-    setTimeout(() => {
-      if (modalVideoRef.current && videoRef.current) {
-        modalVideoRef.current.currentTime = videoRef.current.currentTime;
-        modalVideoRef.current.muted = isMuted;
-      }
-    }, 100);
   };
 
   const handleCloseModal = () => {
-    // Sync main video with modal video position
-    if (videoRef.current && modalVideoRef.current) {
-      videoRef.current.currentTime = modalVideoRef.current.currentTime;
-    }
-
-    // Pause the modal video
-    if (modalVideoRef.current) {
-      modalVideoRef.current.pause();
-    }
-
     setShowModal(false);
-
-    // Resume main video if it was playing before
-    if (videoRef.current && isPlaying) {
-      videoRef.current
-        .play()
-        .catch((err) => console.error("Failed to resume main video:", err));
-    }
-  };
-
-  const handleSeek = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (progressBarRef.current && videoRef.current && duration > 0) {
-      const rect = progressBarRef.current.getBoundingClientRect();
-      const pos = Math.max(
-        0,
-        Math.min(1, (e.clientX - rect.left) / rect.width),
-      );
-      const newTime = pos * duration;
-
-      // Update video time
-      videoRef.current.currentTime = newTime;
-
-      // Also update our state (for immediate UI update)
-      setCurrentTime(newTime);
-    }
-  };
-
-  // Format time function for displaying current time / duration
-  const formatTime = (seconds: number): string => {
-    const mins = Math.floor(seconds / 60);
-    const secs = Math.floor(seconds % 60);
-    return `${mins}:${secs.toString().padStart(2, "0")}`;
-  };
-
-  // Assign a thumbnail ref
-  const setThumbnailRef = (element: HTMLVideoElement | null, id: string) => {
-    if (element) {
-      thumbnailRefs.current.set(id, element);
-    } else {
-      thumbnailRefs.current.delete(id);
-    }
   };
 
   // Filter videos by category
@@ -566,17 +246,7 @@ const EpicGamingShowcase: React.FC = () => {
   };
 
   // Categories for filtering
-  const categories = [
-    "All",
-    "Educational",
-    "Sports",
-    "Adventure",
-    "Music",
-    "Simulation",
-  ];
-
-  // Calculate progress percentage safely
-  const progressPercentage = duration > 0 ? (currentTime / duration) * 100 : 0;
+  const categories = ["All", "Featured", "Adventure", "Highlights", "Shorts"];
 
   return (
     <div className="relative min-h-screen w-full overflow-hidden bg-transparent text-white">
@@ -740,160 +410,63 @@ const EpicGamingShowcase: React.FC = () => {
                 className="relative aspect-video w-full overflow-hidden rounded-xl bg-black"
                 transition={{ type: "spring", stiffness: 300, damping: 30 }}
               >
-                <video
-                  ref={videoRef}
-                  className="h-full w-full rounded-xl object-contain"
-                  src={videos[activeIndex]?.videoUrl}
-                  poster={
-                    !videoReady ? videos[activeIndex]?.thumbnailUrl : undefined
-                  }
-                  playsInline
-                  muted={isMuted}
-                  preload="auto"
+                <iframe
+                  className="h-full w-full rounded-xl"
+                  src={`https://www.youtube.com/embed/${videos[activeIndex]?.youtubeId}?autoplay=0&rel=0&modestbranding=1`}
+                  title={videos[activeIndex]?.title}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
                 />
 
-                {/* Play button overlay when paused */}
-                {!isPlaying && videoReady && (
-                  <div
-                    className="absolute inset-0 flex cursor-pointer items-center justify-center bg-gradient-to-t from-black/80 via-black/40 to-transparent transition-all duration-300 hover:from-black/90 hover:via-black/60"
-                    onClick={handlePlayPause}
+                {/* Video Info Overlay */}
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black via-black/80 to-transparent p-6">
+                  <motion.div
+                    animate={titleControls}
+                    initial={{ opacity: 0, y: 20 }}
+                    className="max-w-2xl"
                   >
-                    <motion.div
-                      className="flex h-24 w-24 items-center justify-center rounded-full bg-gradient-to-r from-purple-600 to-fuchsia-600 shadow-2xl shadow-purple-500/50"
-                      whileHover={{ scale: 1.15 }}
-                      whileTap={{ scale: 0.9 }}
-                      animate={{
-                        boxShadow: [
-                          "0 0 20px rgba(168, 85, 247, 0.5)",
-                          "0 0 40px rgba(168, 85, 247, 0.8)",
-                          "0 0 20px rgba(168, 85, 247, 0.5)",
-                        ],
-                      }}
-                      transition={{
-                        duration: 2,
-                        repeat: Infinity,
-                        ease: "easeInOut",
-                      }}
-                    >
-                      <Play size={40} className="ml-2 text-white" />
-                    </motion.div>
-                  </div>
-                )}
-
-                {/* Video Controls Overlay */}
-                <div className="absolute inset-0 flex flex-col justify-between bg-gradient-to-t from-black via-transparent to-black/40 p-6 opacity-0 transition-opacity duration-300 hover:opacity-100">
-                  {/* Top Controls */}
-                  <div className="flex items-start justify-between">
-                    <motion.div
-                      animate={titleControls}
-                      initial={{ opacity: 0, y: 20 }}
-                      className="max-w-2xl"
-                    >
-                      <h3 className="mb-2 font-orbitron text-3xl font-black uppercase text-white drop-shadow-2xl">
-                        {videos[activeIndex]?.title}
-                      </h3>
-                      <div className="flex flex-wrap items-center gap-4 font-rajdhani text-sm font-medium">
-                        <span className="flex items-center gap-1 rounded-full border border-purple-400/30 bg-purple-500/20 px-3 py-1 text-purple-200 backdrop-blur-sm">
-                          <TrendingUp className="h-4 w-4" />
-                          {videos[activeIndex]?.genre}
+                    <h3 className="mb-2 font-orbitron text-3xl font-black uppercase text-white drop-shadow-2xl">
+                      {videos[activeIndex]?.title}
+                    </h3>
+                    <div className="flex flex-wrap items-center gap-3">
+                      <span className="flex items-center gap-1 rounded-full border border-purple-400/30 bg-purple-500/20 px-3 py-1 font-rajdhani text-sm font-bold text-purple-200 backdrop-blur-sm">
+                        <TrendingUp className="h-4 w-4" />
+                        {videos[activeIndex]?.genre}
+                      </span>
+                      {videos[activeIndex]?.isShort && (
+                        <span className="rounded-full border border-fuchsia-400/30 bg-fuchsia-500/20 px-3 py-1 font-rajdhani text-xs font-bold uppercase text-fuchsia-200 backdrop-blur-sm">
+                          YouTube Short
                         </span>
-                      </div>
-                    </motion.div>
+                      )}
+                    </div>
+                  </motion.div>
+
+                  {/* Navigation Controls */}
+                  <div className="mt-4 flex items-center justify-center gap-2">
                     <motion.button
-                      className="rounded-full border border-white/20 bg-black/60 p-3 text-white backdrop-blur-sm transition-all hover:border-purple-400 hover:bg-black/80"
+                      className="rounded-full border border-white/20 bg-black/60 p-3 text-white backdrop-blur-sm transition-all hover:border-cyan-400 hover:bg-cyan-600"
+                      onClick={handlePrevVideo}
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.9 }}
+                    >
+                      <ChevronLeft size={20} />
+                    </motion.button>
+                    <motion.button
+                      className="rounded-full border border-white/20 bg-black/60 p-3 text-white backdrop-blur-sm transition-all hover:border-cyan-400 hover:bg-cyan-600"
+                      onClick={handleNextVideo}
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.9 }}
+                    >
+                      <ChevronRight size={20} />
+                    </motion.button>
+                    <motion.button
+                      className="rounded-full border border-white/20 bg-black/60 p-3 text-white backdrop-blur-sm transition-all hover:border-purple-400 hover:bg-purple-600"
                       onClick={handleOpenModal}
                       whileHover={{ scale: 1.1 }}
                       whileTap={{ scale: 0.9 }}
                     >
                       <Maximize2 size={24} />
                     </motion.button>
-                  </div>
-
-                  {/* Bottom Controls */}
-                  <div className="space-y-3">
-                    {/* Progress Bar */}
-                    <div
-                      ref={progressBarRef}
-                      className="group/bar relative h-2 w-full cursor-pointer overflow-hidden rounded-full bg-white/10 backdrop-blur-sm"
-                      onClick={handleSeek}
-                    >
-                      <motion.div
-                        className="absolute h-full origin-left rounded-full bg-gradient-to-r from-purple-500 via-fuchsia-500 to-cyan-500"
-                        style={{ width: `${progressPercentage}%` }}
-                        animate={{
-                          boxShadow: [
-                            "0 0 10px rgba(168, 85, 247, 0.5)",
-                            "0 0 20px rgba(168, 85, 247, 0.8)",
-                            "0 0 10px rgba(168, 85, 247, 0.5)",
-                          ],
-                        }}
-                        transition={{
-                          duration: 2,
-                          repeat: Infinity,
-                          ease: "easeInOut",
-                        }}
-                      />
-                      <motion.div
-                        className="absolute h-4 w-4 -translate-x-1/2 translate-y-[-25%] rounded-full border-2 border-white bg-gradient-to-r from-purple-500 to-fuchsia-500 opacity-0 shadow-lg transition-opacity duration-200 group-hover/bar:opacity-100"
-                        style={{ left: `${progressPercentage}%` }}
-                      />
-                    </div>
-
-                    {/* Control Buttons */}
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        <motion.button
-                          className="rounded-full border border-white/20 bg-black/60 p-3 text-white backdrop-blur-sm transition-all hover:border-purple-400 hover:bg-purple-600"
-                          onClick={handlePlayPause}
-                          disabled={!videoReady}
-                          whileHover={{ scale: 1.1 }}
-                          whileTap={{ scale: 0.9 }}
-                        >
-                          {isPlaying ? <Pause size={20} /> : <Play size={20} />}
-                        </motion.button>
-                        <motion.button
-                          className="rounded-full border border-white/20 bg-black/60 p-3 text-white backdrop-blur-sm transition-all hover:border-fuchsia-400 hover:bg-fuchsia-600"
-                          onClick={handleMuteToggle}
-                          whileHover={{ scale: 1.1 }}
-                          whileTap={{ scale: 0.9 }}
-                        >
-                          {isMuted ? (
-                            <VolumeX size={20} />
-                          ) : (
-                            <Volume2 size={20} />
-                          )}
-                        </motion.button>
-                        <span className="min-w-[100px] font-rajdhani text-sm font-bold text-white">
-                          {formatTime(currentTime)} / {formatTime(duration)}
-                        </span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <motion.button
-                          className="rounded-full border border-white/20 bg-black/60 p-3 text-white backdrop-blur-sm transition-all hover:border-cyan-400 hover:bg-cyan-600"
-                          onClick={handlePrevVideo}
-                          whileHover={{ scale: 1.1 }}
-                          whileTap={{ scale: 0.9 }}
-                        >
-                          <ChevronLeft size={20} />
-                        </motion.button>
-                        <motion.button
-                          className="rounded-full border border-white/20 bg-black/60 p-3 text-white backdrop-blur-sm transition-all hover:border-cyan-400 hover:bg-cyan-600"
-                          onClick={handleNextVideo}
-                          whileHover={{ scale: 1.1 }}
-                          whileTap={{ scale: 0.9 }}
-                        >
-                          <ChevronRight size={20} />
-                        </motion.button>
-                        <motion.button
-                          className="rounded-full border border-white/20 bg-black/60 p-3 text-white backdrop-blur-sm transition-all hover:border-yellow-400 hover:bg-yellow-600"
-                          onClick={handleFullScreen}
-                          whileHover={{ scale: 1.1 }}
-                          whileTap={{ scale: 0.9 }}
-                        >
-                          <Fullscreen size={20} />
-                        </motion.button>
-                      </div>
-                    </div>
                   </div>
                 </div>
               </motion.div>
@@ -945,13 +518,28 @@ const EpicGamingShowcase: React.FC = () => {
                   >
                     {/* Video Thumbnail */}
                     <div className="relative aspect-video w-full overflow-hidden">
-                      <video
-                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
-                        src={video.videoUrl}
-                        muted
-                        loop
-                        playsInline
+                      <Image
+                        src={video.thumbnailUrl}
+                        alt={video.title}
+                        fill
+                        className="object-cover transition-transform duration-500 group-hover:scale-110"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        unoptimized
                       />
+
+                      {/* YouTube Logo Badge */}
+                      <div className="absolute right-2 top-2 rounded-full bg-red-600 px-2 py-1">
+                        <svg className="h-4 w-4 fill-white" viewBox="0 0 24 24">
+                          <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+                        </svg>
+                      </div>
+
+                      {/* Short Badge */}
+                      {video.isShort && (
+                        <div className="absolute left-2 top-2 rounded-full bg-gradient-to-r from-fuchsia-600 to-purple-600 px-3 py-1 font-rajdhani text-xs font-bold uppercase text-white">
+                          Short
+                        </div>
+                      )}
 
                       {/* Gradient Overlay */}
                       <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent opacity-60 group-hover:opacity-40" />
@@ -965,10 +553,9 @@ const EpicGamingShowcase: React.FC = () => {
                           transition={{ duration: 0.3 }}
                         >
                           <motion.div
-                            className="flex h-16 w-16 items-center justify-center rounded-full border-4 border-white bg-gradient-to-r from-purple-600 to-fuchsia-600 shadow-2xl"
+                            className="flex h-16 w-16 items-center justify-center rounded-full border-4 border-white bg-gradient-to-r from-red-600 to-red-500 shadow-2xl"
                             animate={{
                               scale: [1, 1.1, 1],
-                              rotate: [0, 5, -5, 0],
                             }}
                             transition={{
                               duration: 2,
@@ -976,11 +563,7 @@ const EpicGamingShowcase: React.FC = () => {
                               ease: "easeInOut",
                             }}
                           >
-                            {isPlaying ? (
-                              <Pause size={28} className="text-white" />
-                            ) : (
-                              <Play size={28} className="ml-1 text-white" />
-                            )}
+                            <Play size={28} className="ml-1 text-white" />
                           </motion.div>
                         </motion.div>
                       )}
@@ -992,8 +575,8 @@ const EpicGamingShowcase: React.FC = () => {
                           initial={{ scale: 0.8 }}
                           whileHover={{ scale: 1 }}
                         >
-                          <div className="flex h-14 w-14 items-center justify-center rounded-full border-2 border-white/30 bg-white/10 backdrop-blur-sm">
-                            <Play size={24} className="ml-1 text-white" />
+                          <div className="flex h-16 w-16 items-center justify-center rounded-full border-4 border-white/50 bg-red-600 shadow-2xl">
+                            <Play size={28} className="ml-1 text-white" />
                           </div>
                         </motion.div>
                       )}
@@ -1080,15 +663,19 @@ const EpicGamingShowcase: React.FC = () => {
               </motion.button>
 
               {/* Video Container */}
-              <div className="relative aspect-video w-full overflow-hidden rounded-2xl">
-                <video
-                  ref={modalVideoRef}
-                  className="h-full w-full object-contain"
-                  src={videos[activeIndex]?.videoUrl}
-                  autoPlay
-                  controls
-                  muted={isMuted}
-                  playsInline
+              <div
+                className={`relative overflow-hidden rounded-2xl ${
+                  videos[activeIndex]?.isShort
+                    ? "mx-auto aspect-[9/16] max-w-md"
+                    : "aspect-video w-full"
+                }`}
+              >
+                <iframe
+                  className="h-full w-full"
+                  src={`https://www.youtube.com/embed/${videos[activeIndex]?.youtubeId}?autoplay=1&rel=0&modestbranding=1`}
+                  title={videos[activeIndex]?.title}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
                 />
               </div>
 
