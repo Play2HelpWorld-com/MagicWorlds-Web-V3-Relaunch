@@ -748,7 +748,7 @@ const About = () => {
                             className="font-orbitron text-2xl font-black uppercase text-white drop-shadow-lg sm:text-3xl md:text-4xl"
                           >
                             <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
-                              $2.4M
+                              $250
                             </span>{" "}
                             Donated
                           </motion.h3>
@@ -1126,13 +1126,13 @@ const About = () => {
                 key={index}
                 variants={fadeInUp}
                 whileHover={{ y: -8, scale: 1.02 }}
-                className="group relative"
+                className="group relative flex"
               >
                 {/* Outer gradient glow */}
                 <div className="absolute -inset-0.5 rounded-2xl bg-gradient-to-r from-purple-600/30 via-pink-600/30 to-purple-600/30 opacity-50 blur-sm transition-all duration-500 group-hover:opacity-100 group-hover:blur-md" />
 
                 {/* Main card */}
-                <div className="relative h-full overflow-hidden rounded-2xl border border-purple-500/20 bg-gradient-to-br from-gray-900 via-gray-900/95 to-purple-900/20 p-7 backdrop-blur-xl">
+                <div className="relative flex w-full flex-col overflow-hidden rounded-2xl border border-purple-500/20 bg-gradient-to-br from-gray-900 via-gray-900/95 to-purple-900/20 p-7 backdrop-blur-xl">
                   {/* Animated gradient overlay */}
                   <motion.div
                     className="absolute inset-0 bg-gradient-to-br from-purple-500/0 via-purple-500/5 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100"
@@ -1154,7 +1154,7 @@ const About = () => {
                   {/* Player info section */}
                   <div className="relative mb-5 flex items-center gap-4">
                     {/* Avatar with ring */}
-                    <div className="relative">
+                    <div className="relative flex-shrink-0">
                       <motion.div
                         className="absolute -inset-1 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 opacity-75 blur-sm"
                         animate={{
@@ -1180,7 +1180,7 @@ const About = () => {
                     </div>
 
                     {/* Name and role */}
-                    <div className="flex-1">
+                    <div className="min-w-0 flex-1">
                       <h4 className="font-orbitron text-base font-black uppercase leading-tight tracking-tight text-white sm:text-lg">
                         {testimonial.name}
                       </h4>
@@ -1190,12 +1190,12 @@ const About = () => {
                     </div>
                   </div>
 
-                  {/* Quote text */}
-                  <p className="relative mb-5 font-rajdhani text-[15px] font-medium italic leading-relaxed text-gray-300 sm:text-base">
+                  {/* Quote text - flex-grow to push rating to bottom */}
+                  <p className="relative mb-5 flex-grow font-rajdhani text-[15px] font-medium italic leading-relaxed text-gray-300 sm:text-base">
                     &quot;{testimonial.quote}&quot;
                   </p>
 
-                  {/* Rating stars with animation */}
+                  {/* Rating stars with animation - stays at bottom */}
                   <div className="relative flex items-center gap-1">
                     {Array.from({ length: 5 }).map((_, i) => (
                       <motion.div
