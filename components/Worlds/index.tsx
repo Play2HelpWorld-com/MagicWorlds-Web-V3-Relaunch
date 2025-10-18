@@ -399,74 +399,95 @@ const EpicGamingShowcase: React.FC = () => {
           animate={mainVideoControls}
         >
           {videos.length > 0 && (
-            <div className="group relative overflow-hidden rounded-2xl border border-purple-500/30 bg-gradient-to-br from-purple-900/20 via-black to-fuchsia-900/20 p-1 shadow-2xl shadow-purple-500/20">
-              {/* Glowing Border Animation */}
-              <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-purple-500 via-fuchsia-500 to-cyan-500 opacity-0 blur-xl transition-opacity duration-500 group-hover:opacity-30" />
+            <div className="space-y-4">
+              {/* Video Player */}
+              <div className="group relative overflow-hidden rounded-2xl border border-purple-500/30 bg-gradient-to-br from-purple-900/20 via-black to-fuchsia-900/20 p-1 shadow-2xl shadow-purple-500/20">
+                {/* Glowing Border Animation */}
+                <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-purple-500 via-fuchsia-500 to-cyan-500 opacity-0 blur-xl transition-opacity duration-500 group-hover:opacity-30" />
 
-              <motion.div
-                className="relative aspect-video w-full overflow-hidden rounded-xl bg-black"
-                transition={{ type: "spring", stiffness: 300, damping: 30 }}
-              >
-                <iframe
-                  className="h-full w-full rounded-xl"
-                  src={`https://www.youtube.com/embed/${videos[activeIndex]?.youtubeId}?autoplay=0&rel=0&modestbranding=1`}
-                  title={videos[activeIndex]?.title}
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                />
+                <motion.div
+                  className="relative aspect-video w-full overflow-hidden rounded-xl bg-black"
+                  transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                >
+                  <iframe
+                    className="h-full w-full rounded-xl"
+                    src={`https://www.youtube.com/embed/${videos[activeIndex]?.youtubeId}?autoplay=0&rel=0&modestbranding=1`}
+                    title={videos[activeIndex]?.title}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
+                </motion.div>
+              </div>
 
-                {/* Video Info Overlay */}
-                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black via-black/80 to-transparent p-6">
-                  <motion.div
-                    animate={titleControls}
-                    initial={{ opacity: 0, y: 20 }}
-                    className="max-w-2xl"
-                  >
-                    <h3 className="mb-2 font-orbitron text-3xl font-black uppercase text-white drop-shadow-2xl">
-                      {videos[activeIndex]?.title}
-                    </h3>
-                    <div className="flex flex-wrap items-center gap-3">
-                      <span className="flex items-center gap-1 rounded-full border border-purple-400/30 bg-purple-500/20 px-3 py-1 font-rajdhani text-sm font-bold text-purple-200 backdrop-blur-sm">
-                        <TrendingUp className="h-4 w-4" />
-                        {videos[activeIndex]?.genre}
+              {/* Video Info and Controls Section */}
+              <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                {/* Left: Video Title and Info */}
+                <motion.div
+                  animate={titleControls}
+                  initial={{ opacity: 0, y: 20 }}
+                  className="flex-1"
+                >
+                  <h3 className="mb-2 font-orbitron text-2xl font-black uppercase text-white md:text-3xl">
+                    {videos[activeIndex]?.title}
+                  </h3>
+                  <div className="flex flex-wrap items-center gap-3">
+                    <span className="flex items-center gap-1 rounded-full border border-purple-400/30 bg-purple-500/20 px-3 py-1 font-rajdhani text-sm font-bold text-purple-200 backdrop-blur-sm">
+                      <TrendingUp className="h-4 w-4" />
+                      {videos[activeIndex]?.genre}
+                    </span>
+                    {videos[activeIndex]?.isShort && (
+                      <span className="rounded-full border border-fuchsia-400/30 bg-fuchsia-500/20 px-3 py-1 font-rajdhani text-xs font-bold uppercase text-fuchsia-200 backdrop-blur-sm">
+                        YouTube Short
                       </span>
-                      {videos[activeIndex]?.isShort && (
-                        <span className="rounded-full border border-fuchsia-400/30 bg-fuchsia-500/20 px-3 py-1 font-rajdhani text-xs font-bold uppercase text-fuchsia-200 backdrop-blur-sm">
-                          YouTube Short
-                        </span>
-                      )}
-                    </div>
-                  </motion.div>
-
-                  {/* Navigation Controls */}
-                  <div className="mt-4 flex items-center justify-center gap-2">
-                    <motion.button
-                      className="rounded-full border border-white/20 bg-black/60 p-3 text-white backdrop-blur-sm transition-all hover:border-cyan-400 hover:bg-cyan-600"
-                      onClick={handlePrevVideo}
-                      whileHover={{ scale: 1.1 }}
-                      whileTap={{ scale: 0.9 }}
-                    >
-                      <ChevronLeft size={20} />
-                    </motion.button>
-                    <motion.button
-                      className="rounded-full border border-white/20 bg-black/60 p-3 text-white backdrop-blur-sm transition-all hover:border-cyan-400 hover:bg-cyan-600"
-                      onClick={handleNextVideo}
-                      whileHover={{ scale: 1.1 }}
-                      whileTap={{ scale: 0.9 }}
-                    >
-                      <ChevronRight size={20} />
-                    </motion.button>
-                    <motion.button
-                      className="rounded-full border border-white/20 bg-black/60 p-3 text-white backdrop-blur-sm transition-all hover:border-purple-400 hover:bg-purple-600"
-                      onClick={handleOpenModal}
-                      whileHover={{ scale: 1.1 }}
-                      whileTap={{ scale: 0.9 }}
-                    >
-                      <Maximize2 size={24} />
-                    </motion.button>
+                    )}
                   </div>
+                </motion.div>
+
+                {/* Right: Navigation Controls */}
+                <div className="flex items-center gap-2">
+                  <motion.button
+                    className="rounded-xl border border-white/20 bg-gradient-to-r from-cyan-600 to-cyan-700 px-4 py-3 text-white shadow-lg shadow-cyan-500/30 backdrop-blur-sm transition-all hover:border-cyan-400 hover:shadow-cyan-500/50 md:px-6"
+                    onClick={handlePrevVideo}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <div className="flex items-center gap-2">
+                      <ChevronLeft size={20} />
+                      <span className="hidden font-rajdhani font-bold md:inline">
+                        Previous
+                      </span>
+                    </div>
+                  </motion.button>
+
+                  <motion.button
+                    className="rounded-xl border border-white/20 bg-gradient-to-r from-purple-600 to-fuchsia-600 px-4 py-3 text-white shadow-lg shadow-purple-500/30 backdrop-blur-sm transition-all hover:border-purple-400 hover:shadow-purple-500/50 md:px-6"
+                    onClick={handleOpenModal}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <div className="flex items-center gap-2">
+                      <Maximize2 size={20} />
+                      <span className="hidden font-rajdhani font-bold md:inline">
+                        Fullscreen
+                      </span>
+                    </div>
+                  </motion.button>
+
+                  <motion.button
+                    className="rounded-xl border border-white/20 bg-gradient-to-r from-cyan-600 to-cyan-700 px-4 py-3 text-white shadow-lg shadow-cyan-500/30 backdrop-blur-sm transition-all hover:border-cyan-400 hover:shadow-cyan-500/50 md:px-6"
+                    onClick={handleNextVideo}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <div className="flex items-center gap-2">
+                      <span className="hidden font-rajdhani font-bold md:inline">
+                        Next
+                      </span>
+                      <ChevronRight size={20} />
+                    </div>
+                  </motion.button>
                 </div>
-              </motion.div>
+              </div>
             </div>
           )}
         </motion.div>
