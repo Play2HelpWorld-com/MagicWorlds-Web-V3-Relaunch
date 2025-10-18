@@ -1098,27 +1098,27 @@ const About = () => {
           >
             {[
               {
-                name: "Alex Morgan",
+                name: "Justice Eneje",
                 avatar: "/images/about/player1.png",
                 role: "Pro Gamer",
                 quote:
-                  "I've earned enough through Games with Magic Worlds to fund my new gaming setup. The platform is intuitive and the rewards are real.",
+                  "Magic Worlds has transformed my gaming experience. The rewards are incredible and the community is amazing. I've already cashed out multiple times!",
                 rating: 5,
               },
               {
-                name: "Sarah Chen",
+                name: "Veronnie",
                 avatar: "/images/about/player2.png",
                 role: "Casual Player",
                 quote:
-                  "As a student, the extra income from playing games has been a game-changer. Plus, knowing I'm contributing to charity makes it even better.",
+                  "I love how easy it is to earn while having fun. The games are engaging and knowing my play helps charities makes every session meaningful.",
                 rating: 5,
               },
               {
-                name: "Marcus Williams",
+                name: "John Jay",
                 avatar: "/images/about/player3.png",
                 role: "Content Creator",
                 quote:
-                  "The tournaments are incredibly engaging and the community is fantastic. I've made friends and money - what more could you want?",
+                  "The best play-to-earn platform I've tried. Great tournaments, active community, and real rewards. My viewers love watching me compete here!",
                 rating: 4,
               },
             ].map((testimonial, index) => (
