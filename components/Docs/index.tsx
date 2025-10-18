@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { docsData } from "./docsData";
 import {
@@ -13,80 +13,37 @@ import {
   Scroll,
   Users,
   Code,
+  ChevronRight,
+  ChevronLeft,
+  Zap,
+  Trophy,
 } from "lucide-react";
 
-// Particle component for magical effects
-
-type Particle = {
-  x: number;
-  y: number;
-  size: number;
-  color: string;
-  speedX: number;
-  speedY: number;
-};
-
-const Particles = ({ active }: { active: boolean }) => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-
-  useEffect(() => {
-    if (!active) return;
-
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    const particles: Particle[] = [];
-    const colors = ["#8a2be2", "#ff69b4", "#00bfff", "#7fff00"];
-
-    // Store random values in variables before use
-    for (let i = 0; i < 50; i++) {
-      const x = Math.random() * canvas.width;
-      const y = Math.random() * canvas.height;
-      const size = Math.random() * 5 + 1;
-      const color = colors[Math.floor(Math.random() * colors.length)];
-      const speedX = Math.random() * 3 - 1.5;
-      const speedY = Math.random() * 3 - 1.5;
-
-      particles.push({ x, y, size, color, speedX, speedY });
-    }
-
-    function animate() {
-      if (!ctx || !canvas) return; // Extra null check for safety
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      particles.forEach((p) => {
-        ctx.fillStyle = p.color;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        ctx.fill();
-
-        p.x += p.speedX;
-        p.y += p.speedY;
-
-        if (p.x < 0 || p.x > canvas.width) p.speedX *= -1;
-        if (p.y < 0 || p.y > canvas.height) p.speedY *= -1;
-      });
-
-      requestAnimationFrame(animate);
-    }
-
-    const animation = requestAnimationFrame(animate);
-
-    return () => {
-      cancelAnimationFrame(animation);
-    };
-  }, [active]);
+// Main content component with animations
+const ContentSection = ({ section }) => {
+  if (!section) return null;
 
   return (
-    <canvas
-      ref={canvasRef}
-      className="pointer-events-none absolute inset-0 z-0 opacity-30"
-    />
+    <div className="prose prose-invert max-w-none">
+      {/* Title */}
+      <motion.h1
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="mb-6 bg-gradient-to-r from-purple-400 via-fuchsia-400 to-cyan-400 bg-clip-text font-orbitron text-3xl font-black uppercase tracking-tight text-transparent"
+      >
+        {section.title}
+      </motion.h1>
+
+      {/* Content */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.1 }}
+        className="space-y-4 font-rajdhani text-base leading-relaxed text-gray-300"
+      >
+        {section.content}
+      </motion.div>
+    </div>
   );
 };
 
@@ -105,38 +62,89 @@ const SidebarLink = ({ activeSection, setActiveSection }) => {
     troubleshooting: <ShieldAlert className="h-5 w-5" />,
   };
 
+  const colors = {
+    introduction: "from-purple-500 to-fuchsia-500",
+    gettingStarted: "from-cyan-500 to-blue-500",
+    features: "from-yellow-500 to-orange-500",
+    gameplay: "from-red-500 to-pink-500",
+    worldBuilding: "from-green-500 to-emerald-500",
+    community: "from-indigo-500 to-purple-500",
+    developers: "from-blue-500 to-cyan-500",
+    troubleshooting: "from-orange-500 to-red-500",
+  };
+
   return (
     <>
-      {sections.map((section) => (
+      {sections.map((section, index) => (
         <motion.li
           key={section}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: index * 0.05 }}
+          whileHover={{ scale: 1.02, x: 5 }}
+          whileTap={{ scale: 0.98 }}
         >
           <button
             onClick={() => setActiveSection(section)}
-            className={`flex w-full items-center rounded-lg px-4 py-3 text-base transition-all ${
+            className={`group relative w-full overflow-hidden rounded-xl border px-4 py-3.5 text-left transition-all ${
               activeSection === section
-                ? "bg-gradient-to-r from-purple-600 to-blue-500 text-white shadow-lg"
-                : "text-body-color dark:text-body-color-dark hover:bg-primary hover:bg-opacity-10"
+                ? `border-purple-500/50 bg-gradient-to-r ${colors[section]} shadow-lg shadow-purple-500/30`
+                : "border-white/10 bg-white/5 hover:border-purple-500/30 hover:bg-white/10"
             }`}
           >
-            <motion.div
-              className="mr-4"
-              initial={{ rotate: 0 }}
-              animate={{ rotate: activeSection === section ? 360 : 0 }}
-              transition={{ duration: 0.5 }}
-            >
-              {icons[section] || <Gamepad2 className="h-5 w-5" />}
-            </motion.div>
-            <span>{docsData[section]?.title}</span>
+            <div className="relative z-10 flex items-center">
+              <motion.div
+                className={`mr-3 ${
+                  activeSection === section
+                    ? "text-white"
+                    : "text-gray-400 group-hover:text-white"
+                }`}
+                animate={{
+                  rotate: activeSection === section ? [0, 10, -10, 0] : 0,
+                  scale: activeSection === section ? [1, 1.1, 1] : 1,
+                }}
+                transition={{ duration: 0.5 }}
+              >
+                {icons[section] || <Gamepad2 className="h-5 w-5" />}
+              </motion.div>
+              <span
+                className={`font-rajdhani text-sm font-bold uppercase tracking-wide ${
+                  activeSection === section
+                    ? "text-white"
+                    : "text-gray-300 group-hover:text-white"
+                }`}
+              >
+                {docsData[section]?.title}
+              </span>
 
+              {activeSection === section && (
+                <motion.div
+                  className="ml-auto flex items-center gap-1"
+                  initial={{ opacity: 0, scale: 0 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <div className="h-2 w-2 animate-pulse rounded-full bg-white" />
+                  <ChevronRight className="h-4 w-4 text-white" />
+                </motion.div>
+              )}
+            </div>
+
+            {/* Animated background for active state */}
             {activeSection === section && (
               <motion.div
-                className="ml-auto h-2 w-2 rounded-full bg-white"
-                initial={{ scale: 0 }}
-                animate={{ scale: [0, 1.5, 1] }}
-                transition={{ duration: 0.5 }}
+                className="absolute inset-0 opacity-20 blur-xl"
+                style={{
+                  background: `linear-gradient(90deg, var(--tw-gradient-stops))`,
+                }}
+                animate={{
+                  opacity: [0.1, 0.3, 0.1],
+                }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
               />
             )}
           </button>
@@ -146,242 +154,145 @@ const SidebarLink = ({ activeSection, setActiveSection }) => {
   );
 };
 
-// Main content component with animations
-const ContentSection = ({ section, isActive }) => {
-  return (
-    <AnimatePresence mode="wait">
-      {isActive && (
-        <motion.div
-          key={section}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -20 }}
-          transition={{ duration: 0.5 }}
-          className="rounded-lg border border-purple-900/30 bg-gradient-to-br from-gray-900 to-gray-800 p-8 text-white shadow-xl"
-        >
-          {docsData[section]?.content}
-        </motion.div>
-      )}
-    </AnimatePresence>
-  );
-};
-
-// 3D Card effect component
-const Card3D = ({ children }) => {
-  const cardRef = useRef<HTMLDivElement>(null);
-  const [rotateX, setRotateX] = useState(0);
-  const [rotateY, setRotateY] = useState(0);
-
-  const handleMouseMove = (e) => {
-    if (!cardRef.current) return;
-
-    const card = cardRef.current;
-    const rect = card.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
-
-    setRotateX((y - centerY) / 20);
-    setRotateY(-(x - centerX) / 20);
-  };
-
-  const handleMouseLeave = () => {
-    setRotateX(0);
-    setRotateY(0);
-  };
-
-  return (
-    <div
-      ref={cardRef}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      className="perspective-1000 transform-gpu transition-transform duration-200 ease-out"
-      style={{ transform: `rotateX(${rotateX}deg) rotateY(${rotateY}deg)` }}
-    >
-      {children}
-    </div>
-  );
-};
-
 export default function Docs() {
   const [activeSection, setActiveSection] = useState("introduction");
-  const [error, setError] = useState(null);
-  const [showParticles, setShowParticles] = useState(false);
+  const sections = Object.keys(docsData);
+  const currentIndex = sections.indexOf(activeSection);
 
-  // Toggle particles effect
-  const toggleParticles = () => {
-    setShowParticles(!showParticles);
+  const handleNext = () => {
+    if (currentIndex < sections.length - 1) {
+      setActiveSection(sections[currentIndex + 1]);
+    }
   };
 
-  const handleSectionChange = (section) => {
-    try {
-      if (!docsData[section]) {
-        throw new Error("Invalid section selected.");
-      }
-      setError(null);
-      setActiveSection(section);
-
-      // Show particles briefly when changing sections
-      setShowParticles(true);
-      setTimeout(() => setShowParticles(false), 2000);
-    } catch (err) {
-      setError(err.message || "An error occurred while selecting the section.");
+  const handlePrevious = () => {
+    if (currentIndex > 0) {
+      setActiveSection(sections[currentIndex - 1]);
     }
   };
 
   return (
-    <section className="min-h-screen bg-gradient-to-b from-gray-950 via-gray-900 to-purple-950 pb-16 pt-24 text-white">
-      {showParticles && <Particles active={showParticles} />}
+    <section className="relative overflow-hidden bg-transparent py-20 lg:py-25 xl:py-30">
+      {/* Animated Grid Background */}
+      <div className="absolute inset-0 z-0">
+        {/* <div
+          className="h-full w-full opacity-20"
+          style={{
+            backgroundImage: `linear-gradient(rgba(139, 92, 246, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(139, 92, 246, 0.1) 1px, transparent 1px)`,
+            backgroundSize: "50px 50px",
+          }}
+        /> */}
+      </div>
 
-      <div className="container mx-auto px-4">
+      {/* Gradient Orbs */}
+      {/* <div className="absolute left-0 top-0 -z-10 h-[500px] w-[500px] rounded-full bg-purple-500 opacity-20 blur-[120px]" />
+      <div className="absolute right-0 top-1/4 -z-10 h-[600px] w-[600px] rounded-full bg-fuchsia-500 opacity-20 blur-[120px]" />
+      <div className="absolute bottom-0 left-1/3 -z-10 h-[500px] w-[500px] rounded-full bg-cyan-500 opacity-20 blur-[120px]" /> */}
+
+      {/* Header */}
+      <div className="relative z-10 mb-16 text-center">
         <motion.div
-          className="mb-12 flex justify-center"
-          initial={{ y: -50, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="mb-4 flex items-center justify-center gap-4"
         >
-          <Card3D>
-            <div className="flex items-center space-x-4 rounded-xl bg-gradient-to-r from-purple-600 to-blue-500 p-6 shadow-2xl">
-              <Gamepad2 className="h-12 w-12 text-white" />
-              <h1 className="bg-gradient-to-r from-white to-purple-200 bg-clip-text text-4xl font-bold tracking-tight text-transparent">
-                Journey With Magic Worlds
-              </h1>
-            </div>
-          </Card3D>
+          {/* <Trophy className="h-12 w-12 text-yellow-400 drop-shadow-[0_0_15px_rgba(234,179,8,0.5)]" /> */}
+          <h2 className="bg-gradient-to-r from-purple-400 via-fuchsia-400 to-cyan-400 bg-clip-text font-orbitron text-6xl font-black uppercase text-transparent">
+            DOCUMENTATION
+          </h2>
+          {/* <Trophy className="h-12 w-12 text-yellow-400 drop-shadow-[0_0_15px_rgba(234,179,8,0.5)]" /> */}
         </motion.div>
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.3, duration: 0.6 }}
+          className="font-rajdhani text-xl text-gray-300"
+        >
+          Your ultimate guide to mastering the Magic Worlds 🎮
+        </motion.p>
+      </div>
 
+      <div className="container relative z-10 mx-auto w-full">
         <div className="flex flex-col gap-8 lg:flex-row">
           {/* Sidebar */}
           <motion.div
-            className="w-full lg:w-1/4"
-            initial={{ x: -50, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6 }}
+            className="lg:w-1/4"
           >
-            <div className="sticky top-[74px] rounded-lg border border-purple-500/30 bg-gray-900/80 p-4 shadow-lg backdrop-blur-lg">
-              <div className="mb-4 flex items-center justify-between">
-                <h3 className="text-xl font-semibold text-white">Navigation</h3>
-                <motion.button
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
-                  onClick={toggleParticles}
-                  className="rounded-full bg-purple-600 p-2 text-white"
-                  title="Toggle magical effects"
-                >
-                  <Wand2 className="h-4 w-4" />
-                </motion.button>
+            <div className="sticky top-[74px] rounded-2xl border border-purple-500/30 bg-black/40 p-6 backdrop-blur-lg">
+              <div className="mb-6 flex items-center gap-3">
+                <Gamepad2 className="h-6 w-6 text-purple-400" />
+                <h3 className="font-orbitron text-lg font-bold uppercase tracking-wider text-white">
+                  Navigation
+                </h3>
               </div>
               <ul className="space-y-2">
                 <SidebarLink
                   activeSection={activeSection}
-                  setActiveSection={handleSectionChange}
+                  setActiveSection={setActiveSection}
                 />
               </ul>
             </div>
           </motion.div>
 
-          {/* Content Section */}
+          {/* Content */}
           <motion.div
-            className="w-full lg:w-3/4"
-            initial={{ x: 50, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="lg:w-3/4"
           >
-            {/* Display Title */}
-            <motion.h1
-              className="mb-6 bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-3xl font-bold text-transparent"
-              key={activeSection + "-title"}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.3 }}
-            >
-              {docsData[activeSection]?.title}
-            </motion.h1>
+            <div className="relative overflow-hidden rounded-2xl border border-purple-500/30 bg-black/40 p-8 backdrop-blur-lg lg:p-12">
+              {/* Content Glow Effect */}
+              <div className="absolute -inset-0.5 -z-10 rounded-2xl bg-gradient-to-r from-purple-500 via-fuchsia-500 to-cyan-500 opacity-20 blur-xl" />
 
-            {/* Display Content */}
-            <div className="mb-8">
-              <ContentSection section={activeSection} isActive={true} />
-            </div>
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeSection}
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <ContentSection section={docsData[activeSection]} />
+                </motion.div>
+              </AnimatePresence>
 
-            {/* Error handling */}
-            {error && (
+              {/* Navigation Buttons */}
               <motion.div
-                className="mt-4 rounded-lg border border-red-500 bg-red-500/20 p-4 text-red-200"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3 }}
+                transition={{ delay: 0.4 }}
+                className="mt-12 flex items-center justify-between border-t border-white/10 pt-8"
               >
-                <ShieldAlert className="mr-2 inline-block h-5 w-5" />
-                {error}
+                <button
+                  onClick={handlePrevious}
+                  disabled={currentIndex === 0}
+                  className="group flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-6 py-3 font-rajdhani font-bold uppercase tracking-wide text-white transition-all hover:border-purple-500/50 hover:bg-purple-500/20 hover:shadow-lg hover:shadow-purple-500/30 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:border-white/10 disabled:hover:bg-white/5 disabled:hover:shadow-none"
+                >
+                  <ChevronLeft className="h-5 w-5 transition-transform group-hover:-translate-x-1" />
+                  <span>Previous</span>
+                </button>
+
+                <div className="flex items-center gap-2 text-gray-400">
+                  <Zap className="h-5 w-5 text-yellow-400" />
+                  <span className="font-rajdhani text-sm">
+                    {currentIndex + 1} / {sections.length}
+                  </span>
+                </div>
+
+                <button
+                  onClick={handleNext}
+                  disabled={currentIndex === sections.length - 1}
+                  className="group flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-6 py-3 font-rajdhani font-bold uppercase tracking-wide text-white transition-all hover:border-cyan-500/50 hover:bg-cyan-500/20 hover:shadow-lg hover:shadow-cyan-500/30 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:border-white/10 disabled:hover:bg-white/5 disabled:hover:shadow-none"
+                >
+                  <span>Next</span>
+                  <ChevronRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+                </button>
               </motion.div>
-            )}
-
-            {/* Navigation buttons */}
-            <div className="mt-8 flex justify-between">
-              {Object.keys(docsData).indexOf(activeSection) > 0 && (
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={() =>
-                    handleSectionChange(
-                      Object.keys(docsData)[
-                        Object.keys(docsData).indexOf(activeSection) - 1
-                      ],
-                    )
-                  }
-                  className="flex items-center rounded-lg bg-gray-800 px-4 py-2 text-white hover:bg-gray-700"
-                >
-                  <svg
-                    className="mr-2 h-5 w-5"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M15 19l-7-7 7-7"
-                    ></path>
-                  </svg>
-                  Previous
-                </motion.button>
-              )}
-
-              {Object.keys(docsData).indexOf(activeSection) <
-                Object.keys(docsData).length - 1 && (
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={() =>
-                    handleSectionChange(
-                      Object.keys(docsData)[
-                        Object.keys(docsData).indexOf(activeSection) + 1
-                      ],
-                    )
-                  }
-                  className="ml-auto flex items-center rounded-lg bg-purple-700 px-4 py-2 text-white hover:bg-purple-600"
-                >
-                  Next
-                  <svg
-                    className="ml-2 h-5 w-5"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M9 5l7 7-7 7"
-                    ></path>
-                  </svg>
-                </motion.button>
-              )}
             </div>
           </motion.div>
         </div>

@@ -10,6 +10,11 @@ const nextConfig = {
         hostname: "cdn.sanity.io",
         port: "",
       },
+      {
+        protocol: "https",
+        hostname: "img.youtube.com",
+        port: "",
+      },
     ],
   },
 };

@@ -1,344 +1,422 @@
 "use client";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
-import { useEffect, useState } from "react";
-import SectionHeader from "../Common/SectionHeader";
+import { useEffect, useState, useRef } from "react";
+import {
+  Monitor,
+  Smartphone,
+  Gamepad2,
+  Headset,
+  Cloud,
+  Globe,
+  Zap,
+  Users,
+  Shield,
+  Wifi,
+} from "lucide-react";
 
 const Integration = () => {
-  const [isHovering, setIsHovering] = useState<number | null>(null);
-  const [animateBackground, setAnimateBackground] = useState(false);
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"],
+  });
+
+  const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
+  const scale = useTransform(
+    scrollYProgress,
+    [0, 0.2, 0.8, 1],
+    [0.8, 1, 1, 0.8],
+  );
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setAnimateBackground((prev) => !prev);
-    }, 8000);
-    return () => clearInterval(interval);
+    const handleMouseMove = (e: MouseEvent) => {
+      if (containerRef.current) {
+        const rect = containerRef.current.getBoundingClientRect();
+        setMousePosition({
+          x: e.clientX - rect.left,
+          y: e.clientY - rect.top,
+        });
+      }
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
-  const platformIcons = [
-    { src: "/images/brand/pc.png", name: "PC Gaming", color: "#50E3C2" },
-    { src: "/images/brand/console.png", name: "Console", color: "#FF5757" },
-    { src: "/images/brand/mobile.png", name: "Mobile", color: "#FFD600" },
-    { src: "/images/brand/vr.png", name: "VR", color: "#AB6AFF" },
+  const platforms = [
     {
-      src: "/images/brand/cloud.png",
-      name: "Cloud Gaming",
-      color: "#3F95FF",
+      icon: Monitor,
+      name: "WINDOWS",
+      color: "#00D9FF",
+      gradient: "from-cyan-500 to-blue-500",
+      description: "Maximum performance. Ultra graphics. Competitive edge.",
+      specs: ["4K Ready", "Ray Tracing", "144+ FPS"],
+      status: "Released",
     },
-    { src: "/images/brand/browser.png", name: "Browser", color: "#FF9552" },
+    {
+      icon: Monitor,
+      name: "MACOS",
+      color: "#A3A3A3",
+      gradient: "from-gray-400 to-gray-600",
+      description: "Optimized for Apple Silicon. Seamless performance.",
+      specs: ["M-Series", "Retina Display", "Metal API"],
+      status: "Released",
+    },
+    {
+      icon: Smartphone,
+      name: "ANDROID",
+      color: "#3DDC84",
+      gradient: "from-green-500 to-emerald-500",
+      description: "Play anywhere. Quick sessions. Always connected.",
+      specs: ["Touch Optimized", "5G Ready", "Low Latency"],
+      status: "Released",
+    },
+    {
+      icon: Cloud,
+      name: "CLOUD STREAM",
+      color: "#00E5A0",
+      gradient: "from-emerald-500 to-teal-500",
+      description: "Zero downloads. Instant play. Game anywhere, anytime.",
+      specs: ["No Install", "Any Device", "1080p Stream"],
+      status: "Released",
+    },
+    {
+      icon: Headset,
+      name: "VR WORLDS",
+      color: "#B14AED",
+      gradient: "from-purple-500 to-violet-500",
+      description: "Coming to VR. 360° experience. Virtual reality redefined.",
+      specs: ["Full VR", "Hand Tracking", "Haptic Feedback"],
+      status: "Upcoming",
+    },
+    {
+      icon: Smartphone,
+      name: "IOS",
+      color: "#007AFF",
+      gradient: "from-blue-500 to-indigo-500",
+      description: "Coming to iPhone & iPad. Premium mobile experience.",
+      specs: ["App Store", "Game Center", "iCloud Sync"],
+      status: "Upcoming",
+    },
   ];
 
-  const floatingElements = [
-    { size: "sm", color: "#FF5757", delay: 0 },
-    { size: "lg", color: "#FFD600", delay: 1.5 },
-    { size: "md", color: "#50E3C2", delay: 0.7 },
-    { size: "sm", color: "#AB6AFF", delay: 2.1 },
-    { size: "md", color: "#3F95FF", delay: 3.2 },
-    { size: "sm", color: "#FF9552", delay: 1.2 },
-    { size: "lg", color: "#50E3C2", delay: 2.8 },
-    { size: "md", color: "#FF5757", delay: 4.1 },
+  const features = [
+    {
+      icon: Zap,
+      label: "Real-Time Sync",
+      description: "Instant progress across devices",
+    },
+    {
+      icon: Users,
+      label: "Cross-Play",
+      description: "Play with anyone, anywhere",
+    },
+    {
+      icon: Shield,
+      label: "Secure Cloud",
+      description: "Your data, protected",
+    },
+    {
+      icon: Wifi,
+      label: "Low Latency",
+      description: "Lightning-fast response",
+    },
   ];
-
-  const getSizeClass = (size) => {
-    switch (size) {
-      case "sm":
-        return "h-3 w-3";
-      case "md":
-        return "h-5 w-5";
-      case "lg":
-        return "h-8 w-8";
-      default:
-        return "h-4 w-4";
-    }
-  };
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.3,
-      },
-    },
-  };
-
-  const iconVariants = {
-    hidden: { opacity: 0, scale: 0.8, y: 20 },
-    visible: {
-      opacity: 1,
-      scale: 1,
-      y: 0,
-      transition: { type: "spring", stiffness: 100, damping: 10 },
-    },
-    hover: {
-      scale: 1.1,
-      y: -10,
-      boxShadow: "0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23)",
-      transition: { type: "spring", stiffness: 300, damping: 10 },
-    },
-  };
-
-  const particleVariants = {
-    initial: (i) => ({
-      opacity: 0.7,
-      y: 0,
-      x: 0,
-      scale: 1,
-    }),
-    animate: (i) => ({
-      opacity: [0.7, 0.9, 0.7],
-      y: [0, -15, 0],
-      x: [0, i % 2 === 0 ? 10 : -10, 0],
-      scale: [1, 1.2, 1],
-      transition: {
-        repeat: Infinity,
-        repeatType: "loop" as const,
-        duration: 3 + (i.delay || 0),
-        ease: "easeInOut",
-        delay: i.delay || 0,
-      },
-    }),
-  };
-
-  const backgroundVariants = {
-    initial: { backgroundPosition: "0% 0%" },
-    animate: {
-      backgroundPosition: ["0% 0%", "100% 100%"],
-      transition: {
-        duration: 20,
-        ease: "linear",
-        repeat: Infinity,
-        repeatType: "loop" as const,
-      },
-    },
-  };
 
   return (
-    <section className="relative overflow-hidden py-24 lg:py-32">
-      {/* Animated Background */}
-      <motion.div
-        className="absolute inset-0 z-0 bg-transparent bg-[length:400%_400%]"
-        variants={backgroundVariants}
-        initial="initial"
-        animate="animate"
-      >
-        {/* Particle Grid Overlay */}
-        <div className="absolute inset-0 opacity-20">
-          <div className="h-full w-full bg-[radial-gradient(rgba(255,255,255,0.3)_1px,transparent_1px)] bg-[size:20px_20px]"></div>
-        </div>
-      </motion.div>
-
-      {/* Content Container */}
-      <div className="relative z-10 mx-auto max-w-7xl px-4 md:px-8 2xl:px-0">
-        {/* Section Title */}
+    <section
+      ref={containerRef}
+      className="relative overflow-hidden bg-black py-20 lg:py-32"
+    >
+      {/* Animated Grid Background */}
+      <div className="absolute inset-0 opacity-20">
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#1a1a1a_1px,transparent_1px),linear-gradient(to_bottom,#1a1a1a_1px,transparent_1px)] bg-[size:4rem_4rem]" />
         <motion.div
-          initial={{ opacity: 0, y: -30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          viewport={{ once: true }}
-          className="mb-16 text-center"
-        >
-          <SectionHeader
-            headerInfo={{
-              title: `CROSS-PLATFORM GAMING UNIVERSE`,
-              subtitle: `Connect & Play Across Every Device`,
-              description: `Jump into action seamlessly across all your devices. Whether you're grinding XP on your desktop, quick-matching on mobile, or exploring virtual worlds in VR—your gaming adventure follows you everywhere. Play2Work's cross-platform technology ensures your progress, friends, and achievements stay synchronized in real-time.`,
-            }}
-          />
+          className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-purple-500/10 to-pink-500/10"
+          animate={{
+            opacity: [0.3, 0.6, 0.3],
+            scale: [1, 1.05, 1],
+          }}
+          transition={{
+            duration: 8,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+      </div>
 
+      {/* Mouse Follower Glow */}
+      <motion.div
+        className="pointer-events-none absolute inset-0 opacity-30"
+        animate={{
+          background: `radial-gradient(600px circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(0, 217, 255, 0.15), transparent 40%)`,
+        }}
+        transition={{ type: "spring", damping: 30, stiffness: 200 }}
+      />
+
+      <motion.div
+        className="relative z-10 mx-auto max-w-7xl px-4 md:px-8 2xl:px-0"
+        style={{ opacity, scale }}
+      >
+        {/* Header Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+          className="mb-20 text-center"
+        >
+          {/* Glitch effect badge */}
           <motion.div
-            initial={{ width: "0%" }}
-            whileInView={{ width: "80%" }}
-            transition={{ delay: 0.5, duration: 1.5 }}
+            className="mb-6 inline-flex items-center gap-2 rounded-full border border-cyan-500/30 bg-cyan-500/10 px-4 py-2 backdrop-blur-sm"
+            initial={{ opacity: 0, scale: 0.8 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.2 }}
             viewport={{ once: true }}
-            className="mx-auto mt-8 h-px bg-gradient-to-r from-transparent via-blue-500 to-transparent"
+          >
+            <Zap className="h-4 w-4 text-cyan-400" />
+            <span className="font-orbitron text-xs font-bold uppercase tracking-wider text-cyan-400">
+              Universal Gaming Platform
+            </span>
+          </motion.div>
+
+          {/* Main Title */}
+          <motion.h2
+            className="mb-6 font-orbitron text-4xl font-black uppercase leading-tight text-white md:text-5xl lg:text-6xl"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3, duration: 0.8 }}
+            viewport={{ once: true }}
+          >
+            <span className="bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
+              ONE WORLD
+            </span>
+            <br />
+            <span className="text-white">INFINITE DEVICES</span>
+          </motion.h2>
+
+          {/* Subtitle */}
+          <motion.p
+            className="mx-auto max-w-3xl font-rajdhani text-lg font-medium leading-relaxed text-gray-400 md:text-xl"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ delay: 0.5, duration: 0.8 }}
+            viewport={{ once: true }}
+          >
+            Break free from platform limitations. Your adventure synchronizes
+            seamlessly across desktop, mobile, console, VR, and cloud. One
+            account. One profile. Unlimited possibilities.
+          </motion.p>
+
+          {/* Animated divider */}
+          <motion.div
+            className="mx-auto mt-8 h-1 w-32 rounded-full bg-gradient-to-r from-cyan-500 via-purple-500 to-pink-500"
+            initial={{ width: 0, opacity: 0 }}
+            whileInView={{ width: 128, opacity: 1 }}
+            transition={{ delay: 0.7, duration: 1 }}
+            viewport={{ once: true }}
           />
         </motion.div>
 
-        {/* Gaming Platforms Section */}
-        <motion.div
-          className="relative mx-auto max-w-5xl px-4"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-        >
-          {/* Floating elements */}
-          {floatingElements.map((element, idx) => (
-            <motion.div
-              key={idx}
-              className={`absolute rounded-full ${getSizeClass(element.size)}`}
-              style={{
-                background: element.color,
-                boxShadow: `0 0 15px ${element.color}`,
-                left: `${10 + Math.random() * 80}%`,
-                top: `${10 + Math.random() * 80}%`,
-              }}
-              custom={element}
-              variants={particleVariants}
-              initial="initial"
-              animate="animate"
-            />
-          ))}
+        {/* Platform Cards Grid */}
+        <div className="mb-20 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {platforms.map((platform, index) => {
+            const Icon = platform.icon;
+            const isActive = activeIndex === index;
 
-          {/* Platform Icons Grid */}
-          <div className="grid grid-cols-2 gap-8 md:grid-cols-3 lg:gap-12">
-            {platformIcons.map((platform, index) => (
+            return (
               <motion.div
                 key={index}
-                variants={iconVariants}
-                whileHover={isHovering === index ? "hover" : "visible"}
-                onHoverStart={() => setIsHovering(index)}
-                onHoverEnd={() => setIsHovering(null)}
-                className="flex flex-col items-center justify-center"
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1, duration: 0.6 }}
+                viewport={{ once: true }}
+                onHoverStart={() => setActiveIndex(index)}
+                onHoverEnd={() => setActiveIndex(null)}
+                className="group relative"
               >
-                <motion.div className="group relative flex h-32 w-32 items-center justify-center overflow-hidden rounded-2xl border border-white/10 bg-black/20 backdrop-blur-md">
-                  {/* Glow effect on hover */}
-                  <motion.div
-                    className="absolute inset-0 opacity-0 group-hover:opacity-50"
-                    style={{
-                      background: `radial-gradient(circle, ${platform.color} 0%, transparent 70%)`,
-                    }}
-                    animate={
-                      isHovering === index ? { opacity: 0.5 } : { opacity: 0 }
-                    }
-                    transition={{ duration: 0.5 }}
-                  />
+                {/* Glow effect */}
+                <motion.div
+                  className={`absolute -inset-0.5 rounded-2xl bg-gradient-to-r ${platform.gradient} opacity-0 blur-xl transition-opacity duration-500 group-hover:opacity-70`}
+                />
 
-                  {/* Icon */}
-                  <div className="relative z-10 p-5">
-                    <Image
-                      width={100}
-                      height={100}
-                      src={platform.src}
-                      alt={platform.name}
-                      className="h-16 w-16 object-contain"
-                    />
+                {/* Card */}
+                <div className="relative h-full overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-b from-gray-900/90 to-black/90 p-6 backdrop-blur-sm transition-all duration-500 group-hover:border-white/30">
+                  {/* Status Badge */}
+                  {/* <div className="absolute right-4 top-4">
+                    <span
+                      className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wide ${
+                        platform.status === "Released"
+                          ? "bg-emerald-500/20 text-emerald-400 ring-1 ring-emerald-500/40"
+                          : "bg-amber-500/20 text-amber-400 ring-1 ring-amber-500/40"
+                      }`}
+                    >
+                      <div
+                        className={`h-1.5 w-1.5 rounded-full ${
+                          platform.status === "Released"
+                            ? "animate-pulse bg-emerald-400"
+                            : "bg-amber-400"
+                        }`}
+                      />
+                      {platform.status}
+                    </span>
+                  </div> */}
+
+                  {/* Icon and Title Row */}
+                  <div className="mb-4 flex items-center gap-4">
+                    {/* Icon container */}
+                    <motion.div
+                      className={`inline-flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-xl bg-gradient-to-br ${platform.gradient} p-0.5`}
+                      animate={isActive ? { scale: [1, 1.1, 1] } : {}}
+                      transition={{ duration: 0.5 }}
+                    >
+                      <div className="flex h-full w-full items-center justify-center rounded-xl bg-black">
+                        <Icon className="h-7 w-7 text-white" />
+                      </div>
+                    </motion.div>
+
+                    {/* Platform name */}
+                    <h3 className="font-orbitron text-xl font-bold uppercase tracking-wide text-white">
+                      {platform.name}
+                    </h3>
                   </div>
 
-                  {/* Animated border on hover */}
+                  {/* Description */}
+                  <p className="mb-4 font-rajdhani text-sm font-medium leading-relaxed text-gray-400">
+                    {platform.description}
+                  </p>
+
+                  {/* Specs list */}
+                  <div className="space-y-2">
+                    {platform.specs.map((spec, i) => (
+                      <motion.div
+                        key={i}
+                        className="flex items-center gap-2"
+                        initial={{ opacity: 0, x: -20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        transition={{ delay: index * 0.1 + i * 0.1 }}
+                        viewport={{ once: true }}
+                      >
+                        <div
+                          className={`h-1.5 w-1.5 rounded-full bg-gradient-to-r ${platform.gradient}`}
+                        />
+                        <span className="font-rajdhani text-xs font-medium uppercase tracking-wide text-gray-500 transition-colors duration-300 group-hover:text-gray-300">
+                          {spec}
+                        </span>
+                      </motion.div>
+                    ))}
+                  </div>
+
+                  {/* Hover shine effect */}
                   <motion.div
-                    className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100"
+                    className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
                     style={{
-                      background: `linear-gradient(90deg, transparent, ${platform.color}, transparent)`,
-                      backgroundSize: "200% 100%",
+                      background: `linear-gradient(135deg, transparent 0%, ${platform.color}15 50%, transparent 100%)`,
                     }}
-                    animate={
-                      isHovering === index
-                        ? {
-                            backgroundPosition: ["0% 0%", "200% 0%"],
-                          }
-                        : {}
-                    }
-                    transition={{ duration: 1.5, repeat: Infinity }}
                   />
-                </motion.div>
-
-                {/* Platform name with animation */}
-                <motion.p
-                  className="font-gaming mt-4 text-center text-sm font-medium text-white"
-                  animate={
-                    isHovering === index
-                      ? {
-                          scale: 1.1,
-                          color: platform.color,
-                        }
-                      : {
-                          scale: 1,
-                          color: "#ffffff",
-                        }
-                  }
-                  transition={{ duration: 0.3 }}
-                >
-                  {platform.name}
-                </motion.p>
+                </div>
               </motion.div>
-            ))}
-          </div>
+            );
+          })}
+        </div>
 
-          {/* Central connecting lines */}
-          <motion.div
-            className="absolute inset-0 z-0 opacity-40"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 0.4 }}
-            transition={{ delay: 1, duration: 1.5 }}
-            viewport={{ once: true }}
-          >
-            <svg
-              width="100%"
-              height="100%"
-              viewBox="0 0 800 600"
-              className="stroke-blue-500/50"
-            >
-              <motion.path
-                d="M400,100 L200,200 L250,350 L400,450 L550,350 L600,200 L400,100"
-                fill="none"
-                strokeWidth="2"
-                initial={{ pathLength: 0, opacity: 0 }}
-                animate={{ pathLength: 1, opacity: 1 }}
-                transition={{ duration: 2.5, ease: "easeInOut" }}
-              />
-              <motion.path
-                d="M400,100 L400,450"
-                fill="none"
-                strokeWidth="2"
-                strokeDasharray="5,5"
-                initial={{ pathLength: 0, opacity: 0 }}
-                animate={{ pathLength: 1, opacity: 1 }}
-                transition={{ duration: 1.5, ease: "easeInOut", delay: 1 }}
-              />
-              <motion.path
-                d="M200,200 L600,200"
-                fill="none"
-                strokeWidth="2"
-                strokeDasharray="5,5"
-                initial={{ pathLength: 0, opacity: 0 }}
-                animate={{ pathLength: 1, opacity: 1 }}
-                transition={{ duration: 1.5, ease: "easeInOut", delay: 1.5 }}
-              />
-            </svg>
-          </motion.div>
-        </motion.div>
+        {/* Features Bar */}
 
-        {/* CTA Button */}
+        {/* Bottom CTA Section */}
         <motion.div
-          className="mt-16 text-center"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 1.2 }}
+          transition={{ duration: 0.8 }}
           viewport={{ once: true }}
+          className="relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-gray-900/90 to-black/90 p-8 text-center backdrop-blur-sm md:p-12"
         >
-          {/* <motion.button
-            className="relative overflow-hidden rounded-full bg-gradient-to-r from-blue-600 to-purple-600 px-8 py-4 font-bold text-white shadow-lg"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.98 }}
-          >
-            <span className="relative z-10">START GAMING NOW</span>
-            <motion.span
-              className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500"
-              initial={{ x: "-100%" }}
-              whileHover={{ x: "0%" }}
-              transition={{ duration: 0.4 }}
-            />
-          </motion.button> */}
+          {/* Background pattern */}
+          <div className="absolute inset-0 opacity-5">
+            <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff_1px,transparent_1px),linear-gradient(to_bottom,#ffffff_1px,transparent_1px)] bg-[size:2rem_2rem]" />
+          </div>
 
-          {/* Pulse effect around button */}
-          <motion.div
-            className="absolute left-1/2 mt-4 -translate-x-1/2 rounded-full bg-blue-500/20"
-            style={{ width: 20, height: 20 }}
-            animate={{
-              scale: [1, 3, 1],
-              opacity: [0.7, 0, 0.7],
-            }}
-            transition={{
-              duration: 2,
-              repeat: Infinity,
-              repeatType: "loop",
-            }}
-          />
+          <div className="relative z-10">
+            {/* Badge */}
+            <motion.div
+              className="mb-4 inline-flex items-center gap-2 rounded-full border border-cyan-500/30 bg-cyan-500/10 px-4 py-1.5"
+              animate={{
+                boxShadow: [
+                  "0 0 0 0 rgba(0, 217, 255, 0)",
+                  "0 0 0 10px rgba(0, 217, 255, 0)",
+                ],
+              }}
+              transition={{ duration: 2, repeat: Infinity }}
+            >
+              <div className="h-2 w-2 animate-pulse rounded-full bg-cyan-400" />
+              <span className="font-orbitron text-xs font-bold uppercase tracking-wider text-cyan-400">
+                Ready to Play
+              </span>
+            </motion.div>
+
+            {/* Heading */}
+            <h3 className="mb-4 font-orbitron text-2xl font-black uppercase text-white md:text-3xl">
+              <span className="bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">
+                YOUR JOURNEY
+              </span>{" "}
+              <span className="text-white">STARTS NOW</span>
+            </h3>
+
+            {/* Description */}
+            <p className="mx-auto mb-8 max-w-2xl font-rajdhani text-base font-medium text-gray-400 md:text-lg">
+              Join millions of players in the ultimate cross-platform gaming
+              experience. One account. Unlimited adventure. Zero boundaries.
+            </p>
+
+            {/* Stats */}
+            <div className="mb-8 flex flex-wrap items-center justify-center gap-8">
+              <div className="text-center">
+                <div className="mb-1 font-orbitron text-3xl font-black text-cyan-400">
+                  6+
+                </div>
+                <div className="font-rajdhani text-sm uppercase tracking-wide text-gray-500">
+                  Platforms
+                </div>
+              </div>
+              <div className="h-8 w-px bg-white/10" />
+              <div className="text-center">
+                <div className="mb-1 font-orbitron text-3xl font-black text-purple-400">
+                  100%
+                </div>
+                <div className="font-rajdhani text-sm uppercase tracking-wide text-gray-500">
+                  Synced
+                </div>
+              </div>
+              <div className="h-8 w-px bg-white/10" />
+              <div className="text-center">
+                <div className="mb-1 font-orbitron text-3xl font-black text-pink-400">
+                  24/7
+                </div>
+                <div className="font-rajdhani text-sm uppercase tracking-wide text-gray-500">
+                  Available
+                </div>
+              </div>
+            </div>
+
+            {/* Pulse decoration */}
+            <motion.div
+              className="absolute left-1/2 top-1/2 -z-10 h-64 w-64 -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-500/20 blur-3xl"
+              animate={{
+                scale: [1, 1.2, 1],
+                opacity: [0.3, 0.5, 0.3],
+              }}
+              transition={{
+                duration: 4,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+            />
+          </div>
         </motion.div>
-      </div>
+      </motion.div>
     </section>
   );
 };

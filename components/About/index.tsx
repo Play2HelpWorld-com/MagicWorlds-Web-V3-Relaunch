@@ -748,7 +748,7 @@ const About = () => {
                             className="font-orbitron text-2xl font-black uppercase text-white drop-shadow-lg sm:text-3xl md:text-4xl"
                           >
                             <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
-                              $2.4M
+                              $250
                             </span>{" "}
                             Donated
                           </motion.h3>
@@ -1028,7 +1028,7 @@ const About = () => {
       </section>
 
       {/* <!-- ===== Testimonials Section ===== --> */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-black to-gray-900 py-20">
+      <section className="relative overflow-hidden bg-transparent py-20">
         <div className="absolute inset-0 z-0">
           {/* Animated Stars Background */}
           {Array.from({ length: 50 }).map((_, index) => (
@@ -1098,27 +1098,27 @@ const About = () => {
           >
             {[
               {
-                name: "Alex Morgan",
+                name: "Justice Eneje",
                 avatar: "/images/about/player1.png",
                 role: "Pro Gamer",
                 quote:
-                  "I've earned enough through Games with Magic Worlds to fund my new gaming setup. The platform is intuitive and the rewards are real.",
+                  "Magic Worlds has transformed my gaming experience. The rewards are incredible and the community is amazing. I've already cashed out multiple times!",
                 rating: 5,
               },
               {
-                name: "Sarah Chen",
+                name: "Veronnie",
                 avatar: "/images/about/player2.png",
                 role: "Casual Player",
                 quote:
-                  "As a student, the extra income from playing games has been a game-changer. Plus, knowing I'm contributing to charity makes it even better.",
+                  "I love how easy it is to earn while having fun. The games are engaging and knowing my play helps charities makes every session meaningful.",
                 rating: 5,
               },
               {
-                name: "Marcus Williams",
+                name: "John Jay",
                 avatar: "/images/about/player3.png",
                 role: "Content Creator",
                 quote:
-                  "The tournaments are incredibly engaging and the community is fantastic. I've made friends and money - what more could you want?",
+                  "The best play-to-earn platform I've tried. Great tournaments, active community, and real rewards. My viewers love watching me compete here!",
                 rating: 4,
               },
             ].map((testimonial, index) => (
@@ -1126,13 +1126,13 @@ const About = () => {
                 key={index}
                 variants={fadeInUp}
                 whileHover={{ y: -8, scale: 1.02 }}
-                className="group relative"
+                className="group relative flex"
               >
                 {/* Outer gradient glow */}
                 <div className="absolute -inset-0.5 rounded-2xl bg-gradient-to-r from-purple-600/30 via-pink-600/30 to-purple-600/30 opacity-50 blur-sm transition-all duration-500 group-hover:opacity-100 group-hover:blur-md" />
 
                 {/* Main card */}
-                <div className="relative h-full overflow-hidden rounded-2xl border border-purple-500/20 bg-gradient-to-br from-gray-900 via-gray-900/95 to-purple-900/20 p-7 backdrop-blur-xl">
+                <div className="relative flex w-full flex-col overflow-hidden rounded-2xl border border-purple-500/20 bg-gradient-to-br from-gray-900 via-gray-900/95 to-purple-900/20 p-7 backdrop-blur-xl">
                   {/* Animated gradient overlay */}
                   <motion.div
                     className="absolute inset-0 bg-gradient-to-br from-purple-500/0 via-purple-500/5 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100"
@@ -1154,7 +1154,7 @@ const About = () => {
                   {/* Player info section */}
                   <div className="relative mb-5 flex items-center gap-4">
                     {/* Avatar with ring */}
-                    <div className="relative">
+                    <div className="relative flex-shrink-0">
                       <motion.div
                         className="absolute -inset-1 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 opacity-75 blur-sm"
                         animate={{
@@ -1180,7 +1180,7 @@ const About = () => {
                     </div>
 
                     {/* Name and role */}
-                    <div className="flex-1">
+                    <div className="min-w-0 flex-1">
                       <h4 className="font-orbitron text-base font-black uppercase leading-tight tracking-tight text-white sm:text-lg">
                         {testimonial.name}
                       </h4>
@@ -1190,12 +1190,12 @@ const About = () => {
                     </div>
                   </div>
 
-                  {/* Quote text */}
-                  <p className="relative mb-5 font-rajdhani text-[15px] font-medium italic leading-relaxed text-gray-300 sm:text-base">
+                  {/* Quote text - flex-grow to push rating to bottom */}
+                  <p className="relative mb-5 flex-grow font-rajdhani text-[15px] font-medium italic leading-relaxed text-gray-300 sm:text-base">
                     &quot;{testimonial.quote}&quot;
                   </p>
 
-                  {/* Rating stars with animation */}
+                  {/* Rating stars with animation - stays at bottom */}
                   <div className="relative flex items-center gap-1">
                     {Array.from({ length: 5 }).map((_, i) => (
                       <motion.div
@@ -1239,7 +1239,7 @@ const About = () => {
       </section>
 
       {/* <!-- ===== CTA Section ===== --> */}
-      <section className="relative overflow-hidden bg-black py-16">
+      <section className="relative overflow-hidden bg-transparent py-16">
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -1287,7 +1287,7 @@ const About = () => {
             whileInView="visible"
             transition={{ duration: 0.8, delay: 0.2 }}
             viewport={{ once: true }}
-            className="relative overflow-hidden rounded-2xl border border-purple-800/30 bg-gradient-to-br from-gray-900 to-black p-8 md:p-12"
+            className="relative overflow-hidden rounded-2xl border border-purple-800/30 bg-gradient-to-br from-gray-900 via-purple-950/20 to-black p-8 md:p-12"
           >
             {/* Animated Corner Elements */}
             <div className="absolute left-0 top-0 h-24 w-24 -translate-x-1/2 -translate-y-1/2">
