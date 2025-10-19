@@ -23,8 +23,6 @@ const Footer = () => {
     { name: "Home", href: "/" },
     { name: "Play Now", href: "/play" },
     { name: "Worlds", href: "/worlds" },
-    { name: "Games", href: "/games" },
-    { name: "Leaderboard", href: "/leaderboard" },
     { name: "Documentation", href: "/docs" },
   ];
 
@@ -58,10 +56,9 @@ const Footer = () => {
     },
     { name: "Support Center", href: "/support" },
     {
-      name: "Mobile Game",
+      name: "Download Game",
       href: "https://magicworlds.itch.io/magic-world",
     },
-    { name: "Itch.io", href: "https://magicworlds.itch.io/magic-world" },
   ];
 
   const socialLinks = [
