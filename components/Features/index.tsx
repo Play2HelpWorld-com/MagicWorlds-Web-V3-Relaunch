@@ -390,13 +390,11 @@ const GameFeatureCard = ({ feature, index, inView }) => {
       },
     }),
     hover: {
-      y: -10,
-      boxShadow:
-        "0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.1)",
+      scale: 1.01,
       transition: {
         type: "spring",
         stiffness: 400,
-        damping: 10,
+        damping: 15,
       },
     },
   };
@@ -488,212 +486,88 @@ const GameFeatureCard = ({ feature, index, inView }) => {
       onHoverStart={() => setIsHovered(true)}
       onHoverEnd={() => setIsHovered(false)}
       onClick={handleClick}
-      className={`group relative z-10 cursor-pointer overflow-hidden rounded-3xl border-2 ${colorTheme.border} bg-white/[0.03] backdrop-blur-2xl transition-all duration-500 hover:border-opacity-100 hover:bg-white/[0.08]`}
+      className={`group relative z-10 h-[400px] cursor-pointer overflow-hidden rounded-3xl border-2 ${colorTheme.border} transition-all duration-300 md:h-[450px]`}
       style={{
         boxShadow: isHovered
-          ? `0 25px 50px -12px ${colorTheme.glow}, 0 0 60px -15px ${colorTheme.glow}, inset 0 1px 0 0 rgba(255, 255, 255, 0.1)`
-          : "0 10px 20px -5px rgba(0, 0, 0, 0.4), inset 0 1px 0 0 rgba(255, 255, 255, 0.05)",
+          ? "0 12px 24px -6px rgba(0,0,0,0.45), inset 0 1px 0 0 rgba(255,255,255,0.06)"
+          : "0 10px 20px -6px rgba(0,0,0,0.35), inset 0 1px 0 0 rgba(255,255,255,0.04)",
       }}
     >
-      {/* Animated background gradient overlay */}
-      <motion.div
-        className={`absolute inset-0 bg-gradient-to-br ${colorTheme.bgOverlay} opacity-0`}
-        animate={{
-          opacity: isHovered ? 0.5 : 0,
-        }}
-        transition={{ duration: 0.5 }}
-      />
+      {/* Background Image */}
+      <div className="absolute inset-0 z-0">
+        <Image
+          src={icon}
+          alt={title}
+          fill
+          className="object-cover"
+          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          priority={index < 3}
+        />
+        {/* Dark overlay for better text readability */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/30" />
+      </div>
 
-      {/* Enhanced glow effect on hover - top right */}
-      <motion.div
-        className="pointer-events-none absolute -right-20 -top-20 h-40 w-40 rounded-full blur-3xl"
-        style={{
-          background: `radial-gradient(circle, ${colorTheme.glow} 0%, transparent 70%)`,
-        }}
-        animate={
-          isHovered ? { scale: 1.5, opacity: 0.7 } : { scale: 0, opacity: 0 }
-        }
-        transition={{ duration: 0.6 }}
-      />
-
-      {/* Additional glow effect - bottom left */}
-      <motion.div
-        className="pointer-events-none absolute -bottom-20 -left-20 h-40 w-40 rounded-full blur-3xl"
-        style={{
-          background: `radial-gradient(circle, ${colorTheme.glow} 0%, transparent 70%)`,
-        }}
-        animate={
-          isHovered ? { scale: 1.3, opacity: 0.4 } : { scale: 0, opacity: 0 }
-        }
-        transition={{ duration: 0.6, delay: 0.1 }}
-      />
-
-      {/* Card Content - Enhanced Layout */}
-      <div className="relative flex h-full flex-col">
-        {/* Header Section with Icon and Title */}
-        <div className="relative flex items-start gap-5 border-b border-white/[0.08] bg-gradient-to-b from-white/[0.05] to-transparent p-7 md:p-9">
-          {/* Enhanced icon container with multiple effects */}
-          <motion.div
-            variants={iconVariants}
-            className="relative flex-shrink-0"
-          >
-            {/* Outer glow ring */}
+      {/* Floating particles on hover */}
+      {isHovered && (
+        <>
+          {[...Array(6)].map((_, i) => (
             <motion.div
-              className={`absolute -inset-2 rounded-2xl bg-gradient-to-br ${colorTheme.gradient} opacity-0 blur-lg`}
+              key={i}
+              className={`absolute h-2 w-2 rounded-full bg-gradient-to-r ${colorTheme.gradient}`}
+              initial={{ opacity: 0, scale: 0 }}
               animate={{
-                opacity: isHovered ? 0.6 : 0,
+                opacity: [0, 0.8, 0],
+                scale: [0, 1, 0],
+                x: [0, Math.cos((i * Math.PI) / 3) * 60],
+                y: [0, Math.sin((i * Math.PI) / 3) * 60],
               }}
-              transition={{ duration: 0.5 }}
-            />
-
-            {/* Main icon container */}
-            <div
-              className={`relative flex h-20 w-20 items-center justify-center rounded-2xl bg-gradient-to-br ${colorTheme.gradient} p-[2px] shadow-2xl`}
-            >
-              {/* Inner container with glass effect */}
-              <div className="flex h-full w-full items-center justify-center rounded-[14px] bg-black/40 backdrop-blur-sm">
-                <Image
-                  src={icon}
-                  width={44}
-                  height={44}
-                  alt={title}
-                  className="relative z-10 drop-shadow-2xl"
-                />
-              </div>
-
-              {/* Animated shine effect */}
-              <motion.div
-                className="absolute inset-0 rounded-2xl bg-gradient-to-tr from-transparent via-white/30 to-transparent"
-                animate={
-                  isHovered
-                    ? { x: ["-100%", "100%"], opacity: [0, 0.5, 0] }
-                    : { x: "-100%", opacity: 0 }
-                }
-                transition={{ duration: 1, ease: "easeInOut" }}
-              />
-            </div>
-
-            {/* Floating particles around icon */}
-            {isHovered && (
-              <>
-                {[...Array(3)].map((_, i) => (
-                  <motion.div
-                    key={i}
-                    className={`absolute h-1 w-1 rounded-full bg-gradient-to-r ${colorTheme.gradient}`}
-                    initial={{ opacity: 0, scale: 0 }}
-                    animate={{
-                      opacity: [0, 1, 0],
-                      scale: [0, 1, 0],
-                      x: [0, (i - 1) * 20],
-                      y: [0, -20 - i * 10],
-                    }}
-                    transition={{
-                      duration: 1.5,
-                      repeat: Infinity,
-                      delay: i * 0.2,
-                    }}
-                    style={{
-                      left: "50%",
-                      top: "50%",
-                    }}
-                  />
-                ))}
-              </>
-            )}
-          </motion.div>
-
-          {/* Title section with enhanced styling */}
-          <div className="flex-1 space-y-3 pt-2">
-            <motion.h3
-              className={`bg-gradient-to-r font-orbitron ${colorTheme.gradient} bg-clip-text text-xl font-black uppercase leading-tight tracking-wide text-transparent md:text-2xl`}
-              animate={isHovered ? { x: 3 } : { x: 0 }}
-              transition={{ type: "spring", stiffness: 300, damping: 25 }}
-            >
-              {title}
-            </motion.h3>
-
-            {/* Enhanced decorative line with glow */}
-            <motion.div className="relative h-1 w-full">
-              <motion.div
-                className={`h-full rounded-full bg-gradient-to-r ${colorTheme.gradient} opacity-30`}
-                initial={{ width: "0%" }}
-                animate={{ width: "100%" }}
-                transition={{ duration: 0.8, delay: 0.2 }}
-              />
-              <motion.div
-                className={`absolute left-0 top-0 h-full rounded-full bg-gradient-to-r ${colorTheme.gradient} shadow-lg`}
-                initial={{ width: "0%" }}
-                animate={{ width: isHovered ? "80%" : "45%" }}
-                transition={{ duration: 0.4 }}
-                style={{
-                  boxShadow: `0 0 10px ${colorTheme.glow}`,
-                }}
-              />
-            </motion.div>
-          </div>
-        </div>
-
-        {/* Body Section - Enhanced Description */}
-        <div className="flex-1 p-7 md:p-9">
-          <motion.p
-            className="font-rajdhani text-[17px] font-medium leading-relaxed text-gray-300/90 md:text-lg"
-            initial={{ opacity: 0.8 }}
-            animate={{ opacity: isHovered ? 1 : 0.9 }}
-            transition={{ duration: 0.3 }}
-          >
-            {description}
-          </motion.p>
-        </div>
-
-        {/* Footer Section - Enhanced CTA Button */}
-        <div className="border-t border-white/[0.08] bg-gradient-to-t from-white/[0.02] to-transparent p-7 md:p-9">
-          <motion.div
-            className={`group/btn relative overflow-hidden rounded-xl bg-gradient-to-r ${colorTheme.gradient} px-7 py-4 text-center font-rajdhani text-base font-bold uppercase tracking-widest text-white shadow-2xl`}
-            animate={isHovered ? { opacity: 1, y: 0 } : { opacity: 0.95, y: 0 }}
-            transition={{ duration: 0.3 }}
-            whileHover={{ scale: 1.03, y: -2 }}
-            whileTap={{ scale: 0.98 }}
-            style={{
-              boxShadow: isHovered
-                ? `0 10px 30px ${colorTheme.glow}, 0 0 20px ${colorTheme.glow}`
-                : `0 6px 12px rgba(0, 0, 0, 0.3)`,
-            }}
-          >
-            {/* Animated background pattern */}
-            <motion.div
-              className="absolute inset-0 opacity-20"
+              transition={{
+                duration: 1.5,
+                repeat: Infinity,
+                delay: i * 0.1,
+              }}
               style={{
-                backgroundImage: `radial-gradient(circle at 2px 2px, rgba(255,255,255,0.15) 1px, transparent 1px)`,
-                backgroundSize: "20px 20px",
+                left: "50%",
+                top: "50%",
               }}
-              animate={
-                isHovered
-                  ? { backgroundPosition: ["0px 0px", "20px 20px"] }
-                  : { backgroundPosition: "0px 0px" }
-              }
-              transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
             />
+          ))}
+        </>
+      )}
 
-            {/* Sliding shine effect */}
-            <motion.div
-              className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
-              initial={{ x: "-100%" }}
-              animate={isHovered ? { x: "200%" } : { x: "-100%" }}
-              transition={{ duration: 0.8, ease: "easeInOut" }}
-            />
+      {/* Card Content - Title and Button */}
+      <div className="relative z-10 flex h-full flex-col items-center justify-end gap-5 p-8 md:p-10">
+        {/* Title */}
+        <motion.h3
+          className="font-orbitron text-2xl font-black uppercase leading-tight tracking-wider text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)] md:text-3xl"
+          animate={isHovered ? { scale: 1.05, y: -5 } : { scale: 1, y: 0 }}
+          transition={{ type: "spring", stiffness: 300, damping: 20 }}
+        >
+          {title}
+        </motion.h3>
 
-            <span className="relative flex items-center justify-center gap-2.5">
-              <span>Visit Platform</span>
-              <motion.span
-                className="text-lg"
-                animate={isHovered ? { x: [0, 5, 0] } : { x: 0 }}
-                transition={{ duration: 1.5, repeat: Infinity }}
-              >
-                →
-              </motion.span>
-            </span>
-          </motion.div>
-        </div>
+        {/* CTA Button */}
+        <motion.div
+          className={`relative w-full overflow-hidden rounded-xl border-2 ${colorTheme.border} bg-black/30 px-6 py-4 text-center font-orbitron text-sm font-black uppercase tracking-widest text-white backdrop-blur-md transition-all duration-200 hover:border-opacity-80 hover:bg-black/50`}
+          whileHover={{ scale: 1.03, y: -2 }}
+          whileTap={{ scale: 0.97 }}
+          style={{
+            boxShadow: isHovered
+              ? "0 10px 20px rgba(0,0,0,0.5)"
+              : "0 6px 12px rgba(0,0,0,0.3)",
+          }}
+        >
+          <span className="relative flex items-center justify-center gap-2.5">
+            <span>ENTER</span>
+            <motion.span
+              className="text-base"
+              animate={isHovered ? { x: [0, 4, 0] } : { x: 0 }}
+              transition={{ duration: 1, repeat: Infinity }}
+            >
+              →
+            </motion.span>
+          </span>
+        </motion.div>
       </div>
     </motion.div>
   );

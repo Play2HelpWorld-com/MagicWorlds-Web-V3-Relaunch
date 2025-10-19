@@ -201,7 +201,7 @@ const Hero = () => {
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.6 }}
-              className="font-orbitron mt-4 whitespace-nowrap text-3xl font-black uppercase leading-[1.1] tracking-tighter sm:mt-5 sm:text-4xl md:text-5xl lg:text-6xl"
+              className="mt-4 whitespace-nowrap font-orbitron text-3xl font-black uppercase leading-[1.1] tracking-tighter sm:mt-5 sm:text-4xl md:text-5xl lg:text-6xl"
             >
               <span className="bg-gradient-to-r from-purple-400 via-fuchsia-400 to-purple-500 bg-clip-text text-transparent drop-shadow-[0_0_30px_rgba(168,85,247,0.9)]">
                 MAGIC
@@ -216,7 +216,7 @@ const Hero = () => {
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.8 }}
-              className="font-rajdhani mx-auto mt-5 max-w-xl text-base font-medium leading-relaxed text-gray-400 sm:mt-6 sm:text-lg md:text-xl lg:text-lg"
+              className="mx-auto mt-5 max-w-xl font-rajdhani text-base font-medium leading-relaxed text-gray-400 sm:mt-6 sm:text-lg md:text-xl lg:text-lg"
             >
               <span className="text-gray-300">Magic Worlds</span> – Love, Laugh,
               Learn, Lucrative.
@@ -237,9 +237,9 @@ const Hero = () => {
               <ClaimButton />
 
               <motion.button
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.95 }}
-                className="font-rajdhani rounded-2xl border-2 border-purple-600/50 bg-gradient-to-r from-purple-900/40 to-fuchsia-900/30 px-8 py-4 text-base font-bold uppercase tracking-wider text-purple-200 backdrop-blur-md transition-all duration-300 hover:border-fuchsia-500 hover:from-purple-800/50 hover:to-fuchsia-800/40 hover:text-white hover:shadow-[0_0_40px_rgba(168,85,247,0.7)] sm:px-10 sm:text-lg"
+                whileHover={{ scale: 1.01 }}
+                whileTap={{ scale: 0.99 }}
+                className="rounded-2xl border-2 border-purple-600/50 bg-gradient-to-r from-purple-900/40 to-fuchsia-900/30 px-8 py-4 font-rajdhani text-base font-bold uppercase tracking-wider text-purple-200 backdrop-blur-md transition-all duration-300 hover:border-fuchsia-500 hover:from-purple-800/50 hover:to-fuchsia-800/40 hover:text-white hover:shadow-[0_0_40px_rgba(168,85,247,0.7)] sm:px-10 sm:text-lg"
               >
                 EXPLORE WORLDS
               </motion.button>
@@ -249,7 +249,7 @@ const Hero = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 1.2 }}
-              className="font-rajdhani mt-8 hidden items-center justify-center space-x-3 text-sm font-medium text-gray-500 sm:mt-10 sm:flex md:text-base lg:justify-start"
+              className="mt-8 hidden items-center justify-center space-x-3 font-rajdhani text-sm font-medium text-gray-500 sm:mt-10 sm:flex md:text-base lg:justify-start"
             >
               <div className="flex -space-x-2">
                 {[1, 2, 3, 4].map((i) => (
@@ -424,7 +424,7 @@ const Hero = () => {
                             {/* Token motto - PLAY/EARN/DONATE */}
                             <div className="text-center">
                               <motion.div
-                                className="font-orbitron mb-1.5 bg-gradient-to-r from-purple-300 via-fuchsia-300 to-purple-300 bg-clip-text text-3xl font-black uppercase tracking-tight text-transparent drop-shadow-[0_0_20px_rgba(168,85,247,0.9)] sm:text-4xl md:text-5xl lg:text-4xl"
+                                className="mb-1.5 bg-gradient-to-r from-purple-300 via-fuchsia-300 to-purple-300 bg-clip-text font-orbitron text-3xl font-black uppercase tracking-tight text-transparent drop-shadow-[0_0_20px_rgba(168,85,247,0.9)] sm:text-4xl md:text-5xl lg:text-4xl"
                                 animate={{ scale: [1, 1.02, 1] }}
                                 transition={{ duration: 2, repeat: Infinity }}
                               >
@@ -451,14 +451,30 @@ const Hero = () => {
 
                       {/* Token action button - Outside card */}
                       <motion.button
-                        whileHover={{ scale: 1.05, y: -2 }}
-                        whileTap={{ scale: 0.95 }}
-                        className="font-rajdhani absolute -bottom-6 left-1/2 w-[180px] -translate-x-1/2 rounded-xl border border-purple-700/50 bg-gradient-to-r from-purple-800 via-fuchsia-800 to-purple-900 py-3 text-sm font-bold uppercase tracking-wider text-purple-100 shadow-lg shadow-purple-950/70 transition-all duration-300 hover:from-purple-700 hover:via-fuchsia-700 hover:to-purple-800 hover:shadow-purple-900/90 sm:-bottom-8 sm:w-[180px] sm:py-3.5 sm:text-base md:-bottom-10 md:w-[180px] md:py-4 md:text-base lg:-bottom-8 lg:w-[180px] lg:py-3 lg:text-sm"
+                        whileHover={{ scale: 1.08, y: -3 }}
+                        whileTap={{ scale: 0.92 }}
+                        transition={{
+                          type: "spring",
+                          stiffness: 400,
+                          damping: 17,
+                        }}
+                        className="group absolute -bottom-6 left-0 right-0 mx-auto w-[180px] origin-center transform-gpu rounded-2xl border-2 border-purple-500/60 bg-purple-900/30 py-2.5 font-orbitron text-base font-black uppercase tracking-widest text-white shadow-lg backdrop-blur-md transition-colors duration-300 hover:border-fuchsia-400 hover:bg-purple-500/40 sm:-bottom-8 sm:w-[200px] sm:py-3 sm:text-lg md:-bottom-10 md:w-[220px] md:py-3 md:text-lg lg:-bottom-8 lg:w-[200px] lg:py-2.5 lg:text-base"
                         style={{
-                          boxShadow: `0 0 20px ${cryptoTokens[activeToken].glowColor}`,
+                          textShadow:
+                            "0 0 10px rgba(255,255,255,0.8), 0 2px 4px rgba(0,0,0,0.8)",
+                          willChange: "transform",
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.boxShadow = `0 0 30px ${cryptoTokens[activeToken].glowColor}, 0 0 60px ${cryptoTokens[activeToken].glowColor}`;
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.boxShadow = "";
                         }}
                       >
-                        {cryptoTokens[activeToken].motto} NOW
+                        <span className="relative z-10 flex items-center justify-center">
+                          {cryptoTokens[activeToken].motto} NOW
+                        </span>
+                        <div className="absolute inset-0 rounded-2xl bg-gradient-to-t from-transparent via-purple-500/20 to-fuchsia-500/20 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
                       </motion.button>
 
                       {/* Floating particles around token */}
