@@ -40,9 +40,9 @@ const Footer = () => {
       icon: Github,
     },
     {
-      name: "Reddit",
-      href: "https://www.reddit.com/user/MagicWorlds_/",
-      icon: MessageCircle,
+      name: "Open Source",
+      href: "https://github.com/orgs/TheMagicWorlds",
+      icon: Github,
     },
     {
       name: "Blog",
@@ -59,7 +59,7 @@ const Footer = () => {
     { name: "Support Center", href: "/support" },
     {
       name: "Mobile Game",
-      href: "https://drive.google.com/file/d/141f8EDsJhFywxbtJ0KfJUH8HRarf3P4j/view?usp=drive_link",
+      href: "https://magicworlds.itch.io/magic-world",
     },
     { name: "Itch.io", href: "https://magicworlds.itch.io/magic-world" },
   ];
