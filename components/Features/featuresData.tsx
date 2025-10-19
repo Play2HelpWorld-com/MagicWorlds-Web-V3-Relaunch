@@ -7,7 +7,7 @@ const featuresData: Feature[] = [
     title: "Join the Community",
     description:
       "Connect with thousands of players worldwide. Join our vibrant community on Discord, share strategies, and make lasting friendships in the Magic Worlds universe.",
-    link: "https://discord.com/invite/NcNSaTVNdn",
+    link: "https://discord.gg/wCwqrTdHnp",
     color: "purple",
   },
   {

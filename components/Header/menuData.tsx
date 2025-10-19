@@ -78,7 +78,7 @@ const menuData: Menu[] = [
         id: 53,
         title: "Gamer Tips",
         newTab: false,
-        path: "https://discord.com/invite/NcNSaTVNdn",
+        path: "https://discord.gg/wCwqrTdHnp",
       },
       {
         id: 54,
