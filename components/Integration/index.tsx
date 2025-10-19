@@ -130,10 +130,10 @@ const Integration = () => {
   return (
     <section
       ref={containerRef}
-      className="relative overflow-hidden bg-black py-20 lg:py-32"
+      className="relative overflow-hidden bg-transparent py-20 lg:py-32"
     >
       {/* Animated Grid Background */}
-      <div className="absolute inset-0 opacity-20">
+      {/* <div className="absolute inset-0 opacity-20">
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#1a1a1a_1px,transparent_1px),linear-gradient(to_bottom,#1a1a1a_1px,transparent_1px)] bg-[size:4rem_4rem]" />
         <motion.div
           className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-purple-500/10 to-pink-500/10"
@@ -147,7 +147,7 @@ const Integration = () => {
             ease: "easeInOut",
           }}
         />
-      </div>
+      </div> */}
 
       {/* Mouse Follower Glow */}
       <motion.div

@@ -185,14 +185,14 @@ const FAQ = () => {
   };
 
   return (
-    <section className="relative overflow-hidden bg-black py-20 lg:py-32">
+    <section className="relative overflow-hidden bg-transparent py-20 lg:py-32">
       {/* Animated Grid Background */}
-      <div className="absolute inset-0 opacity-10">
+      {/* <div className="absolute inset-0 opacity-10">
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#1a1a1a_1px,transparent_1px),linear-gradient(to_bottom,#1a1a1a_1px,transparent_1px)] bg-[size:4rem_4rem]" />
-      </div>
+      </div> */}
 
       {/* Gradient Overlay */}
-      <motion.div
+      {/* <motion.div
         className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 via-purple-500/5 to-pink-500/5"
         animate={{
           opacity: [0.3, 0.5, 0.3],
@@ -202,7 +202,7 @@ const FAQ = () => {
           repeat: Infinity,
           ease: "easeInOut",
         }}
-      />
+      /> */}
 
       <div className="relative z-10 mx-auto max-w-7xl px-4 md:px-8 2xl:px-0">
         {/* Header Section */}
