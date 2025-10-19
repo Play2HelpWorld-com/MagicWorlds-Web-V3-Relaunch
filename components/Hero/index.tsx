@@ -239,6 +239,7 @@ const Hero = () => {
               <motion.button
                 whileHover={{ scale: 1.01 }}
                 whileTap={{ scale: 0.99 }}
+                onClick={() => (window.location.href = "/worlds")}
                 className="rounded-2xl border-2 border-purple-600/50 bg-gradient-to-r from-purple-900/40 to-fuchsia-900/30 px-8 py-4 font-rajdhani text-base font-bold uppercase tracking-wider text-purple-200 backdrop-blur-md transition-all duration-300 hover:border-fuchsia-500 hover:from-purple-800/50 hover:to-fuchsia-800/40 hover:text-white hover:shadow-[0_0_40px_rgba(168,85,247,0.7)] sm:px-10 sm:text-lg"
               >
                 EXPLORE WORLDS

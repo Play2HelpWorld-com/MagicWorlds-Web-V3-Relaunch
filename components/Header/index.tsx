@@ -216,6 +216,8 @@ const Header = () => {
                               <Link
                                 href={item.path || "#"}
                                 onClick={handleNavItemClick}
+                                target={item.newTab ? "_blank" : undefined}
+                                rel={item.newTab ? "noopener noreferrer" : undefined}
                                 className="block text-[10px] font-bold uppercase tracking-wide text-white/80 transition-all duration-500 ease-out hover:bg-gradient-to-r hover:from-indigo-400 hover:via-purple-400 hover:to-pink-400 hover:bg-clip-text hover:text-transparent sm:text-xs"
                                 style={{
                                   fontFamily:
@@ -247,6 +249,8 @@ const Header = () => {
                               <Link
                                 href={item.path || "#"}
                                 onClick={() => setActiveDropdown(null)}
+                                target={item.newTab ? "_blank" : undefined}
+                                rel={item.newTab ? "noopener noreferrer" : undefined}
                                 className="relative block overflow-hidden rounded-xl px-4 py-2.5 text-xs font-bold uppercase tracking-wide text-white/90 transition-all duration-300 ease-out hover:bg-gradient-to-r hover:from-purple-600/20 hover:via-fuchsia-600/20 hover:to-cyan-600/20 hover:text-white hover:shadow-[inset_0_0_20px_rgba(168,85,247,0.4)] sm:text-sm"
                                 style={{
                                   fontFamily:
@@ -280,6 +284,8 @@ const Header = () => {
                       <Link
                         href={`${menuItem.path}`}
                         onClick={handleNavItemClick}
+                        target={menuItem.newTab ? "_blank" : undefined}
+                        rel={menuItem.newTab ? "noopener noreferrer" : undefined}
                         className={`relative inline-block text-xs font-bold uppercase tracking-wider transition-all duration-500 ease-out sm:text-sm ${
                           pathUrl === menuItem.path
                             ? "bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent drop-shadow-[0_0_8px_rgba(99,102,241,0.5)]"
