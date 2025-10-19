@@ -390,7 +390,7 @@ const GameFeatureCard = ({ feature, index, inView }) => {
       },
     }),
     hover: {
-      y: -10,
+      scale: 1.01,
       boxShadow:
         "0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.1)",
       transition: {
@@ -488,45 +488,16 @@ const GameFeatureCard = ({ feature, index, inView }) => {
       onHoverStart={() => setIsHovered(true)}
       onHoverEnd={() => setIsHovered(false)}
       onClick={handleClick}
-      className={`group relative z-10 cursor-pointer overflow-hidden rounded-3xl border-2 ${colorTheme.border} bg-white/[0.03] backdrop-blur-2xl transition-all duration-500 hover:border-opacity-100 hover:bg-white/[0.08]`}
+      className={`group relative z-10 cursor-pointer overflow-hidden rounded-3xl border-2 ${colorTheme.border} bg-white/[0.015] backdrop-blur-2xl transition-all duration-300`}
       style={{
         boxShadow: isHovered
-          ? `0 25px 50px -12px ${colorTheme.glow}, 0 0 60px -15px ${colorTheme.glow}, inset 0 1px 0 0 rgba(255, 255, 255, 0.1)`
-          : "0 10px 20px -5px rgba(0, 0, 0, 0.4), inset 0 1px 0 0 rgba(255, 255, 255, 0.05)",
+          ? "0 12px 24px -6px rgba(0,0,0,0.45), inset 0 1px 0 0 rgba(255,255,255,0.06)"
+          : "0 10px 20px -6px rgba(0,0,0,0.35), inset 0 1px 0 0 rgba(255,255,255,0.04)",
       }}
     >
-      {/* Animated background gradient overlay */}
-      <motion.div
-        className={`absolute inset-0 bg-gradient-to-br ${colorTheme.bgOverlay} opacity-0`}
-        animate={{
-          opacity: isHovered ? 0.5 : 0,
-        }}
-        transition={{ duration: 0.5 }}
-      />
+      {/* Removed bright gradient overlay to keep card subtle */}
 
-      {/* Enhanced glow effect on hover - top right */}
-      <motion.div
-        className="pointer-events-none absolute -right-20 -top-20 h-40 w-40 rounded-full blur-3xl"
-        style={{
-          background: `radial-gradient(circle, ${colorTheme.glow} 0%, transparent 70%)`,
-        }}
-        animate={
-          isHovered ? { scale: 1.5, opacity: 0.7 } : { scale: 0, opacity: 0 }
-        }
-        transition={{ duration: 0.6 }}
-      />
-
-      {/* Additional glow effect - bottom left */}
-      <motion.div
-        className="pointer-events-none absolute -bottom-20 -left-20 h-40 w-40 rounded-full blur-3xl"
-        style={{
-          background: `radial-gradient(circle, ${colorTheme.glow} 0%, transparent 70%)`,
-        }}
-        animate={
-          isHovered ? { scale: 1.3, opacity: 0.4 } : { scale: 0, opacity: 0 }
-        }
-        transition={{ duration: 0.6, delay: 0.1 }}
-      />
+      {/* Removed hover glow orbs to avoid light colors on hover */}
 
       {/* Card Content - Enhanced Layout */}
       <div className="relative flex h-full flex-col">
@@ -538,13 +509,7 @@ const GameFeatureCard = ({ feature, index, inView }) => {
             className="relative flex-shrink-0"
           >
             {/* Outer glow ring */}
-            <motion.div
-              className={`absolute -inset-2 rounded-2xl bg-gradient-to-br ${colorTheme.gradient} opacity-0 blur-lg`}
-              animate={{
-                opacity: isHovered ? 0.6 : 0,
-              }}
-              transition={{ duration: 0.5 }}
-            />
+            {/* Removed outer glow ring */}
 
             {/* Main icon container */}
             <div
@@ -562,15 +527,7 @@ const GameFeatureCard = ({ feature, index, inView }) => {
               </div>
 
               {/* Animated shine effect */}
-              <motion.div
-                className="absolute inset-0 rounded-2xl bg-gradient-to-tr from-transparent via-white/30 to-transparent"
-                animate={
-                  isHovered
-                    ? { x: ["-100%", "100%"], opacity: [0, 0.5, 0] }
-                    : { x: "-100%", opacity: 0 }
-                }
-                transition={{ duration: 1, ease: "easeInOut" }}
-              />
+              {/* Removed sliding shine effect */}
             </div>
 
             {/* Floating particles around icon */}
@@ -621,13 +578,10 @@ const GameFeatureCard = ({ feature, index, inView }) => {
                 transition={{ duration: 0.8, delay: 0.2 }}
               />
               <motion.div
-                className={`absolute left-0 top-0 h-full rounded-full bg-gradient-to-r ${colorTheme.gradient} shadow-lg`}
+                className={`absolute left-0 top-0 h-full rounded-full bg-gradient-to-r ${colorTheme.gradient}`}
                 initial={{ width: "0%" }}
                 animate={{ width: isHovered ? "80%" : "45%" }}
                 transition={{ duration: 0.4 }}
-                style={{
-                  boxShadow: `0 0 10px ${colorTheme.glow}`,
-                }}
               />
             </motion.div>
           </div>
@@ -648,40 +602,17 @@ const GameFeatureCard = ({ feature, index, inView }) => {
         {/* Footer Section - Enhanced CTA Button */}
         <div className="border-t border-white/[0.08] bg-gradient-to-t from-white/[0.02] to-transparent p-7 md:p-9">
           <motion.div
-            className={`group/btn relative overflow-hidden rounded-xl bg-gradient-to-r ${colorTheme.gradient} px-7 py-4 text-center font-rajdhani text-base font-bold uppercase tracking-widest text-white shadow-2xl`}
+            className={`group/btn relative overflow-hidden rounded-xl border border-white/20 bg-transparent px-7 py-4 text-center font-orbitron text-base font-black uppercase tracking-widest text-white`}
             animate={isHovered ? { opacity: 1, y: 0 } : { opacity: 0.95, y: 0 }}
-            transition={{ duration: 0.3 }}
-            whileHover={{ scale: 1.03, y: -2 }}
+            transition={{ duration: 0.2 }}
+            whileHover={{ scale: 1.02, y: -1 }}
             whileTap={{ scale: 0.98 }}
             style={{
               boxShadow: isHovered
-                ? `0 10px 30px ${colorTheme.glow}, 0 0 20px ${colorTheme.glow}`
-                : `0 6px 12px rgba(0, 0, 0, 0.3)`,
+                ? "0 8px 16px rgba(0,0,0,0.35)"
+                : "0 6px 12px rgba(0,0,0,0.25)",
             }}
           >
-            {/* Animated background pattern */}
-            <motion.div
-              className="absolute inset-0 opacity-20"
-              style={{
-                backgroundImage: `radial-gradient(circle at 2px 2px, rgba(255,255,255,0.15) 1px, transparent 1px)`,
-                backgroundSize: "20px 20px",
-              }}
-              animate={
-                isHovered
-                  ? { backgroundPosition: ["0px 0px", "20px 20px"] }
-                  : { backgroundPosition: "0px 0px" }
-              }
-              transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-            />
-
-            {/* Sliding shine effect */}
-            <motion.div
-              className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
-              initial={{ x: "-100%" }}
-              animate={isHovered ? { x: "200%" } : { x: "-100%" }}
-              transition={{ duration: 0.8, ease: "easeInOut" }}
-            />
-
             <span className="relative flex items-center justify-center gap-2.5">
               <span>Visit Platform</span>
               <motion.span
