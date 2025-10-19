@@ -390,8 +390,7 @@ const GameFeatureCard = ({ feature, index, inView }) => {
       },
     }),
     hover: {
-      y: -8,
-      scale: 1.02,
+      scale: 1.01,
       transition: {
         type: "spring",
         stiffness: 400,
