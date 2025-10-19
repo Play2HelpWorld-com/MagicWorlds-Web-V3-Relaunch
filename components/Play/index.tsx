@@ -40,8 +40,7 @@ const GAMES = [
     spotlight: true,
     windowsDownload: "https://magicworlds.itch.io/magic-world",
     macosDownload: "https://magicworlds.itch.io/magic-world",
-    androidDownload:
-      "https://drive.google.com/file/d/141f8EDsJhFywxbtJ0KfJUH8HRarf3P4j/view?usp=drive_link",
+    androidDownload: "https://magicworlds.itch.io/magic-world",
     features: [
       "Cross-platform gameplay",
       "Real-time multiplayer battles",

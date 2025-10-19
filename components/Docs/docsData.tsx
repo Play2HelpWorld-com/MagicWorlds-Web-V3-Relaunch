@@ -1547,12 +1547,12 @@ export const docsData: Record<string, DocSection> = {
                 <line x1="4.93" y1="19.07" x2="8.69" y2="15.31"></line>
                 <line x1="19.07" y1="19.07" x2="15.31" y2="15.31"></line>
               </svg>
-              <strong className="text-blue-300">Reddit:</strong>
+              <strong className="text-blue-300">Open Source:</strong>
               <a
-                href="https://www.reddit.com/user/MagicWorlds_/"
+                href="https://github.com/orgs/TheMagicWorlds"
                 className="text-purple-300 hover:text-purple-200 hover:underline"
               >
-                u/MagicWorlds_
+                GitHub Organization
               </a>
             </li>
             <li className="flex items-center gap-2">

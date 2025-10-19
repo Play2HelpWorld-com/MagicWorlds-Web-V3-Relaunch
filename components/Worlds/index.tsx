@@ -29,7 +29,7 @@ const GAMEPLAY_VIDEOS: GameplayVideo[] = [
     genre: "Featured",
     youtubeId: "uYgyLtKgOVM",
     isShort: false,
-    thumbnailUrl: "https://img.youtube.com/vi/uYgyLtKgOVM/maxresdefault.jpg",
+    thumbnailUrl: "https://img.youtube.com/vi/uYgyLtKgOVM/hqdefault.jpg",
   },
   {
     id: "1",

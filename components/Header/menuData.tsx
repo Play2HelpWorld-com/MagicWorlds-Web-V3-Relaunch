@@ -90,7 +90,7 @@ const menuData: Menu[] = [
         id: 55,
         title: "Open Source",
         newTab: false,
-        path: "https://www.reddit.com/user/MagicWorlds_/",
+        path: "https://github.com/orgs/TheMagicWorlds",
       },
       {
         id: 56,
@@ -108,7 +108,7 @@ const menuData: Menu[] = [
         id: 58,
         title: "Mobile Game Link",
         newTab: false,
-        path: "https://drive.google.com/file/d/141f8EDsJhFywxbtJ0KfJUH8HRarf3P4j/view?usp=drive_link",
+        path: "https://magicworlds.itch.io/magic-world",
       },
     ],
   },
