@@ -212,28 +212,39 @@ const FeaturesTab = () => {
               className={`group relative overflow-hidden rounded-xl border-2 px-6 py-4 backdrop-blur-sm transition-all duration-500
           ${
             currentTab === feature.id
-              ? "border-purple-500 bg-gradient-to-br from-purple-600/40 via-purple-500/30 to-fuchsia-600/40 shadow-[0_0_40px_rgba(168,85,247,0.6)]"
-              : "border-purple-500/20 bg-gradient-to-br from-gray-800/60 to-gray-900/60 hover:border-purple-500/60 hover:shadow-[0_0_25px_rgba(168,85,247,0.3)]"
+              ? index === 0
+                ? "border-cyan-400 bg-gradient-to-br from-cyan-600 to-blue-700 shadow-[0_0_30px_rgba(34,211,238,0.6)]"
+                : index === 1
+                  ? "border-amber-400 bg-gradient-to-br from-amber-600 to-orange-700 shadow-[0_0_30px_rgba(251,191,36,0.6)]"
+                  : "border-emerald-400 bg-gradient-to-br from-emerald-600 to-teal-700 shadow-[0_0_30px_rgba(52,211,153,0.6)]"
+              : "border-purple-500/30 bg-gray-800/80 hover:border-purple-400/60 hover:shadow-[0_0_20px_rgba(168,85,247,0.4)]"
           }`}
             >
-              {/* Animated background particles */}
-              <div className="pointer-events-none absolute inset-0">
-                <div
-                  className={`absolute right-0 top-0 h-20 w-20 rounded-full blur-2xl transition-opacity duration-500 ${
-                    currentTab === feature.id || isHovering === feature.id
-                      ? "opacity-50"
-                      : "opacity-0"
-                  } ${
-                    index === 0
-                      ? "bg-blue-500"
-                      : index === 1
-                        ? "bg-amber-500"
-                        : "bg-emerald-500"
-                  }`}
-                />
-              </div>
+              {/* Animated background particles with vibrant colors - only when active */}
+              {currentTab === feature.id && (
+                <div className="pointer-events-none absolute inset-0">
+                  <motion.div
+                    animate={{
+                      scale: [1, 1.5, 1],
+                      opacity: [0.2, 0.4, 0.2],
+                    }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                    }}
+                    className={`absolute right-0 top-0 h-32 w-32 rounded-full blur-3xl ${
+                      index === 0
+                        ? "bg-gradient-to-br from-cyan-400 to-blue-600"
+                        : index === 1
+                          ? "bg-gradient-to-br from-amber-400 to-orange-600"
+                          : "bg-gradient-to-br from-emerald-400 to-teal-600"
+                    }`}
+                  />
+                </div>
+              )}
 
-              {/* Icon container */}
+              {/* Icon container with vibrant glow */}
               <div className="relative flex flex-row items-center gap-3">
                 <motion.div
                   animate={
@@ -245,51 +256,73 @@ const FeaturesTab = () => {
                       : {}
                   }
                   transition={{
-                    duration: 3,
-                    repeat: currentTab === feature.id ? Infinity : 0,
-                    ease: "linear",
+                    rotate: {
+                      duration: 3,
+                      repeat: currentTab === feature.id ? Infinity : 0,
+                      ease: "linear",
+                    },
+                    scale: {
+                      duration: 2,
+                      repeat: currentTab === feature.id ? Infinity : 0,
+                      ease: "easeInOut",
+                    },
                   }}
-                  className={`relative flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg border-2 ${
+                  className={`relative flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-lg transition-all duration-300 ${
                     currentTab === feature.id
                       ? `${
                           index === 0
-                            ? "border-blue-400 bg-blue-500/20"
+                            ? "bg-cyan-500 shadow-[0_0_15px_rgba(34,211,238,0.6)]"
                             : index === 1
-                              ? "border-amber-400 bg-amber-500/20"
-                              : "border-emerald-400 bg-emerald-500/20"
-                        } shadow-lg`
-                      : "border-gray-600/50 bg-gray-700/30"
+                              ? "bg-amber-500 shadow-[0_0_15px_rgba(251,191,36,0.6)]"
+                              : "bg-emerald-500 shadow-[0_0_15px_rgba(52,211,153,0.6)]"
+                        }`
+                      : "bg-gray-700/50"
                   }`}
                 >
-                  {/* Glowing core */}
-                  <motion.div
-                    animate={
-                      currentTab === feature.id
-                        ? {
-                            scale: [1, 1.5, 1],
-                            opacity: [0.5, 1, 0.5],
-                          }
-                        : {}
-                    }
-                    transition={{
-                      duration: 2,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                    }}
-                    className={`h-4 w-4 rounded-full ${
-                      index === 0
-                        ? "bg-blue-400"
-                        : index === 1
-                          ? "bg-amber-400"
-                          : "bg-emerald-400"
-                    } ${currentTab === feature.id ? "opacity-100" : "opacity-40"}`}
-                  />
+                  {/* Multi-layered glowing core - only when active */}
+                  {currentTab === feature.id && (
+                    <>
+                      <motion.div
+                        animate={{
+                          scale: [1, 1.5, 1],
+                          opacity: [0.5, 0.8, 0.5],
+                        }}
+                        transition={{
+                          duration: 1.5,
+                          repeat: Infinity,
+                          ease: "easeInOut",
+                        }}
+                        className={`absolute h-6 w-6 rounded-full blur-sm ${
+                          index === 0
+                            ? "bg-cyan-200"
+                            : index === 1
+                              ? "bg-amber-200"
+                              : "bg-emerald-200"
+                        }`}
+                      />
+                      <motion.div
+                        animate={{
+                          scale: [1, 1.2, 1],
+                          opacity: [0.8, 1, 0.8],
+                        }}
+                        transition={{
+                          duration: 2,
+                          repeat: Infinity,
+                          ease: "easeInOut",
+                        }}
+                        className="relative h-4 w-4 rounded-full bg-white"
+                      />
+                    </>
+                  )}
+                  {currentTab !== feature.id && (
+                    <div className="relative h-4 w-4 rounded-full bg-white opacity-40" />
+                  )}
                 </motion.div>
 
                 <span
-                  className={`block font-orbitron text-base font-black uppercase tracking-wider transition-colors duration-300 ${
+                  className={`block font-orbitron text-base font-black uppercase tracking-wider transition-all duration-300 md:text-lg ${
                     currentTab === feature.id
-                      ? "bg-gradient-to-r from-white via-purple-100 to-white bg-clip-text text-transparent"
+                      ? "text-white"
                       : "text-gray-300 group-hover:text-white"
                   }`}
                 >
@@ -297,20 +330,49 @@ const FeaturesTab = () => {
                 </span>
               </div>
 
-              {/* Corner accents */}
+              {/* Vibrant corner accents - only when active */}
               {currentTab === feature.id && (
                 <>
                   <motion.div
-                    initial={{ opacity: 0, scale: 0 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    className="absolute left-2 top-2 h-3 w-3 border-l-2 border-t-2 border-purple-400"
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{
+                      opacity: [0.6, 1, 0.6],
+                      scale: 1,
+                    }}
+                    transition={{
+                      opacity: { duration: 1.5, repeat: Infinity },
+                      scale: { duration: 0.3 },
+                    }}
+                    className="absolute left-1 top-1 h-3 w-3 border-l-2 border-t-2 border-white/90"
                   />
                   <motion.div
-                    initial={{ opacity: 0, scale: 0 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    className="absolute bottom-2 right-2 h-3 w-3 border-b-2 border-r-2 border-purple-400"
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{
+                      opacity: [0.6, 1, 0.6],
+                      scale: 1,
+                    }}
+                    transition={{
+                      opacity: { duration: 1.5, repeat: Infinity, delay: 0.75 },
+                      scale: { duration: 0.3 },
+                    }}
+                    className="absolute bottom-1 right-1 h-3 w-3 border-b-2 border-r-2 border-white/90"
                   />
                 </>
+              )}
+
+              {/* Animated border glow - only when active */}
+              {currentTab === feature.id && (
+                <motion.div
+                  animate={{
+                    opacity: [0.3, 0.6, 0.3],
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
+                  className="pointer-events-none absolute inset-0 rounded-xl shadow-[inset_0_0_20px_rgba(255,255,255,0.2)]"
+                />
               )}
             </motion.button>
           ))}
