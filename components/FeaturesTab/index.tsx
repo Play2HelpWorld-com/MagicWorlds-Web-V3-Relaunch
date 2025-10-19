@@ -27,7 +27,7 @@ const FeaturesTab = () => {
   const gamingFeaturesData = [
     {
       id: "tabOne",
-      buttonText: "Sign Up",
+      buttonText: "Join",
       title: "Sign Up & Join",
       description:
         "Create your free account in seconds and become part of the Magic Worlds community. Quick registration gets you instant access to our gaming platform and charitable impact system.",
@@ -42,7 +42,7 @@ const FeaturesTab = () => {
     },
     {
       id: "tabTwo",
-      buttonText: "Start Playing",
+      buttonText: "Play",
       title: "Start Playing",
       description:
         "Jump into a world of excitement with our curated collection of games. From action-packed adventures to mind-bending puzzles, discover new experiences and challenge your skills.",
@@ -57,7 +57,7 @@ const FeaturesTab = () => {
     },
     {
       id: "tabThree",
-      buttonText: "Earn Rewards",
+      buttonText: "Earn",
       title: "Earn Rewards",
       description:
         "Every minute of gameplay earns you valuable points. Complete challenges, unlock achievements, and watch your score multiply with consecutive daily play streaks.",
@@ -205,65 +205,175 @@ const FeaturesTab = () => {
             <motion.button
               key={feature.id}
               onClick={() => setCurrentTab(feature.id)}
-              onMouseEnter={() => setIsHovering(feature.id)}
-              onMouseLeave={() => setIsHovering(null)}
-              initial="idle"
-              animate={currentTab === feature.id ? "active" : "idle"}
-              variants={glowVariants}
-              className={`relative flex items-center gap-4 rounded-xl px-6 py-4 backdrop-blur-lg transition-all duration-300 md:px-8
-                ${
-                  currentTab === feature.id
-                    ? "border border-purple-500 bg-gradient-to-r from-purple-900/80 to-purple-600/80"
-                    : "border border-gray-700 bg-gray-900/40 hover:border-gray-500"
-                }`}
+              onHoverStart={() => setIsHovering(feature.id)}
+              onHoverEnd={() => setIsHovering(null)}
+              whileHover={{ scale: 1.05, y: -5 }}
+              whileTap={{ scale: 0.95 }}
+              className={`group relative overflow-hidden rounded-xl border-2 px-6 py-4 backdrop-blur-sm transition-all duration-500
+          ${
+            currentTab === feature.id
+              ? index === 0
+                ? "border-cyan-400 bg-gradient-to-br from-cyan-600 to-blue-700 shadow-[0_0_30px_rgba(34,211,238,0.6)]"
+                : index === 1
+                  ? "border-amber-400 bg-gradient-to-br from-amber-600 to-orange-700 shadow-[0_0_30px_rgba(251,191,36,0.6)]"
+                  : "border-emerald-400 bg-gradient-to-br from-emerald-600 to-teal-700 shadow-[0_0_30px_rgba(52,211,153,0.6)]"
+              : "border-purple-500/30 bg-gray-800/80 hover:border-purple-400/60 hover:shadow-[0_0_20px_rgba(168,85,247,0.4)]"
+          }`}
             >
-              {/* Game-controller themed numbering */}
-              <div
-                className={`flex h-12 w-12 items-center justify-center rounded-lg
-                ${
-                  currentTab === feature.id
-                    ? "bg-purple-600 text-white"
-                    : "bg-gray-800 text-gray-300"
-                }`}
-              >
-                <motion.div
-                  animate={{
-                    scale:
-                      isHovering === feature.id || currentTab === feature.id
-                        ? [1, 1.1, 1]
-                        : 1,
-                  }}
-                  transition={{
-                    duration: 0.5,
-                    repeat: currentTab === feature.id ? Infinity : 0,
-                    repeatType: "reverse",
-                  }}
-                  className="relative"
-                >
-                  <span className="text-lg font-bold">{index + 1}</span>
+              {/* Animated background particles with vibrant colors - only when active */}
+              {currentTab === feature.id && (
+                <div className="pointer-events-none absolute inset-0">
+                  <motion.div
+                    animate={{
+                      scale: [1, 1.5, 1],
+                      opacity: [0.2, 0.4, 0.2],
+                    }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                    }}
+                    className={`absolute right-0 top-0 h-32 w-32 rounded-full blur-3xl ${
+                      index === 0
+                        ? "bg-gradient-to-br from-cyan-400 to-blue-600"
+                        : index === 1
+                          ? "bg-gradient-to-br from-amber-400 to-orange-600"
+                          : "bg-gradient-to-br from-emerald-400 to-teal-600"
+                    }`}
+                  />
+                </div>
+              )}
 
-                  {/* Controller button dots */}
-                  <div className="absolute -right-1 -top-1 h-1.5 w-1.5 rounded-full bg-white/80"></div>
-                  <div className="absolute -bottom-1 -left-1 h-1.5 w-1.5 rounded-full bg-white/80"></div>
+              {/* Icon container with vibrant glow */}
+              <div className="relative flex flex-row items-center gap-3">
+                <motion.div
+                  animate={
+                    currentTab === feature.id
+                      ? {
+                          rotate: [0, 360],
+                          scale: [1, 1.1, 1],
+                        }
+                      : {}
+                  }
+                  transition={{
+                    rotate: {
+                      duration: 3,
+                      repeat: currentTab === feature.id ? Infinity : 0,
+                      ease: "linear",
+                    },
+                    scale: {
+                      duration: 2,
+                      repeat: currentTab === feature.id ? Infinity : 0,
+                      ease: "easeInOut",
+                    },
+                  }}
+                  className={`relative flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-lg transition-all duration-300 ${
+                    currentTab === feature.id
+                      ? `${
+                          index === 0
+                            ? "bg-cyan-500 shadow-[0_0_15px_rgba(34,211,238,0.6)]"
+                            : index === 1
+                              ? "bg-amber-500 shadow-[0_0_15px_rgba(251,191,36,0.6)]"
+                              : "bg-emerald-500 shadow-[0_0_15px_rgba(52,211,153,0.6)]"
+                        }`
+                      : "bg-gray-700/50"
+                  }`}
+                >
+                  {/* Multi-layered glowing core - only when active */}
+                  {currentTab === feature.id && (
+                    <>
+                      <motion.div
+                        animate={{
+                          scale: [1, 1.5, 1],
+                          opacity: [0.5, 0.8, 0.5],
+                        }}
+                        transition={{
+                          duration: 1.5,
+                          repeat: Infinity,
+                          ease: "easeInOut",
+                        }}
+                        className={`absolute h-6 w-6 rounded-full blur-sm ${
+                          index === 0
+                            ? "bg-cyan-200"
+                            : index === 1
+                              ? "bg-amber-200"
+                              : "bg-emerald-200"
+                        }`}
+                      />
+                      <motion.div
+                        animate={{
+                          scale: [1, 1.2, 1],
+                          opacity: [0.8, 1, 0.8],
+                        }}
+                        transition={{
+                          duration: 2,
+                          repeat: Infinity,
+                          ease: "easeInOut",
+                        }}
+                        className="relative h-4 w-4 rounded-full bg-white"
+                      />
+                    </>
+                  )}
+                  {currentTab !== feature.id && (
+                    <div className="relative h-4 w-4 rounded-full bg-white opacity-40" />
+                  )}
                 </motion.div>
+
+                <span
+                  className={`block font-orbitron text-base font-black uppercase tracking-wider transition-all duration-300 md:text-lg ${
+                    currentTab === feature.id
+                      ? "text-white"
+                      : "text-gray-300 group-hover:text-white"
+                  }`}
+                >
+                  {feature.buttonText}
+                </span>
               </div>
 
-              <span
-                className={`font-rajdhani text-sm font-bold uppercase tracking-wider transition-colors duration-300 ${currentTab === feature.id ? "text-white" : "text-gray-300"}`}
-              >
-                {feature.buttonText}
-              </span>
+              {/* Vibrant corner accents - only when active */}
+              {currentTab === feature.id && (
+                <>
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{
+                      opacity: [0.6, 1, 0.6],
+                      scale: 1,
+                    }}
+                    transition={{
+                      opacity: { duration: 1.5, repeat: Infinity },
+                      scale: { duration: 0.3 },
+                    }}
+                    className="absolute left-1 top-1 h-3 w-3 border-l-2 border-t-2 border-white/90"
+                  />
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{
+                      opacity: [0.6, 1, 0.6],
+                      scale: 1,
+                    }}
+                    transition={{
+                      opacity: { duration: 1.5, repeat: Infinity, delay: 0.75 },
+                      scale: { duration: 0.3 },
+                    }}
+                    className="absolute bottom-1 right-1 h-3 w-3 border-b-2 border-r-2 border-white/90"
+                  />
+                </>
+              )}
 
-              {/* Animated selection indicator */}
-              {/* {currentTab === feature.id && (
+              {/* Animated border glow - only when active */}
+              {currentTab === feature.id && (
                 <motion.div
-                  layoutId="activeTab"
-                  className="absolute -bottom-1 left-0 right-0 h-1 bg-gradient-to-r from-purple-500 to-pink-500"
-                  initial={{ width: 0 }}
-                  animate={{ width: "100%" }}
-                  transition={{ duration: 0.3 }}
+                  animate={{
+                    opacity: [0.3, 0.6, 0.3],
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
+                  className="pointer-events-none absolute inset-0 rounded-xl shadow-[inset_0_0_20px_rgba(255,255,255,0.2)]"
                 />
-              )} */}
+              )}
             </motion.button>
           ))}
         </motion.div>
@@ -412,19 +522,41 @@ const FeaturesTab = () => {
                         animate="visible"
                         className="mt-8"
                       >
-                        <button
-                          className={`group relative overflow-hidden rounded-lg px-8 py-3 font-rajdhani text-sm font-bold uppercase tracking-wider text-white transition-all duration-300 md:text-base
+                        <motion.button
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                          className={`group relative overflow-hidden rounded-xl border-2 px-10 py-4 font-orbitron text-base font-black uppercase tracking-widest text-white shadow-2xl transition-all duration-300 md:text-lg
                           ${
                             feature.id === "tabOne"
-                              ? "bg-blue-600 hover:bg-blue-700"
+                              ? "border-blue-400 bg-gradient-to-r from-blue-600 via-blue-500 to-cyan-600 shadow-blue-500/50 hover:shadow-blue-400/80"
                               : feature.id === "tabTwo"
-                                ? "bg-amber-600 hover:bg-amber-700"
-                                : "bg-emerald-600 hover:bg-emerald-700"
+                                ? "border-amber-400 bg-gradient-to-r from-amber-600 via-yellow-500 to-orange-600 shadow-amber-500/50 hover:shadow-amber-400/80"
+                                : "border-emerald-400 bg-gradient-to-r from-emerald-600 via-green-500 to-teal-600 shadow-emerald-500/50 hover:shadow-emerald-400/80"
                           }`}
                         >
-                          {/* Button particle effects */}
-                          <span className="pointer-events-none absolute -left-10 -top-10 h-20 w-20 rounded-full bg-white/30 opacity-0 duration-700 group-hover:scale-[6] group-hover:opacity-20"></span>
-                          <span className="pointer-events-none absolute -bottom-10 -right-10 h-20 w-20 rounded-full bg-white/20 opacity-0 delay-100 duration-700 group-hover:scale-[6] group-hover:opacity-20"></span>
+                          {/* Animated gradient overlay */}
+                          <motion.div
+                            animate={{
+                              x: ["-100%", "100%"],
+                            }}
+                            transition={{
+                              duration: 3,
+                              repeat: Infinity,
+                              ease: "linear",
+                            }}
+                            className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
+                          />
+
+                          {/* Corner accents */}
+                          <div className="absolute left-1 top-1 h-2 w-2 border-l-2 border-t-2 border-white/80" />
+                          <div className="absolute bottom-1 right-1 h-2 w-2 border-b-2 border-r-2 border-white/80" />
+
+                          {/* Particle effects on hover */}
+                          <span className="pointer-events-none absolute -left-10 -top-10 h-24 w-24 rounded-full bg-white/40 opacity-0 blur-xl duration-700 group-hover:scale-[5] group-hover:opacity-30"></span>
+                          <span className="pointer-events-none absolute -bottom-10 -right-10 h-24 w-24 rounded-full bg-white/30 opacity-0 blur-xl delay-75 duration-700 group-hover:scale-[5] group-hover:opacity-30"></span>
+
+                          {/* Glow effect */}
+                          <div className="absolute inset-0 rounded-xl bg-white/20 opacity-0 blur-md transition-opacity duration-300 group-hover:opacity-100" />
 
                           {/* Button text */}
                           <span className="relative z-10">
@@ -434,7 +566,20 @@ const FeaturesTab = () => {
                                 ? "Start Playing"
                                 : "View Rewards"}
                           </span>
-                        </button>
+
+                          {/* Pixel-style border animation */}
+                          <motion.div
+                            animate={{
+                              opacity: [0.5, 1, 0.5],
+                            }}
+                            transition={{
+                              duration: 1.5,
+                              repeat: Infinity,
+                              ease: "easeInOut",
+                            }}
+                            className="absolute inset-0 rounded-xl border-2 border-white/30"
+                          />
+                        </motion.button>
                       </motion.div>
                     </div>
                   </motion.div>

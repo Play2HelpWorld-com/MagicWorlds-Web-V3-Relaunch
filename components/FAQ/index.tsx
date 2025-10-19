@@ -325,7 +325,7 @@ const FAQ = () => {
 
           <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
             <motion.a
-              href="https://discord.com/invite/NcNSaTVNdn"
+              href="https://discord.gg/wCwqrTdHnp"
               target="_blank"
               rel="noopener noreferrer"
               className="group relative inline-flex items-center gap-3 overflow-hidden rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 px-8 py-4 font-orbitron text-sm font-bold uppercase tracking-wider text-white transition-all duration-300 hover:shadow-xl hover:shadow-cyan-500/50"
