@@ -27,7 +27,7 @@ const FeaturesTab = () => {
   const gamingFeaturesData = [
     {
       id: "tabOne",
-      buttonText: "Sign Up",
+      buttonText: "Join",
       title: "Sign Up & Join",
       description:
         "Create your free account in seconds and become part of the Magic Worlds community. Quick registration gets you instant access to our gaming platform and charitable impact system.",
@@ -42,7 +42,7 @@ const FeaturesTab = () => {
     },
     {
       id: "tabTwo",
-      buttonText: "Start Playing",
+      buttonText: "Play",
       title: "Start Playing",
       description:
         "Jump into a world of excitement with our curated collection of games. From action-packed adventures to mind-bending puzzles, discover new experiences and challenge your skills.",
@@ -57,7 +57,7 @@ const FeaturesTab = () => {
     },
     {
       id: "tabThree",
-      buttonText: "Earn Rewards",
+      buttonText: "Earn",
       title: "Earn Rewards",
       description:
         "Every minute of gameplay earns you valuable points. Complete challenges, unlock achievements, and watch your score multiply with consecutive daily play streaks.",
@@ -205,65 +205,113 @@ const FeaturesTab = () => {
             <motion.button
               key={feature.id}
               onClick={() => setCurrentTab(feature.id)}
-              onMouseEnter={() => setIsHovering(feature.id)}
-              onMouseLeave={() => setIsHovering(null)}
-              initial="idle"
-              animate={currentTab === feature.id ? "active" : "idle"}
-              variants={glowVariants}
-              className={`relative flex items-center gap-4 rounded-xl px-6 py-4 backdrop-blur-lg transition-all duration-300 md:px-8
-                ${
-                  currentTab === feature.id
-                    ? "border border-purple-500 bg-gradient-to-r from-purple-900/80 to-purple-600/80"
-                    : "border border-gray-700 bg-gray-900/40 hover:border-gray-500"
-                }`}
+              onHoverStart={() => setIsHovering(feature.id)}
+              onHoverEnd={() => setIsHovering(null)}
+              whileHover={{ scale: 1.05, y: -5 }}
+              whileTap={{ scale: 0.95 }}
+              className={`group relative overflow-hidden rounded-xl border-2 px-6 py-4 backdrop-blur-sm transition-all duration-500
+          ${
+            currentTab === feature.id
+              ? "border-purple-500 bg-gradient-to-br from-purple-600/40 via-purple-500/30 to-fuchsia-600/40 shadow-[0_0_40px_rgba(168,85,247,0.6)]"
+              : "border-purple-500/20 bg-gradient-to-br from-gray-800/60 to-gray-900/60 hover:border-purple-500/60 hover:shadow-[0_0_25px_rgba(168,85,247,0.3)]"
+          }`}
             >
-              {/* Game-controller themed numbering */}
-              <div
-                className={`flex h-12 w-12 items-center justify-center rounded-lg
-                ${
-                  currentTab === feature.id
-                    ? "bg-purple-600 text-white"
-                    : "bg-gray-800 text-gray-300"
-                }`}
-              >
-                <motion.div
-                  animate={{
-                    scale:
-                      isHovering === feature.id || currentTab === feature.id
-                        ? [1, 1.1, 1]
-                        : 1,
-                  }}
-                  transition={{
-                    duration: 0.5,
-                    repeat: currentTab === feature.id ? Infinity : 0,
-                    repeatType: "reverse",
-                  }}
-                  className="relative"
-                >
-                  <span className="text-lg font-bold">{index + 1}</span>
-
-                  {/* Controller button dots */}
-                  <div className="absolute -right-1 -top-1 h-1.5 w-1.5 rounded-full bg-white/80"></div>
-                  <div className="absolute -bottom-1 -left-1 h-1.5 w-1.5 rounded-full bg-white/80"></div>
-                </motion.div>
+              {/* Animated background particles */}
+              <div className="pointer-events-none absolute inset-0">
+                <div
+                  className={`absolute right-0 top-0 h-20 w-20 rounded-full blur-2xl transition-opacity duration-500 ${
+                    currentTab === feature.id || isHovering === feature.id
+                      ? "opacity-50"
+                      : "opacity-0"
+                  } ${
+                    index === 0
+                      ? "bg-blue-500"
+                      : index === 1
+                        ? "bg-amber-500"
+                        : "bg-emerald-500"
+                  }`}
+                />
               </div>
 
-              <span
-                className={`font-rajdhani text-sm font-bold uppercase tracking-wider transition-colors duration-300 ${currentTab === feature.id ? "text-white" : "text-gray-300"}`}
-              >
-                {feature.buttonText}
-              </span>
-
-              {/* Animated selection indicator */}
-              {/* {currentTab === feature.id && (
+              {/* Icon container */}
+              <div className="relative flex flex-row items-center gap-3">
                 <motion.div
-                  layoutId="activeTab"
-                  className="absolute -bottom-1 left-0 right-0 h-1 bg-gradient-to-r from-purple-500 to-pink-500"
-                  initial={{ width: 0 }}
-                  animate={{ width: "100%" }}
-                  transition={{ duration: 0.3 }}
-                />
-              )} */}
+                  animate={
+                    currentTab === feature.id
+                      ? {
+                          rotate: [0, 360],
+                          scale: [1, 1.1, 1],
+                        }
+                      : {}
+                  }
+                  transition={{
+                    duration: 3,
+                    repeat: currentTab === feature.id ? Infinity : 0,
+                    ease: "linear",
+                  }}
+                  className={`relative flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg border-2 ${
+                    currentTab === feature.id
+                      ? `${
+                          index === 0
+                            ? "border-blue-400 bg-blue-500/20"
+                            : index === 1
+                              ? "border-amber-400 bg-amber-500/20"
+                              : "border-emerald-400 bg-emerald-500/20"
+                        } shadow-lg`
+                      : "border-gray-600/50 bg-gray-700/30"
+                  }`}
+                >
+                  {/* Glowing core */}
+                  <motion.div
+                    animate={
+                      currentTab === feature.id
+                        ? {
+                            scale: [1, 1.5, 1],
+                            opacity: [0.5, 1, 0.5],
+                          }
+                        : {}
+                    }
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                    }}
+                    className={`h-4 w-4 rounded-full ${
+                      index === 0
+                        ? "bg-blue-400"
+                        : index === 1
+                          ? "bg-amber-400"
+                          : "bg-emerald-400"
+                    } ${currentTab === feature.id ? "opacity-100" : "opacity-40"}`}
+                  />
+                </motion.div>
+
+                <span
+                  className={`block font-orbitron text-base font-black uppercase tracking-wider transition-colors duration-300 ${
+                    currentTab === feature.id
+                      ? "bg-gradient-to-r from-white via-purple-100 to-white bg-clip-text text-transparent"
+                      : "text-gray-300 group-hover:text-white"
+                  }`}
+                >
+                  {feature.buttonText}
+                </span>
+              </div>
+
+              {/* Corner accents */}
+              {currentTab === feature.id && (
+                <>
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    className="absolute left-2 top-2 h-3 w-3 border-l-2 border-t-2 border-purple-400"
+                  />
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    className="absolute bottom-2 right-2 h-3 w-3 border-b-2 border-r-2 border-purple-400"
+                  />
+                </>
+              )}
             </motion.button>
           ))}
         </motion.div>
