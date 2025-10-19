@@ -460,19 +460,41 @@ const FeaturesTab = () => {
                         animate="visible"
                         className="mt-8"
                       >
-                        <button
-                          className={`group relative overflow-hidden rounded-lg px-8 py-3 font-rajdhani text-sm font-bold uppercase tracking-wider text-white transition-all duration-300 md:text-base
+                        <motion.button
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                          className={`group relative overflow-hidden rounded-xl border-2 px-10 py-4 font-orbitron text-base font-black uppercase tracking-widest text-white shadow-2xl transition-all duration-300 md:text-lg
                           ${
                             feature.id === "tabOne"
-                              ? "bg-blue-600 hover:bg-blue-700"
+                              ? "border-blue-400 bg-gradient-to-r from-blue-600 via-blue-500 to-cyan-600 shadow-blue-500/50 hover:shadow-blue-400/80"
                               : feature.id === "tabTwo"
-                                ? "bg-amber-600 hover:bg-amber-700"
-                                : "bg-emerald-600 hover:bg-emerald-700"
+                                ? "border-amber-400 bg-gradient-to-r from-amber-600 via-yellow-500 to-orange-600 shadow-amber-500/50 hover:shadow-amber-400/80"
+                                : "border-emerald-400 bg-gradient-to-r from-emerald-600 via-green-500 to-teal-600 shadow-emerald-500/50 hover:shadow-emerald-400/80"
                           }`}
                         >
-                          {/* Button particle effects */}
-                          <span className="pointer-events-none absolute -left-10 -top-10 h-20 w-20 rounded-full bg-white/30 opacity-0 duration-700 group-hover:scale-[6] group-hover:opacity-20"></span>
-                          <span className="pointer-events-none absolute -bottom-10 -right-10 h-20 w-20 rounded-full bg-white/20 opacity-0 delay-100 duration-700 group-hover:scale-[6] group-hover:opacity-20"></span>
+                          {/* Animated gradient overlay */}
+                          <motion.div
+                            animate={{
+                              x: ["-100%", "100%"],
+                            }}
+                            transition={{
+                              duration: 3,
+                              repeat: Infinity,
+                              ease: "linear",
+                            }}
+                            className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
+                          />
+
+                          {/* Corner accents */}
+                          <div className="absolute left-1 top-1 h-2 w-2 border-l-2 border-t-2 border-white/80" />
+                          <div className="absolute bottom-1 right-1 h-2 w-2 border-b-2 border-r-2 border-white/80" />
+
+                          {/* Particle effects on hover */}
+                          <span className="pointer-events-none absolute -left-10 -top-10 h-24 w-24 rounded-full bg-white/40 opacity-0 blur-xl duration-700 group-hover:scale-[5] group-hover:opacity-30"></span>
+                          <span className="pointer-events-none absolute -bottom-10 -right-10 h-24 w-24 rounded-full bg-white/30 opacity-0 blur-xl delay-75 duration-700 group-hover:scale-[5] group-hover:opacity-30"></span>
+
+                          {/* Glow effect */}
+                          <div className="absolute inset-0 rounded-xl bg-white/20 opacity-0 blur-md transition-opacity duration-300 group-hover:opacity-100" />
 
                           {/* Button text */}
                           <span className="relative z-10">
@@ -482,7 +504,20 @@ const FeaturesTab = () => {
                                 ? "Start Playing"
                                 : "View Rewards"}
                           </span>
-                        </button>
+
+                          {/* Pixel-style border animation */}
+                          <motion.div
+                            animate={{
+                              opacity: [0.5, 1, 0.5],
+                            }}
+                            transition={{
+                              duration: 1.5,
+                              repeat: Infinity,
+                              ease: "easeInOut",
+                            }}
+                            className="absolute inset-0 rounded-xl border-2 border-white/30"
+                          />
+                        </motion.button>
                       </motion.div>
                     </div>
                   </motion.div>
