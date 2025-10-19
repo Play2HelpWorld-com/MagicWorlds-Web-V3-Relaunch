@@ -28,7 +28,7 @@ const menuData: Menu[] = [
       {
         id: 62,
         title: "Apps",
-        newTab: true,
+        newTab: false,
         path: "https://magicworlds.itch.io/magic-world",
       },
       {
@@ -101,7 +101,7 @@ const menuData: Menu[] = [
       {
         id: 57,
         title: "Influencers",
-        newTab: true,
+        newTab: false,
         path: "https://www.instagram.com/magikworlds/",
       },
       {
