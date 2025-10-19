@@ -1036,13 +1036,23 @@ const About = () => {
               key={index}
               className="absolute h-1 w-1 rounded-full bg-white"
               animate={{
+                x: [
+                  `${Math.random() * 100}vw`,
+                  `${Math.random() * 100}vw`,
+                  `${Math.random() * 100}vw`,
+                ],
+                y: [
+                  `${Math.random() * 100}vh`,
+                  `${Math.random() * 100}vh`,
+                  `${Math.random() * 100}vh`,
+                ],
                 opacity: [0.1, 0.8, 0.1],
-                scale: [1, 1.2, 1],
+                scale: [1, 1.5, 1],
               }}
               transition={{
-                duration: 3 + Math.random() * 5,
+                duration: 10 + Math.random() * 20,
                 repeat: Infinity,
-                delay: Math.random() * 5,
+                ease: "linear",
               }}
               style={{
                 top: `${Math.random() * 100}%`,
