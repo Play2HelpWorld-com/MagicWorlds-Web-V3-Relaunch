@@ -100,7 +100,7 @@ const Header = () => {
             transition: "all 0.7s cubic-bezier(0.86, 0, 0.07, 1)",
           }}
         >
-          <div className="flex w-full items-center justify-between transition-all duration-500 ease-out xl:w-auto xl:flex-shrink-0">
+          <div className=" flex w-full items-center justify-between transition-all duration-500 ease-out xl:w-auto xl:flex-shrink-0">
             <Link
               href="/"
               title="Home"
@@ -155,7 +155,7 @@ const Header = () => {
 
           {/* Nav Menu Start   */}
           <div
-            className={`w-full items-center justify-between transition-all duration-700 ease-[cubic-bezier(0.86,0,0.07,1)] xl:visible xl:flex xl:h-auto xl:w-full ${
+            className={`w-full items-center justify-between transition-all duration-700 ease-[cubic-bezier(0.86,0,0.07,1)] xl:visible xl:ml-6 xl:flex xl:h-auto xl:w-full 2xl:ml-8 ${
               navigationOpen
                 ? "navbar !visible mt-3 h-auto max-h-[70vh] overflow-y-auto rounded-2xl bg-black/95 p-3 opacity-100 shadow-[0_8px_32px_rgba(0,0,0,0.6)] backdrop-blur-2xl sm:p-4 xl:mt-0 xl:h-auto xl:max-h-none xl:overflow-visible xl:bg-transparent xl:p-0 xl:shadow-none"
                 : "invisible h-0 opacity-0 xl:visible xl:opacity-100"
