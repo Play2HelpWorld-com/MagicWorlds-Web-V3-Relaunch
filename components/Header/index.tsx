@@ -230,8 +230,11 @@ const Header = () => {
 
                         {/* Desktop: Dropdown menu */}
                         <ul
-                          className={`nav-dropdown absolute left-0 top-full z-50 mt-0 hidden min-w-[220px] flex-col gap-1 rounded-2xl border border-purple-500/40 bg-gradient-to-b from-black via-black/95 to-purple-950/95 p-2 shadow-[0_24px_64px_rgba(139,92,246,0.35)] backdrop-blur-2xl xl:pointer-events-none xl:flex xl:translate-y-[-6px] xl:scale-95 xl:opacity-0 xl:transition-all xl:duration-200 xl:ease-out group-hover:xl:pointer-events-auto group-hover:xl:translate-y-8 group-hover:xl:scale-100 group-hover:xl:opacity-100`}
-                          style={{ transformOrigin: "top center" }}
+                          className={`nav-dropdown absolute left-0 top-full z-50 mt-0 hidden min-w-[220px] flex-col gap-1 rounded-2xl border border-purple-500/40 bg-black bg-gradient-to-b from-black via-black to-purple-950 p-2 shadow-[0_24px_64px_rgba(139,92,246,0.35)] xl:pointer-events-none xl:flex xl:translate-y-[-6px] xl:scale-95 xl:opacity-0 xl:transition-all xl:duration-200 xl:ease-out group-hover:xl:pointer-events-auto group-hover:xl:translate-y-8 group-hover:xl:scale-100 group-hover:xl:opacity-100`}
+                          style={{
+                            transformOrigin: "top center",
+                            backgroundColor: "rgba(0,0,0,1)",
+                          }}
                         >
                           {menuItem.submenu.map((item, subKey) => (
                             <li
