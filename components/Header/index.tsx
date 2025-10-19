@@ -10,9 +10,8 @@ import menuData from "./menuData";
 
 const Header = () => {
   const [navigationOpen, setNavigationOpen] = useState(false);
-  const [dropdownToggler, setDropdownToggler] = useState(false);
+  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [stickyMenu, setStickyMenu] = useState(false);
-  const [activeMenu, setActiveMenu] = useState<string>();
   const [hideOnScroll, setHideOnScroll] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
 
@@ -25,18 +24,17 @@ const Header = () => {
     submenu?: MenuItem[];
   }
 
-  const handleLinkClick = (
-    e: React.MouseEvent<HTMLLIElement, MouseEvent>,
-    menuItem: MenuItem,
-  ) => {
-    e.preventDefault();
-    setActiveMenu(menuItem.title);
-    if (menuItem.id === 5 || menuItem.id === 6) {
-      setDropdownToggler(!dropdownToggler);
-    } else {
-      setNavigationOpen(!navigationOpen);
-    }
+  const handleDropdownClick = (menuTitle: string) => {
+    // Only toggle on mobile (below xl breakpoint)
+    setActiveDropdown(activeDropdown === menuTitle ? null : menuTitle);
   };
+
+  const handleNavItemClick = () => {
+    setNavigationOpen(false);
+    setActiveDropdown(null);
+  };
+
+  // No hover timers needed; desktop uses pure CSS hover. Mobile uses click + state.
 
   // Handle sticky menu
   const handleStickyMenu = () => {
@@ -91,44 +89,43 @@ const Header = () => {
           "transform 0.7s cubic-bezier(0.86, 0, 0.07, 1), opacity 0.5s ease-out",
       }}
     >
-      <div className="mx-auto mt-3 max-w-7xl px-4 transition-all duration-500 ease-out md:px-6 lg:px-8">
+      <div className="mx-auto mt-2 max-w-7xl px-4 transition-all duration-500 ease-out md:px-6 lg:px-8">
         <div
-          className={`relative mx-auto items-center justify-between border border-white/20 bg-black/95 px-2 py-0.5 backdrop-blur-2xl backdrop-saturate-150 transition-all duration-700 ease-[cubic-bezier(0.86,0,0.07,1)] md:px-6 xl:flex ${
+          className={`relative mx-auto items-center justify-between border border-white/20 bg-black/95 px-3 py-1.5 backdrop-blur-2xl backdrop-saturate-150 transition-all duration-700 ease-[cubic-bezier(0.86,0,0.07,1)] sm:px-4 sm:py-2 xl:flex ${
             stickyMenu
-              ? "scale-[0.98] rounded-[2rem] shadow-[0_8px_32px_rgba(0,0,0,0.6)]"
-              : "scale-100 rounded-[2.5rem] shadow-[0_4px_24px_rgba(0,0,0,0.4)]"
-          } hover:scale-[0.99] hover:shadow-[0_12px_40px_rgba(0,0,0,0.7)]`}
+              ? "rounded-[2rem] shadow-[0_8px_32px_rgba(0,0,0,0.6)]"
+              : "rounded-[2.5rem] shadow-[0_4px_24px_rgba(0,0,0,0.4)]"
+          }`}
           style={{
             transition: "all 0.7s cubic-bezier(0.86, 0, 0.07, 1)",
-            willChange: "transform, box-shadow, border-radius",
           }}
         >
-          <div className="flex w-full items-center justify-between transition-all duration-500 ease-out xl:w-[12%]">
+          <div className="flex w-full items-center justify-between transition-all duration-500 ease-out xl:w-auto xl:flex-shrink-0">
             <Link
               href="/"
               title="Home"
-              className="transition-transform duration-500 ease-out hover:scale-105 active:scale-95"
+              className="transition-opacity duration-300 ease-out hover:opacity-80"
             >
               <Image
                 src="/images/logo/logo.png"
                 alt="logo"
                 width={200}
                 height={50}
-                className="hidden h-18 w-24 transition-opacity duration-300 dark:block"
+                className="hidden h-10 w-16 transition-opacity duration-300 dark:block sm:h-11 sm:w-18 md:h-12 md:w-20"
               />
               <Image
                 src="/images/logo/logo.png"
                 alt="logo"
                 width={200}
                 height={50}
-                className="h-18 w-24 transition-opacity duration-300 dark:hidden"
+                className="h-10 w-16 transition-opacity duration-300 dark:hidden sm:h-11 sm:w-18 md:h-12 md:w-20"
               />
             </Link>
 
             {/* <!-- Hamburger Toggle BTN --> */}
             <button
               aria-label="hamburger Toggler"
-              className="block rounded-full p-2 transition-all duration-300 ease-out hover:bg-white/10 active:scale-90 xl:hidden"
+              className="block rounded-full p-2 transition-all duration-300 ease-out hover:bg-white/10 xl:hidden"
               onClick={() => setNavigationOpen(!navigationOpen)}
             >
               <span className="relative block h-5.5 w-5.5 cursor-pointer">
@@ -160,8 +157,8 @@ const Header = () => {
           <div
             className={`w-full items-center justify-between transition-all duration-700 ease-[cubic-bezier(0.86,0,0.07,1)] xl:visible xl:flex xl:h-auto xl:w-full ${
               navigationOpen
-                ? "navbar !visible mt-4 h-auto max-h-[400px] scale-100 rounded-2xl bg-black/95 p-6 opacity-100 shadow-[0_8px_32px_rgba(0,0,0,0.6)] backdrop-blur-2xl xl:mt-0 xl:h-auto xl:bg-transparent xl:p-0 xl:shadow-none"
-                : "invisible h-0 scale-95 opacity-0 xl:visible xl:scale-100 xl:opacity-100"
+                ? "navbar !visible mt-3 h-auto max-h-[70vh] overflow-y-auto rounded-2xl bg-black/95 p-3 opacity-100 shadow-[0_8px_32px_rgba(0,0,0,0.6)] backdrop-blur-2xl sm:p-4 xl:mt-0 xl:h-auto xl:max-h-none xl:overflow-visible xl:bg-transparent xl:p-0 xl:shadow-none"
+                : "invisible h-0 opacity-0 xl:visible xl:opacity-100"
             }`}
             style={{
               transition: "all 0.7s cubic-bezier(0.86, 0, 0.07, 1)",
@@ -169,24 +166,29 @@ const Header = () => {
           >
             <nav>
               <ul
-                className="flex flex-col gap-5 font-bold xl:flex-row xl:items-center xl:gap-10"
+                className="nav-list flex flex-col gap-2 font-bold sm:gap-3 xl:flex-row xl:items-center xl:gap-4 2xl:gap-6"
                 style={{
                   fontFamily: "'Orbitron', 'Rajdhani', 'Exo 2', sans-serif",
                 }}
               >
                 {menuData.map((menuItem, key) => (
-                  <li
-                    onClick={(e) => handleLinkClick(e, menuItem)}
-                    key={key}
-                    className="group relative transition-all duration-500 ease-out hover:scale-105 active:scale-95"
-                  >
+                  <li key={key} className="dropdown-container group relative">
                     {menuItem.submenu ? (
                       <>
-                        <button className="flex cursor-pointer items-center justify-between gap-3 text-sm font-bold uppercase tracking-wider text-white transition-all duration-500 ease-out hover:translate-x-1 hover:bg-gradient-to-r hover:from-indigo-400 hover:via-purple-400 hover:to-pink-400 hover:bg-clip-text hover:text-transparent">
+                        <button
+                          onClick={() => handleDropdownClick(menuItem.title)}
+                          className="flex w-full cursor-pointer items-center justify-between gap-3 text-xs font-bold uppercase tracking-wider text-white transition-all duration-500 ease-out hover:bg-gradient-to-r hover:from-indigo-400 hover:via-purple-400 hover:to-pink-400 hover:bg-clip-text hover:text-transparent sm:text-sm xl:w-auto"
+                        >
                           {menuItem.title}
-                          <span className="transition-transform duration-500 ease-out group-hover:rotate-180 group-hover:scale-110">
+                          <span
+                            className={`transition-transform duration-300 ease-out ${
+                              activeDropdown === menuItem.title
+                                ? "rotate-180 xl:rotate-0"
+                                : "rotate-0"
+                            } group-hover:xl:rotate-180`}
+                          >
                             <svg
-                              className="h-2.5 w-2.5 cursor-pointer fill-white transition-all duration-500 ease-out group-hover:fill-indigo-400"
+                              className="h-2.5 w-2.5 fill-white transition-all duration-500 ease-out group-hover:fill-indigo-400"
                               xmlns="http://www.w3.org/2000/svg"
                               viewBox="0 0 512 512"
                             >
@@ -195,39 +197,87 @@ const Header = () => {
                           </span>
                         </button>
 
-                        {menuItem.title === activeMenu && (
-                          <ul
-                            className={`dropdown transition-all duration-700 ease-[cubic-bezier(0.86,0,0.07,1)] ${dropdownToggler ? "flex scale-100 opacity-100" : "scale-95 opacity-0"}`}
-                            style={{
-                              transition:
-                                "all 0.7s cubic-bezier(0.86, 0, 0.07, 1)",
-                            }}
-                          >
-                            {menuItem.submenu.map((item, key) => (
-                              <li
-                                onClick={(e) => handleLinkClick(e, item)}
-                                key={key}
-                                className="transition-all duration-500 ease-out hover:translate-x-2 hover:scale-105"
+                        {/* Hover bridge strip to keep hover state while moving down to the dropdown */}
+                        <span className="pointer-events-auto absolute left-0 top-full hidden h-8 w-full xl:block"></span>
+
+                        {/* Mobile: Accordion-style submenu */}
+                        <ul
+                          className={`flex flex-col gap-2 overflow-hidden transition-all duration-500 ease-out xl:hidden ${
+                            activeDropdown === menuItem.title
+                              ? "mt-2 max-h-96 opacity-100"
+                              : "max-h-0 opacity-0"
+                          }`}
+                        >
+                          {menuItem.submenu.map((item, subKey) => (
+                            <li
+                              key={subKey}
+                              className="pl-4 transition-all duration-300 ease-out hover:translate-x-2"
+                            >
+                              <Link
+                                href={item.path || "#"}
+                                onClick={handleNavItemClick}
+                                className="block text-[10px] font-bold uppercase tracking-wide text-white/80 transition-all duration-500 ease-out hover:bg-gradient-to-r hover:from-indigo-400 hover:via-purple-400 hover:to-pink-400 hover:bg-clip-text hover:text-transparent sm:text-xs"
+                                style={{
+                                  fontFamily:
+                                    "'Orbitron', 'Rajdhani', 'Exo 2', sans-serif",
+                                }}
                               >
-                                <Link
-                                  href={item.path || "#"}
-                                  className="text-xs font-bold uppercase tracking-wide text-white/80 transition-all duration-500 ease-out hover:bg-gradient-to-r hover:from-indigo-400 hover:via-purple-400 hover:to-pink-400 hover:bg-clip-text hover:text-transparent"
-                                  style={{
-                                    fontFamily:
-                                      "'Orbitron', 'Rajdhani', 'Exo 2', sans-serif",
-                                  }}
-                                >
+                                {item.title}
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+
+                        {/* Desktop: Dropdown menu */}
+                        <ul
+                          className={`nav-dropdown absolute left-0 top-full z-50 mt-0 hidden min-w-[220px] flex-col gap-1 rounded-2xl border border-purple-500/40 bg-gradient-to-b from-black via-black/95 to-purple-950/95 p-2 shadow-[0_24px_64px_rgba(139,92,246,0.35)] backdrop-blur-2xl xl:pointer-events-none xl:flex xl:translate-y-[-6px] xl:scale-95 xl:opacity-0 xl:transition-all xl:duration-200 xl:ease-out group-hover:xl:pointer-events-auto group-hover:xl:translate-y-8 group-hover:xl:scale-100 group-hover:xl:opacity-100`}
+                          style={{ transformOrigin: "top center" }}
+                        >
+                          {menuItem.submenu.map((item, subKey) => (
+                            <li
+                              key={subKey}
+                              className="group/item"
+                              style={{
+                                animationDelay: `${subKey * 50}ms`,
+                              }}
+                            >
+                              <Link
+                                href={item.path || "#"}
+                                onClick={() => setActiveDropdown(null)}
+                                className="relative block overflow-hidden rounded-xl px-4 py-2.5 text-xs font-bold uppercase tracking-wide text-white/90 transition-all duration-300 ease-out hover:bg-gradient-to-r hover:from-purple-600/20 hover:via-fuchsia-600/20 hover:to-cyan-600/20 hover:text-white hover:shadow-[inset_0_0_20px_rgba(168,85,247,0.4)] sm:text-sm"
+                                style={{
+                                  fontFamily:
+                                    "'Orbitron', 'Rajdhani', 'Exo 2', sans-serif",
+                                }}
+                              >
+                                <span className="relative z-10 flex items-center gap-2">
+                                  <span className="h-1.5 w-1.5 rounded-full bg-cyan-400 opacity-0 transition-opacity duration-300 group-hover/item:opacity-100"></span>
                                   {item.title}
-                                </Link>
-                              </li>
-                            ))}
-                          </ul>
-                        )}
+                                  <svg
+                                    className="ml-auto h-3 w-3 -translate-x-2 opacity-0 transition-all duration-300 group-hover/item:translate-x-0 group-hover/item:opacity-100"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                  >
+                                    <path
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                      strokeWidth={2}
+                                      d="M9 5l7 7-7 7"
+                                    />
+                                  </svg>
+                                </span>
+                                <span className="absolute inset-0 -z-10 bg-gradient-to-r from-purple-500/0 via-fuchsia-500/0 to-cyan-500/0 opacity-0 blur-xl transition-opacity duration-300 group-hover/item:from-purple-500/20 group-hover/item:via-fuchsia-500/20 group-hover/item:to-cyan-500/20 group-hover/item:opacity-100"></span>
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
                       </>
                     ) : (
                       <Link
                         href={`${menuItem.path}`}
-                        className={`relative inline-block text-sm font-bold uppercase tracking-wider transition-all duration-500 ease-out hover:translate-y-[-2px] hover:scale-105 active:scale-95 ${
+                        onClick={handleNavItemClick}
+                        className={`relative inline-block text-xs font-bold uppercase tracking-wider transition-all duration-500 ease-out sm:text-sm ${
                           pathUrl === menuItem.path
                             ? "bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent drop-shadow-[0_0_8px_rgba(99,102,241,0.5)]"
                             : "text-white hover:bg-gradient-to-r hover:from-indigo-400 hover:via-purple-400 hover:to-pink-400 hover:bg-clip-text hover:text-transparent"
@@ -255,20 +305,20 @@ const Header = () => {
               </ul>
             </nav>
 
-            <div className="mt-7 flex items-center gap-6 xl:mt-0">
+            <div className="mt-3 flex items-center gap-3 sm:gap-4 xl:mt-0">
               {/* <ProfileModal navOpen={navigationOpen} setNavopen = {setNavigationOpen}/> */}
               <Link
                 href="/support"
-                className="group relative overflow-hidden rounded-full bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 px-6 py-2.5 font-black uppercase tracking-wider text-white shadow-lg shadow-indigo-500/50 backdrop-blur-xl transition-all duration-500 ease-[cubic-bezier(0.86,0,0.07,1)] before:absolute before:inset-0 before:bg-gradient-to-r before:from-pink-600 before:via-purple-600 before:to-indigo-600 before:opacity-0 before:transition-opacity before:duration-500 hover:-translate-y-0.5 hover:scale-105 hover:shadow-[0_8px_32px_rgba(99,102,241,0.6)] hover:before:opacity-100 active:translate-y-0 active:scale-95"
+                className="group relative overflow-hidden rounded-full bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 px-4 py-1.5 text-xs font-black uppercase tracking-wider text-white shadow-lg shadow-indigo-500/50 backdrop-blur-xl transition-all duration-500 ease-[cubic-bezier(0.86,0,0.07,1)] before:absolute before:inset-0 before:bg-gradient-to-r before:from-pink-600 before:via-purple-600 before:to-indigo-600 before:opacity-0 before:transition-opacity before:duration-500 hover:shadow-[0_8px_32px_rgba(99,102,241,0.6)] hover:before:opacity-100 sm:px-5 sm:py-2 sm:text-sm"
                 style={{
                   transition: "all 0.5s cubic-bezier(0.86, 0, 0.07, 1)",
                   fontFamily: "'Orbitron', 'Rajdhani', 'Exo 2', sans-serif",
                 }}
               >
-                <span className="relative z-10 flex items-center gap-2">
+                <span className="relative z-10 flex items-center gap-1 sm:gap-2">
                   <span className="tracking-wider">Contact Us</span>
                   <svg
-                    className="h-4 w-4 transition-transform duration-500 ease-out group-hover:translate-x-1"
+                    className="h-3 w-3 transition-transform duration-500 ease-out group-hover:translate-x-1 sm:h-4 sm:w-4"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -302,9 +352,52 @@ const Header = () => {
           }
         }
 
+        @keyframes dropdown-open {
+          0% {
+            opacity: 0;
+            transform: translateY(-10px) scale(0.95);
+          }
+          100% {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+          }
+        }
+
+        @keyframes dropdown-close {
+          0% {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+          }
+          100% {
+            opacity: 0;
+            transform: translateY(-10px) scale(0.95);
+          }
+        }
+
+        .animate-dropdown-open {
+          animation: dropdown-open 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)
+            forwards;
+        }
+
+        .animate-dropdown-close {
+          animation: dropdown-close 0.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
         /* Smooth scroll behavior */
         html {
           scroll-behavior: smooth;
+        }
+
+        /* Desktop: delay close only when leaving the whole nav list; no delay when switching items */
+        @media (min-width: 1280px) {
+          /* Default: no transition delay while the nav list is hovered */
+          .nav-list:hover .nav-dropdown {
+            transition-delay: 0ms !important;
+          }
+          /* When not hovering the nav list (mouse leaving nav), apply a small delay before opacity/transform start */
+          .nav-list:not(:hover) .nav-dropdown {
+            transition-delay: 250ms !important;
+          }
         }
       `}</style>
     </header>
