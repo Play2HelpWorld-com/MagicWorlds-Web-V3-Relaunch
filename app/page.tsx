@@ -1,5 +1,7 @@
+"use client";
 import { Metadata } from "next";
 import Hero from "@/components/Hero";
+import MarketingBanner from "@/components/Hero/MarketingBanner";
 import Brands from "@/components/Brands";
 import Feature from "@/components/Features";
 import About from "@/components/About";
@@ -16,15 +18,18 @@ import GameSection from "@/components/Games/gameSection";
 import ClaimTokenSection from "@/components/ClaimToken";
 import ClaimButton from "@/components/ClaimToken/claim-button";
 
-export const metadata: Metadata = {
-  title: "Magic Worlds",
-  description: "Discover the best games and apps in the Magic Worlds ecosystem",
-  // other metadata
-};
+// export const metadata: Metadata = {
+//   title: "Magic Worlds",
+//   description: "Discover the best games and apps in the Magic Worlds ecosystem",
+//   // other metadata
+// };
 
 export default function Home() {
   return (
     <main>
+      <MarketingBanner />
+      {/* Spacer to push content below the banner */}
+      <div className="h-screen w-full" />
       <Hero />
       <Feature />
       <FeaturesTab />
