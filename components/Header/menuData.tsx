@@ -2,16 +2,16 @@ import { Menu } from "@/types/menu";
 
 const menuData: Menu[] = [
   {
-    id: 1,
-    title: "Play Now",
-    newTab: false,
-    path: "/play",
-  },
-  {
     id: 3,
     title: "Worlds",
     newTab: false,
     path: "/worlds",
+  },
+  {
+    id: 4,
+    title: "About",
+    newTab: false,
+    path: "/docs",
   },
 
   {
@@ -112,11 +112,12 @@ const menuData: Menu[] = [
       },
     ],
   },
+
   {
-    id: 4,
-    title: "About",
+    id: 1,
+    title: "Contact Us",
     newTab: false,
-    path: "/docs",
+    path: "/support",
   },
 ];
 

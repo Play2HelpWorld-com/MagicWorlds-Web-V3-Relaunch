@@ -349,7 +349,7 @@ const Header = () => {
                 </svg>
               </button>
               <Link
-                href="/support"
+                href="/play"
                 className="group relative overflow-hidden rounded-full bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 px-4 py-1.5 text-xs font-black uppercase tracking-wider text-white shadow-lg shadow-indigo-500/50 backdrop-blur-xl transition-all duration-500 ease-[cubic-bezier(0.86,0,0.07,1)] before:absolute before:inset-0 before:bg-gradient-to-r before:from-pink-600 before:via-purple-600 before:to-indigo-600 before:opacity-0 before:transition-opacity before:duration-500 hover:shadow-[0_8px_32px_rgba(99,102,241,0.6)] hover:before:opacity-100 sm:px-5 sm:py-2 sm:text-sm"
                 style={{
                   transition: "all 0.5s cubic-bezier(0.86, 0, 0.07, 1)",
@@ -357,8 +357,8 @@ const Header = () => {
                 }}
               >
                 <span className="relative z-10 flex items-center gap-1 sm:gap-2">
-                  <span className="tracking-wider">Contact Us</span>
-                  <svg
+                  <span className="tracking-wider">Play Now</span>
+                  {/* <svg
                     className="h-3 w-3 transition-transform duration-500 ease-out group-hover:translate-x-1 sm:h-4 sm:w-4"
                     fill="none"
                     stroke="currentColor"
@@ -370,7 +370,7 @@ const Header = () => {
                       strokeWidth={2}
                       d="M13 7l5 5m0 0l-5 5m5-5H6"
                     />
-                  </svg>
+                  </svg> */}
                 </span>
               </Link>
               {/* <ThemeToggler /> */}
