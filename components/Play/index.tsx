@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -146,6 +147,19 @@ const GameDownloads = () => {
 
       {/* Hero Section */}
       <section className="relative flex min-h-screen items-center justify-center px-4 pb-20 pt-32">
+        {/* Background GIF */}
+        <div className="absolute inset-0 -z-10">
+          <Image
+            src="/3d/signup2-unscreen.gif"
+            alt="Magic Worlds gameplay"
+            fill
+            priority
+            unoptimized
+            sizes="100vw"
+            className="object-fit cover object-center opacity-30"
+          />
+          {/* <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/70 to-black/90" /> */}
+        </div>
         <div className="relative z-10 mx-auto max-w-7xl text-center">
           {/* Badge */}
           <motion.div
