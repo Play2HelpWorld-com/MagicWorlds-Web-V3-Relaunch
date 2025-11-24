@@ -28,8 +28,6 @@ export default function Home() {
   return (
     <main>
       <MarketingBanner />
-      {/* Spacer to push content below the banner */}
-      <div className="h-screen w-full" />
       <Hero />
       <Feature />
       <FeaturesTab />
