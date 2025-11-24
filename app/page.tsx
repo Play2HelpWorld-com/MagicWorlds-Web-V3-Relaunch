@@ -1,7 +1,6 @@
 "use client";
 import { Metadata } from "next";
 import Hero from "@/components/Hero";
-import MarketingBanner from "@/components/Hero/MarketingBanner";
 import Brands from "@/components/Brands";
 import Feature from "@/components/Features";
 import About from "@/components/About";
@@ -27,7 +26,6 @@ import ClaimButton from "@/components/ClaimToken/claim-button";
 export default function Home() {
   return (
     <main>
-      <MarketingBanner />
       <Hero />
       <Feature />
       <FeaturesTab />

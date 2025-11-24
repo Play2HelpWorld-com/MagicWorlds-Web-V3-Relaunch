@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -29,8 +30,9 @@ const bannerMedia: MediaItem[] = [
 ];
 
 const MarketingBanner = () => {
+  const pathname = usePathname() || "/";
   const [bannerPosition, setBannerPosition] = useState(0); // 0 = fully visible, -100 = hidden
-  const [isBannerActive, setIsBannerActive] = useState(true);
+  const [isBannerActive, setIsBannerActive] = useState(pathname === "/");
   const [currentMediaIndex, setCurrentMediaIndex] = useState(0);
   const positionRef = useRef(0);
   const bannerRef = useRef<HTMLDivElement>(null);
@@ -40,6 +42,16 @@ const MarketingBanner = () => {
     positionRef.current = value;
     setBannerPosition(value);
   };
+
+  // Close banner automatically when leaving the homepage
+  useEffect(() => {
+    if (pathname !== "/") {
+      positionRef.current = -100;
+      setBannerPosition(-100);
+      setIsBannerActive(false);
+      setCurrentMediaIndex(0);
+    }
+  }, [pathname]);
 
   // Media rotation effect
   useEffect(() => {
