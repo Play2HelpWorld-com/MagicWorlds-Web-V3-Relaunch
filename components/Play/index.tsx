@@ -162,7 +162,7 @@ const GameDownloads = () => {
         </div>
         <div className="relative z-10 mx-auto max-w-7xl text-center">
           {/* Badge */}
-          <motion.div
+          {/* <motion.div
             className="mb-8 inline-flex items-center gap-2 rounded-full border border-cyan-500/30 bg-cyan-500/10 px-6 py-3 backdrop-blur-sm"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -172,7 +172,7 @@ const GameDownloads = () => {
             <span className="font-orbitron text-sm font-bold uppercase tracking-wider text-cyan-400">
               Featured Game
             </span>
-          </motion.div>
+          </motion.div> */}
 
           {/* Title */}
           <motion.h1
