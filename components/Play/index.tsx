@@ -2,6 +2,7 @@
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { FaWindows, FaApple, FaAndroid } from "react-icons/fa";
 import {
   Download,
   Monitor,
@@ -261,7 +262,7 @@ const GameDownloads = () => {
                 whileTap={{ scale: 0.95 }}
               >
                 <span className="relative z-10 flex items-center gap-3">
-                  <Download className="h-7 w-7 animate-pulse" />
+                  <FaWindows className="h-7 w-7 animate-pulse" />
                   <div className="flex flex-col items-start">
                     <span className="text-xs uppercase tracking-wider opacity-90">
                       Download for
@@ -295,7 +296,7 @@ const GameDownloads = () => {
                 whileTap={{ scale: 0.95 }}
               >
                 <span className="relative z-10 flex items-center gap-3">
-                  <Download className="h-7 w-7 animate-pulse" />
+                  <FaApple className="h-7 w-7 animate-pulse" />
                   <div className="flex flex-col items-start">
                     <span className="text-xs uppercase tracking-wider opacity-90">
                       Download for
@@ -329,7 +330,7 @@ const GameDownloads = () => {
                 whileTap={{ scale: 0.95 }}
               >
                 <span className="relative z-10 flex items-center gap-3">
-                  <Download className="h-7 w-7 animate-pulse" />
+                  <FaAndroid className="h-7 w-7 animate-pulse" />
                   <div className="flex flex-col items-start">
                     <span className="text-xs uppercase tracking-wider opacity-90">
                       Download for
