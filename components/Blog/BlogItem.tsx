@@ -10,7 +10,7 @@ interface BlogItemProps {
 }
 
 const BlogItem: React.FC<BlogItemProps> = ({ blog }) => {
-  const widgets = useMemo(() => [{ ...blog }], []);
+  const widgets = useMemo(() => [{ ...blog }], [blog]);
 
   useEffect(() => {
     widgets.forEach((widget) => {

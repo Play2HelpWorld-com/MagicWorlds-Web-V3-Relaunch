@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import {
   Wallet2,
@@ -31,6 +31,8 @@ import TokenDistributorAbi from "@/abi/TokenDistributor.json";
 import { ethers, keccak256 } from "ethers";
 import axios from "axios";
 import { toast } from "sonner";
+import { getReferralCode } from "@/utils/lib/referralStorage";
+import { notifyTapfiliateEvent } from "@/utils/lib/tapfiliateClient";
 
 const contractAddress =
   process.env.NEXT_PUBLIC_TOKEN_DISTRIBUTOR_ADDRESS || "0x";
@@ -57,6 +59,7 @@ const ClaimButton = () => {
   const [status, setStatus] = useState<StatusType>(null);
   const [errorMessage, setErrorMessage] = useState("");
   const [transactionHash, setTransactionHash] = useState<any>(null);
+  const tapfiliatePceTriggeredRef = useRef(false);
 
   // Wagmi hooks
   const { address, isConnected } = useAccount();
@@ -150,6 +153,36 @@ const ClaimButton = () => {
       setModalStep("summary");
     }
   }, [isConnected, address, claimData, disconnect]);
+
+  useEffect(() => {
+    const maybeNotifyTapfiliate = async () => {
+      if (!isConnected || !address) {
+        return;
+      }
+      if (tapfiliatePceTriggeredRef.current) {
+        return;
+      }
+      const referralCode = getReferralCode();
+      if (!referralCode) {
+        return;
+      }
+
+      tapfiliatePceTriggeredRef.current = true;
+      try {
+        await notifyTapfiliateEvent({
+          eventType: "wallet_connect",
+          walletAddress: address,
+          referralCode,
+          metadata: { source: "claim-button" },
+        });
+      } catch (error) {
+        tapfiliatePceTriggeredRef.current = false;
+        console.error("Failed to notify Tapfiliate of wallet connect", error);
+      }
+    };
+
+    maybeNotifyTapfiliate();
+  }, [isConnected, address]);
 
   useEffect(() => {
     if (isConnected && chainId !== bsc.id) {
