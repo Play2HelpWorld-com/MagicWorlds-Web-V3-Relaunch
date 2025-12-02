@@ -21,9 +21,9 @@ const Footer = () => {
   // Footer sections data
   const quickLinks = [
     { name: "Home", href: "/" },
-    { name: "Play Now", href: "/play" },
     { name: "Worlds", href: "/worlds" },
-    { name: "Documentation", href: "/docs" },
+    { name: "Play Now", href: "/play" },
+    { name: "Support Center", href: "/support" },
   ];
 
   const community = [
@@ -33,12 +33,12 @@ const Footer = () => {
       icon: MessageCircle,
     },
     {
-      name: "GitHub",
-      href: "https://github.com/orgs/TheMagicWorlds",
+      name: "Twitter (X)",
+      href: "https://x.com/magicworlds3",
       icon: Github,
     },
     {
-      name: "Open Source",
+      name: "GitHub",
       href: "https://github.com/orgs/TheMagicWorlds",
       icon: Github,
     },
@@ -54,7 +54,7 @@ const Footer = () => {
       name: "White Paper",
       href: "https://helix-labs-gmbh.notion.site/Magic-Worlds-Layer-2-Whitepaper-1adf1e88252580baa4e9cb08def48ba7?pvs=4",
     },
-    { name: "Support Center", href: "/support" },
+    { name: "Documentation", href: "/docs" },
     {
       name: "Download Game",
       href: "https://magicworlds.itch.io/magic-world",
