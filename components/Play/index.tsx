@@ -1,8 +1,8 @@
 "use client";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import PartnerProgramSection from "./PartnerProgramSection";
+import { saveReferralCode } from "@/utils/lib/referralStorage";
 import { FaWindows, FaApple, FaAndroid } from "react-icons/fa";
 import {
   Download,
@@ -17,6 +17,7 @@ import {
   Globe,
   Cpu,
   HardDrive,
+  ArrowRight,
 } from "lucide-react";
 
 // Game data
@@ -126,9 +127,14 @@ const GameDownloads = ({ initialReferralCode }: GameDownloadsProps) => {
   >("windows");
   const game = GAMES[0]; // Primary game
 
+  useEffect(() => {
+    if (initialReferralCode) {
+      saveReferralCode(initialReferralCode);
+    }
+  }, [initialReferralCode]);
+
   return (
     <>
-      <PartnerProgramSection initialReferralCode={initialReferralCode} />
       <div className="relative min-h-screen overflow-hidden bg-transparent font-rajdhani text-white">
         {/* Animated Grid Background */}
         {/* <div className="fixed inset-0 opacity-20">
@@ -241,6 +247,21 @@ const GameDownloads = ({ initialReferralCode }: GameDownloadsProps) => {
                   transition={{ duration: 0.3 }}
                 />
               </motion.button>
+              <a
+                href="/partners"
+                className="group relative overflow-hidden rounded-xl border-2 border-white/30 px-8 py-4 font-bold text-white backdrop-blur-sm transition hover:border-white/60"
+              >
+                <span className="relative z-10 flex items-center gap-3">
+                  <ArrowRight className="h-5 w-5 text-cyan-300" />
+                  <span className="text-lg">Partner Program</span>
+                </span>
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-r from-white/10 to-transparent"
+                  initial={{ opacity: 0 }}
+                  whileHover={{ opacity: 1 }}
+                  transition={{ duration: 0.3 }}
+                />
+              </a>
             </motion.div>
 
             {/* Download Buttons */}

@@ -20,8 +20,6 @@ import {
 import { getReferralCode, saveReferralCode } from "@/utils/lib/referralStorage";
 import { motion } from "framer-motion";
 
-const PLAY_URL =
-  process.env.NEXT_PUBLIC_PLAY_URL ?? "https://www.themagicworlds.com/play";
 const PARTNER_SUPPORT_EMAIL =
   process.env.NEXT_PUBLIC_PARTNER_SUPPORT_EMAIL ??
   "partners@themagicworlds.com";
@@ -53,6 +51,9 @@ const PartnerProgramSection = ({
   initialReferralCode,
 }: PartnerProgramSectionProps) => {
   const [referralCode, setReferralCode] = useState<string | null>(null);
+  const [playUrl, setPlayUrl] = useState<string>(
+    process.env.NEXT_PUBLIC_PLAY_URL ?? "https://www.themagicworlds.com/play",
+  );
   const [shareFeedback, setShareFeedback] = useState<string | null>(null);
   const [isCopying, setIsCopying] = useState(false);
   const [applyStatus, setApplyStatus] = useState<
@@ -81,7 +82,16 @@ const PartnerProgramSection = ({
     }
   }, [initialReferralCode]);
 
-  const shareUrl = referralCode ? `${PLAY_URL}?ref=${referralCode}` : PLAY_URL;
+  useEffect(() => {
+    if (process.env.NEXT_PUBLIC_PLAY_URL) {
+      return;
+    }
+    if (typeof window !== "undefined") {
+      setPlayUrl(`${window.location.origin}/play`);
+    }
+  }, []);
+
+  const shareUrl = referralCode ? `${playUrl}?ref=${referralCode}` : playUrl;
 
   const incentiveCards = useMemo(
     () => [
