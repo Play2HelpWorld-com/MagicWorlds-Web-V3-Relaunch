@@ -1,7 +1,7 @@
 "use client";
 
 import { FormEvent, useEffect, useMemo, useState } from "react";
-import { useAccount } from "wagmi";
+import { useAccount, useDisconnect } from "wagmi";
 import {
   Coins,
   Wallet,
@@ -105,6 +105,7 @@ const PartnerProgramSection = ({
   const [isCopyingProfileCode, setIsCopyingProfileCode] = useState(false);
 
   const { address, isConnected } = useAccount();
+  const { disconnect } = useDisconnect();
 
   useEffect(() => {
     if (initialReferralCode) {
@@ -261,6 +262,12 @@ const PartnerProgramSection = ({
     } finally {
       setIsCopyingProfileCode(false);
     }
+  };
+
+  const handleDisconnectWallet = () => {
+    disconnect();
+    setPartnerProfile(null);
+    setShareFeedback("Wallet disconnected.");
   };
 
   useEffect(() => {
@@ -555,6 +562,14 @@ const PartnerProgramSection = ({
                 <p className="text-xs text-gray-400">
                   Wallet connections trigger `/cus/c/` + instant bonus.
                 </p>
+                {isConnected && (
+                  <button
+                    className="mt-3 rounded-full border border-white/20 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-white transition hover:border-white"
+                    onClick={handleDisconnectWallet}
+                  >
+                    Disconnect wallet
+                  </button>
+                )}
               </div>
               <div className="rounded-2xl border border-white/10 bg-black/40 p-4">
                 <p className="text-sm font-semibold text-gray-400">

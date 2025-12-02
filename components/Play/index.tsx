@@ -412,6 +412,15 @@ const GameDownloads = ({ initialReferralCode }: GameDownloadsProps) => {
                   transition={{ duration: 0.3 }}
                 />
               </motion.button>
+              {isConnected && !walletButtonDisabled && (
+                <motion.button
+                  className="rounded-full border border-white/40 px-4 py-2 text-sm font-semibold text-white transition hover:border-white"
+                  whileTap={{ scale: 0.96 }}
+                  onClick={handleDisconnectWallet}
+                >
+                  Disconnect wallet
+                </motion.button>
+              )}
             </motion.div>
 
             {walletFeedback && (
