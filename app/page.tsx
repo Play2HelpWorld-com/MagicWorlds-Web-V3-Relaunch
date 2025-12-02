@@ -1,3 +1,4 @@
+"use client";
 import { Metadata } from "next";
 import Hero from "@/components/Hero";
 import Brands from "@/components/Brands";
@@ -16,11 +17,11 @@ import GameSection from "@/components/Games/gameSection";
 import ClaimTokenSection from "@/components/ClaimToken";
 import ClaimButton from "@/components/ClaimToken/claim-button";
 
-export const metadata: Metadata = {
-  title: "Magic Worlds",
-  description: "Discover the best games and apps in the Magic Worlds ecosystem",
-  // other metadata
-};
+// export const metadata: Metadata = {
+//   title: "Magic Worlds",
+//   description: "Discover the best games and apps in the Magic Worlds ecosystem",
+//   // other metadata
+// };
 
 export default function Home() {
   return (

@@ -59,23 +59,25 @@ const About = () => {
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
-        if (entries[0].isIntersecting && videoRef.current) {
-          videoRef.current?.play();
+        const currentVideo = videoRef.current;
+        if (entries[0].isIntersecting && currentVideo) {
+          currentVideo.play();
           setIsPlaying(true);
-        } else if (videoRef.current) {
-          videoRef.current.pause();
+        } else if (currentVideo) {
+          currentVideo.pause();
           setIsPlaying(false);
         }
       },
       { threshold: 0.5 },
     );
 
-    if (videoRef.current) {
-      observer.observe(videoRef.current);
+    const currentVideo = videoRef.current;
+    if (currentVideo) {
+      observer.observe(currentVideo);
     }
 
     return () => {
-      if (videoRef.current) observer.unobserve(videoRef.current);
+      if (currentVideo) observer.unobserve(currentVideo);
     };
   }, []);
 

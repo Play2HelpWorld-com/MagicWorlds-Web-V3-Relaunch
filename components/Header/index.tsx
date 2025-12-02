@@ -34,6 +34,12 @@ const Header = () => {
     setActiveDropdown(null);
   };
 
+  const handleMarketingClick = () => {
+    if (typeof window !== "undefined") {
+      window.dispatchEvent(new CustomEvent("marketing-banner:open"));
+    }
+  };
+
   // No hover timers needed; desktop uses pure CSS hover. Mobile uses click + state.
 
   // Handle sticky menu
@@ -217,7 +223,11 @@ const Header = () => {
                                 href={item.path || "#"}
                                 onClick={handleNavItemClick}
                                 target={item.newTab ? "_blank" : undefined}
-                                rel={item.newTab ? "noopener noreferrer" : undefined}
+                                rel={
+                                  item.newTab
+                                    ? "noopener noreferrer"
+                                    : undefined
+                                }
                                 className="block text-[10px] font-bold uppercase tracking-wide text-white/80 transition-all duration-500 ease-out hover:bg-gradient-to-r hover:from-indigo-400 hover:via-purple-400 hover:to-pink-400 hover:bg-clip-text hover:text-transparent sm:text-xs"
                                 style={{
                                   fontFamily:
@@ -250,7 +260,11 @@ const Header = () => {
                                 href={item.path || "#"}
                                 onClick={() => setActiveDropdown(null)}
                                 target={item.newTab ? "_blank" : undefined}
-                                rel={item.newTab ? "noopener noreferrer" : undefined}
+                                rel={
+                                  item.newTab
+                                    ? "noopener noreferrer"
+                                    : undefined
+                                }
                                 className="relative block overflow-hidden rounded-xl px-4 py-2.5 text-xs font-bold uppercase tracking-wide text-white/90 transition-all duration-300 ease-out hover:bg-gradient-to-r hover:from-purple-600/20 hover:via-fuchsia-600/20 hover:to-cyan-600/20 hover:text-white hover:shadow-[inset_0_0_20px_rgba(168,85,247,0.4)] sm:text-sm"
                                 style={{
                                   fontFamily:
@@ -285,28 +299,38 @@ const Header = () => {
                         href={`${menuItem.path}`}
                         onClick={handleNavItemClick}
                         target={menuItem.newTab ? "_blank" : undefined}
-                        rel={menuItem.newTab ? "noopener noreferrer" : undefined}
-                        className={`relative inline-block text-xs font-bold uppercase tracking-wider transition-all duration-500 ease-out sm:text-sm ${
-                          pathUrl === menuItem.path
-                            ? "bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent drop-shadow-[0_0_8px_rgba(99,102,241,0.5)]"
-                            : "text-white hover:bg-gradient-to-r hover:from-indigo-400 hover:via-purple-400 hover:to-pink-400 hover:bg-clip-text hover:text-transparent"
-                        }`}
+                        rel={
+                          menuItem.newTab ? "noopener noreferrer" : undefined
+                        }
+                        className="group relative inline-block text-xs font-bold uppercase tracking-wider text-white transition-all duration-500 ease-out sm:text-sm"
                         style={{
                           fontFamily:
                             "'Orbitron', 'Rajdhani', 'Exo 2', sans-serif",
                         }}
                       >
                         <span className="relative inline-flex items-center">
-                          <span className="relative z-10">
+                          <span
+                            className={`relative z-10 transition-all duration-500 ${
+                              pathUrl === menuItem.path
+                                ? "bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent drop-shadow-[0_0_8px_rgba(99,102,241,0.5)]"
+                                : "group-hover:bg-gradient-to-r group-hover:from-indigo-400 group-hover:via-purple-400 group-hover:to-pink-400 group-hover:bg-clip-text group-hover:text-transparent"
+                            }`}
+                          >
                             {menuItem.title}
                           </span>
-                          {pathUrl === menuItem.path && (
-                            <>
-                              <span className="absolute -bottom-1 left-0 h-0.5 w-full animate-[shimmer_2s_ease-in-out_infinite] rounded-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 shadow-[0_0_8px_rgba(99,102,241,0.6)] transition-all duration-500 ease-out"></span>
-                              <span className="absolute -inset-1 -z-10 animate-pulse rounded-lg bg-gradient-to-r from-indigo-500/10 via-purple-500/10 to-pink-500/10 blur-sm"></span>
-                            </>
-                          )}
                         </span>
+                        {pathUrl === menuItem.path && (
+                          <>
+                            <span
+                              aria-hidden="true"
+                              className="pointer-events-none absolute -bottom-1 left-0 right-0 -z-10 h-0.5 w-full animate-[shimmer_2s_ease-in-out_infinite] rounded-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 shadow-[0_0_8px_rgba(99,102,241,0.6)] transition-all duration-500 ease-out"
+                            ></span>
+                            <span
+                              aria-hidden="true"
+                              className="pointer-events-none absolute -inset-1 -z-20 animate-pulse rounded-lg bg-gradient-to-r from-indigo-500/10 via-purple-500/10 to-pink-500/10 blur-sm"
+                            ></span>
+                          </>
+                        )}
                       </Link>
                     )}
                   </li>
@@ -316,8 +340,24 @@ const Header = () => {
 
             <div className="mt-3 flex items-center gap-3 sm:gap-4 xl:mt-0">
               {/* <ProfileModal navOpen={navigationOpen} setNavopen = {setNavigationOpen}/> */}
+              <button
+                type="button"
+                aria-label="Launch marketing banner"
+                title="Launch marketing banner"
+                onClick={handleMarketingClick}
+                className="group flex items-center justify-center rounded-full border border-white/20 bg-white/5 p-2 text-white shadow-[0_4px_16px_rgba(0,0,0,0.35)] backdrop-blur-md transition-all duration-300 hover:border-fuchsia-400 hover:bg-white/10 hover:shadow-[0_8px_24px_rgba(236,72,153,0.4)]"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  className="h-5 w-5 text-purple-200 transition-colors duration-300 group-hover:text-white"
+                >
+                  <path d="M3 11a1 1 0 001-1V7a1 1 0 011-1h1l8-4v14l-8-4H5a1 1 0 01-1-1zm18-4.5a2.5 2.5 0 00-3.424-2.313L14 5.382V12.5l3.576 1.195A2.5 2.5 0 0021 11.382zM7 15h2l1.447 4.342A2 2 0 018.553 22H7z" />
+                </svg>
+              </button>
               <Link
-                href="/support"
+                href="/play"
                 className="group relative overflow-hidden rounded-full bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 px-4 py-1.5 text-xs font-black uppercase tracking-wider text-white shadow-lg shadow-indigo-500/50 backdrop-blur-xl transition-all duration-500 ease-[cubic-bezier(0.86,0,0.07,1)] before:absolute before:inset-0 before:bg-gradient-to-r before:from-pink-600 before:via-purple-600 before:to-indigo-600 before:opacity-0 before:transition-opacity before:duration-500 hover:shadow-[0_8px_32px_rgba(99,102,241,0.6)] hover:before:opacity-100 sm:px-5 sm:py-2 sm:text-sm"
                 style={{
                   transition: "all 0.5s cubic-bezier(0.86, 0, 0.07, 1)",
@@ -325,8 +365,8 @@ const Header = () => {
                 }}
               >
                 <span className="relative z-10 flex items-center gap-1 sm:gap-2">
-                  <span className="tracking-wider">Contact Us</span>
-                  <svg
+                  <span className="tracking-wider">Play Now</span>
+                  {/* <svg
                     className="h-3 w-3 transition-transform duration-500 ease-out group-hover:translate-x-1 sm:h-4 sm:w-4"
                     fill="none"
                     stroke="currentColor"
@@ -338,7 +378,7 @@ const Header = () => {
                       strokeWidth={2}
                       d="M13 7l5 5m0 0l-5 5m5-5H6"
                     />
-                  </svg>
+                  </svg> */}
                 </span>
               </Link>
               {/* <ThemeToggler /> */}

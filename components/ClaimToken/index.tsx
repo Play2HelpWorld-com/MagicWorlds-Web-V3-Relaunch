@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import {
   Wallet2,
@@ -29,6 +29,8 @@ const contractAddress =
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import { ethers, keccak256 } from "ethers";
+import { getReferralCode } from "@/utils/lib/referralStorage";
+import { notifyTapfiliateEvent } from "@/utils/lib/tapfiliateClient";
 
 interface ClaimData {
   walletAddress: string;
@@ -51,6 +53,7 @@ const ClaimTokenSection = () => {
     readonly [string, bigint, `0x${string}`[]] | undefined
   >(undefined);
   const [claimCalled, setClaimCalled] = useState(false);
+  const tapfiliatePceTriggeredRef = useRef(false);
 
   // Wagmi hooks
   const { address, isConnected } = useAccount();
@@ -140,7 +143,7 @@ const ClaimTokenSection = () => {
       console.error("Simulation error:", simulateError);
       toast.error(`Transaction would fail: ${simulateError.message}`);
     }
-  }, [simulateError]);
+  }, [simulateError, claimCalled]);
 
   useEffect(() => {
     const updateClaimedTokens = async () => {
@@ -167,7 +170,7 @@ const ClaimTokenSection = () => {
         position: "top-right",
       });
     }
-  }, [isError]);
+  }, [error, isError]);
 
   //the user data field should also caontain a modified-date field.
   //I want to compare this value with the date of the merkel tree dodified date
@@ -308,6 +311,36 @@ const ClaimTokenSection = () => {
       }
     }
   }, [isConnected, address, claimData, disconnect]);
+
+  useEffect(() => {
+    const maybeNotifyTapfiliate = async () => {
+      if (!isConnected || !address) {
+        return;
+      }
+      if (tapfiliatePceTriggeredRef.current) {
+        return;
+      }
+      const referralCode = getReferralCode();
+      if (!referralCode) {
+        return;
+      }
+
+      tapfiliatePceTriggeredRef.current = true;
+      try {
+        await notifyTapfiliateEvent({
+          eventType: "wallet_connect",
+          walletAddress: address,
+          referralCode,
+          metadata: { source: "claim-token-section" },
+        });
+      } catch (error) {
+        tapfiliatePceTriggeredRef.current = false;
+        console.error("Failed to notify Tapfiliate of wallet connect", error);
+      }
+    };
+
+    maybeNotifyTapfiliate();
+  }, [isConnected, address]);
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
