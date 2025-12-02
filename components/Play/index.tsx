@@ -1,9 +1,13 @@
 "use client";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { saveReferralCode } from "@/utils/lib/referralStorage";
+import { getReferralCode, saveReferralCode } from "@/utils/lib/referralStorage";
 import { FaWindows, FaApple, FaAndroid } from "react-icons/fa";
+import { useAccount, useConnect, useDisconnect } from "wagmi";
+import { notifyTapfiliateEvent } from "@/utils/lib/tapfiliateClient";
+import { queueInstantBonus } from "@/utils/lib/partnerBonusClient";
+import { truncateAddress } from "@/utils/lib/truncateAddress";
 import {
   Download,
   Zap,
@@ -18,6 +22,7 @@ import {
   Cpu,
   HardDrive,
   ArrowRight,
+  Wallet,
 } from "lucide-react";
 
 // Game data
@@ -125,13 +130,126 @@ const GameDownloads = ({ initialReferralCode }: GameDownloadsProps) => {
   const [selectedPlatform, setSelectedPlatform] = useState<
     "windows" | "macos" | "android"
   >("windows");
+  const [referralCode, setReferralCode] = useState<string | null>(null);
+  const [walletFeedback, setWalletFeedback] = useState<string | null>(null);
+  const [isSyncingReferral, setIsSyncingReferral] = useState(false);
   const game = GAMES[0]; // Primary game
+  const tapfiliateSyncRef = useRef(false);
+
+  const { address, isConnected } = useAccount();
+  const {
+    connectAsync,
+    connectors,
+    isPending: isWalletConnecting,
+    error: connectError,
+  } = useConnect();
+  const { disconnect } = useDisconnect();
 
   useEffect(() => {
     if (initialReferralCode) {
       saveReferralCode(initialReferralCode);
+      setReferralCode(initialReferralCode);
+      return;
+    }
+
+    const storedCode = getReferralCode();
+    if (storedCode) {
+      setReferralCode(storedCode);
     }
   }, [initialReferralCode]);
+
+  useEffect(() => {
+    if (connectError) {
+      setWalletFeedback(
+        connectError instanceof Error
+          ? connectError.message
+          : "Unable to connect wallet. Please try again.",
+      );
+    }
+  }, [connectError]);
+
+  useEffect(() => {
+    if (!isConnected || !address) {
+      setIsSyncingReferral(false);
+      tapfiliateSyncRef.current = false;
+      return;
+    }
+
+    const effectiveReferralCode = referralCode ?? getReferralCode();
+    if (!effectiveReferralCode) {
+      setWalletFeedback(
+        "Wallet linked, but no referral code is stored yet. Share your ?ref link first.",
+      );
+      return;
+    }
+
+    if (tapfiliateSyncRef.current) {
+      return;
+    }
+
+    tapfiliateSyncRef.current = true;
+    setIsSyncingReferral(true);
+    setWalletFeedback("Syncing wallet with Tapfiliate and queuing bonus...");
+
+    const syncReferral = async () => {
+      try {
+        await notifyTapfiliateEvent({
+          eventType: "wallet_connect",
+          walletAddress: address,
+          referralCode: effectiveReferralCode,
+          metadata: { source: "play-page" },
+        });
+
+        await queueInstantBonus({
+          walletAddress: address,
+          referralCode: effectiveReferralCode,
+          source: "play-page",
+        });
+
+        setWalletFeedback(
+          "Wallet linked. Tapfiliate updated and instant bonus queued.",
+        );
+      } catch (error) {
+        console.error("Failed to sync wallet referral", error);
+        tapfiliateSyncRef.current = false;
+        setWalletFeedback(
+          "Connected but failed to sync referral. Please try again.",
+        );
+      } finally {
+        setIsSyncingReferral(false);
+      }
+    };
+
+    void syncReferral();
+  }, [isConnected, address, referralCode]);
+
+  const handleConnectWallet = async () => {
+    try {
+      setWalletFeedback(null);
+      const connector = connectors?.[0];
+      if (!connector) {
+        throw new Error("No wallet connector is available in this build.");
+      }
+      await connectAsync({ connector });
+    } catch (error) {
+      console.error("Wallet connect failed", error);
+      setWalletFeedback(
+        error instanceof Error
+          ? error.message
+          : "Unable to connect wallet. Please try again.",
+      );
+    }
+  };
+
+  const handleDisconnectWallet = () => {
+    disconnect();
+    tapfiliateSyncRef.current = false;
+    setIsSyncingReferral(false);
+    setWalletFeedback("Wallet disconnected.");
+  };
+
+  const truncatedAddress = address ? truncateAddress(address) : "";
+  const walletButtonDisabled = isWalletConnecting || isSyncingReferral;
 
   return (
     <>
@@ -262,7 +380,50 @@ const GameDownloads = ({ initialReferralCode }: GameDownloadsProps) => {
                   transition={{ duration: 0.3 }}
                 />
               </a>
+              <motion.button
+                className="group relative overflow-hidden rounded-xl border-2 border-cyan-500/40 px-8 py-4 font-bold text-white backdrop-blur-sm transition disabled:cursor-not-allowed disabled:opacity-50"
+                whileHover={{
+                  scale: walletButtonDisabled ? 1 : 1.04,
+                  borderColor: walletButtonDisabled
+                    ? "rgba(6,182,212,0.4)"
+                    : "rgba(6,182,212,0.8)",
+                }}
+                whileTap={{ scale: walletButtonDisabled ? 1 : 0.96 }}
+                onClick={
+                  isConnected ? handleDisconnectWallet : handleConnectWallet
+                }
+                disabled={walletButtonDisabled}
+              >
+                <span className="relative z-10 flex items-center gap-3">
+                  <Wallet className="h-5 w-5 text-cyan-300" />
+                  <span className="flex flex-col items-start text-left">
+                    <span className="text-lg">
+                      {isConnected ? "Wallet Linked" : "Connect Wallet"}
+                    </span>
+                    <span className="text-xs uppercase tracking-wider text-gray-300">
+                      {isConnected ? truncatedAddress : "Claim instant $TOKEN"}
+                    </span>
+                  </span>
+                </span>
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-blue-500/10"
+                  initial={{ opacity: 0 }}
+                  whileHover={{ opacity: walletButtonDisabled ? 0 : 1 }}
+                  transition={{ duration: 0.3 }}
+                />
+              </motion.button>
             </motion.div>
+
+            {walletFeedback && (
+              <motion.p
+                className="mt-3 text-base text-cyan-200"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+              >
+                {isSyncingReferral ? "⏳ " : ""}
+                {walletFeedback}
+              </motion.p>
+            )}
 
             {/* Download Buttons */}
             <motion.div
