@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useEffect, useMemo, useState } from "react";
+import { useAccount } from "wagmi";
 import {
   Coins,
   Wallet,
@@ -38,6 +39,8 @@ interface ApplyFormState {
   notes: string;
 }
 
+const APPLICATION_STATUS_KEY = "tmw_partner_application_status";
+
 const motionFade = {
   hidden: { opacity: 0, y: 24 },
   visible: (i = 1) => ({
@@ -45,6 +48,17 @@ const motionFade = {
     y: 0,
     transition: { delay: i * 0.1, duration: 0.6, ease: "easeOut" },
   }),
+};
+
+const formatDate = (value: string) => {
+  try {
+    return new Intl.DateTimeFormat("en", {
+      dateStyle: "medium",
+      timeStyle: "short",
+    }).format(new Date(value));
+  } catch (error) {
+    return value;
+  }
 };
 
 const PartnerProgramSection = ({
@@ -69,6 +83,13 @@ const PartnerProgramSection = ({
     platforms: "",
     notes: "",
   });
+  const [applicationRecord, setApplicationRecord] = useState<{
+    submittedAt: string;
+    email: string;
+    name: string;
+  } | null>(null);
+
+  const { address, isConnected } = useAccount();
 
   useEffect(() => {
     if (initialReferralCode) {
@@ -79,6 +100,22 @@ const PartnerProgramSection = ({
     const stored = getReferralCode();
     if (stored) {
       setReferralCode(stored);
+    }
+
+    if (typeof window !== "undefined") {
+      const cached = window.localStorage.getItem(APPLICATION_STATUS_KEY);
+      if (cached) {
+        try {
+          const parsed = JSON.parse(cached) as {
+            submittedAt: string;
+            email: string;
+            name: string;
+          };
+          setApplicationRecord(parsed);
+        } catch (error) {
+          console.warn("Invalid partner application cache", error);
+        }
+      }
     }
   }, [initialReferralCode]);
 
@@ -219,6 +256,18 @@ const PartnerProgramSection = ({
       setApplyFeedback(
         "Thanks! Ops will review and reply within 48 hours (Mon–Sat).",
       );
+      const submissionRecord = {
+        submittedAt: new Date().toISOString(),
+        email: applyForm.email,
+        name: applyForm.name,
+      };
+      setApplicationRecord(submissionRecord);
+      if (typeof window !== "undefined") {
+        window.localStorage.setItem(
+          APPLICATION_STATUS_KEY,
+          JSON.stringify(submissionRecord),
+        );
+      }
       setApplyForm({
         name: "",
         email: "",
@@ -404,6 +453,45 @@ const PartnerProgramSection = ({
                 the partner portal to unlock your unique code.
               </p>
             )}
+            <div className="mt-6 space-y-4">
+              <div className="rounded-2xl border border-white/10 bg-black/40 p-4">
+                <p className="text-sm font-semibold text-gray-400">
+                  Wallet status
+                </p>
+                <p className="mt-1 text-lg font-bold">
+                  {isConnected && address
+                    ? `Connected: ${address.slice(0, 6)}…${address.slice(-4)}`
+                    : "Not connected"}
+                </p>
+                <p className="text-xs text-gray-400">
+                  Wallet connections trigger `/cus/c/` + instant bonus.
+                </p>
+              </div>
+              <div className="rounded-2xl border border-white/10 bg-black/40 p-4">
+                <p className="text-sm font-semibold text-gray-400">
+                  Referral code detected
+                </p>
+                <p className="mt-1 text-lg font-bold">
+                  {referralCode ?? "Pending approval"}
+                </p>
+                <p className="text-xs text-gray-400">
+                  Codes arrive post-approval. Share `/play?ref=CODE`.
+                </p>
+              </div>
+              <div className="rounded-2xl border border-white/10 bg-black/40 p-4">
+                <p className="text-sm font-semibold text-gray-400">
+                  Application status
+                </p>
+                <p className="mt-1 text-lg font-bold">
+                  {applicationRecord ? "Submitted" : "Not submitted"}
+                </p>
+                <p className="text-xs text-gray-400">
+                  {applicationRecord
+                    ? `Received ${formatDate(applicationRecord.submittedAt)}`
+                    : "Apply below for review (≤48h)."}
+                </p>
+              </div>
+            </div>
           </motion.div>
         </div>
       </section>
