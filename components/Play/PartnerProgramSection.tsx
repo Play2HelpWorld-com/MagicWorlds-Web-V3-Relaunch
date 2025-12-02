@@ -234,10 +234,10 @@ const PartnerProgramSection = ({
   };
 
   return (
-    <div className="relative isolate bg-[#040111] text-white">
+    <div className="relative isolate bg-transparent text-white">
       <section
         id="partner-hero"
-        className="relative overflow-hidden border-b border-white/5 px-4 py-16 sm:py-20 lg:py-24"
+        className="relative overflow-hidden  px-4 py-20 sm:py-24 lg:py-28"
       >
         <div className="absolute inset-0 bg-gradient-to-b from-cyan-500/10 via-purple-500/10 to-black" />
         <div className="relative mx-auto flex max-w-6xl flex-col gap-12 lg:flex-row lg:items-center">
@@ -252,7 +252,7 @@ const PartnerProgramSection = ({
               viewport={{ once: true }}
               variants={motionFade}
             >
-              Magic Worlds Partner Program
+              Partner Program
             </motion.h1>
             <motion.p
               className="mt-6 text-lg text-gray-300"
@@ -276,7 +276,7 @@ const PartnerProgramSection = ({
               custom={3}
             >
               <button
-                className="inline-flex items-center gap-2 rounded-full bg-cyan-500 px-6 py-3 font-semibold text-black transition hover:bg-cyan-400"
+                className="inline-flex items-center gap-2 rounded-full bg-cyan-500 px-6 py-3 font-semibold text-white transition hover:bg-cyan-400"
                 onClick={() => handleScrollTo("partner-apply")}
               >
                 Apply to Program
@@ -389,7 +389,7 @@ const PartnerProgramSection = ({
               </div>
             </div>
             <button
-              className="mt-4 w-full rounded-xl bg-cyan-500 px-4 py-3 font-semibold text-black disabled:opacity-40"
+              className="mt-4 w-full rounded-xl bg-cyan-500 px-4 py-3 font-semibold text-white disabled:opacity-40"
               onClick={handleCopyShareLink}
               disabled={isCopying}
             >
