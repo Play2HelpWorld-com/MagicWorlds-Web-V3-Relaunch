@@ -1135,35 +1135,35 @@ export const docsData: Record<string, DocSection> = {
     ),
   },
 
-  "repository-structure": {
-    title: "Repository Structure",
-    content: (
-      <div className="overflow-x-auto rounded-lg border border-gray-600 bg-gray-800 p-4">
-        <pre className="text-sm text-gray-200">
-          {`Magic-World/
-│── .github/                  # GitHub-specific settings
-│── docs/                     # Documentation
-│   ├── patch-notes/          # Patch notes for each version
-│   ├── project-management/   # Project management documentation
-│   ├── README.md             # Project overview
-│   ├── CONTRIBUTING.md       # Contribution guidelines
-│── scripts/                  # Automation and deployment scripts
-│── src/                      # Source code for the main game
-│   ├── core/                 # Core game mechanics
-│   ├── assets/               # Global assets
-│   ├── engine/               # Game engine logic
-│── tests/                    # Testing framework
-│── worlds/                   # Sub-worlds stored as folders
-│   ├── music-world/          # Music World files
-│   ├── fashion-world/        # Fashion World files
-│   ├── sub-world/            # Additional sub-worlds files
-│── CHANGELOG.md              # Patch notes
-│── LICENSE                   # Open-source license
-│── README.md                 # Main repository overview`}
-        </pre>
-      </div>
-    ),
-  },
+  //   "repository-structure": {
+  //     title: "Repository Structure",
+  //     content: (
+  //       <div className="overflow-x-auto rounded-lg border border-gray-600 bg-gray-800 p-4">
+  //         <pre className="text-sm text-gray-200">
+  //           {`Magic-World/
+  // │── .github/                  # GitHub-specific settings
+  // │── docs/                     # Documentation
+  // │   ├── patch-notes/          # Patch notes for each version
+  // │   ├── project-management/   # Project management documentation
+  // │   ├── README.md             # Project overview
+  // │   ├── CONTRIBUTING.md       # Contribution guidelines
+  // │── scripts/                  # Automation and deployment scripts
+  // │── src/                      # Source code for the main game
+  // │   ├── core/                 # Core game mechanics
+  // │   ├── assets/               # Global assets
+  // │   ├── engine/               # Game engine logic
+  // │── tests/                    # Testing framework
+  // │── worlds/                   # Sub-worlds stored as folders
+  // │   ├── music-world/          # Music World files
+  // │   ├── fashion-world/        # Fashion World files
+  // │   ├── sub-world/            # Additional sub-worlds files
+  // │── CHANGELOG.md              # Patch notes
+  // │── LICENSE                   # Open-source license
+  // │── README.md                 # Main repository overview`}
+  //         </pre>
+  //       </div>
+  //     ),
+  //   },
 
   monetization: {
     title: "Monetization",
@@ -1596,7 +1596,7 @@ export const docsData: Record<string, DocSection> = {
   },
 
   "knowledge-hub": {
-    title: "Docs",
+    title: "Documents",
     content: (
       <div className="space-y-6">
         <p className="text-lg">
