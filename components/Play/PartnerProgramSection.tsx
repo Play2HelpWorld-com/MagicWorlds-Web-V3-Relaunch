@@ -41,6 +41,16 @@ interface ApplyFormState {
 
 const APPLICATION_STATUS_KEY = "tmw_partner_application_status";
 
+interface PartnerProfileResponse {
+  walletAddress: string;
+  referralCode: string | null;
+  status: string;
+  lastUpdated: string | null;
+  name: string | null;
+  email: string | null;
+  source?: string | null;
+}
+
 const motionFade = {
   hidden: { opacity: 0, y: 24 },
   visible: (i = 1) => ({
@@ -88,6 +98,11 @@ const PartnerProgramSection = ({
     email: string;
     name: string;
   } | null>(null);
+  const [partnerProfile, setPartnerProfile] =
+    useState<PartnerProfileResponse | null>(null);
+  const [isFetchingProfile, setIsFetchingProfile] = useState(false);
+  const [profileError, setProfileError] = useState<string | null>(null);
+  const [isCopyingProfileCode, setIsCopyingProfileCode] = useState(false);
 
   const { address, isConnected } = useAccount();
 
@@ -129,6 +144,10 @@ const PartnerProgramSection = ({
   }, []);
 
   const shareUrl = referralCode ? `${playUrl}?ref=${referralCode}` : playUrl;
+  const creatorReferralUrl = partnerProfile?.referralCode
+    ? `${playUrl}?ref=${partnerProfile.referralCode}`
+    : null;
+  const resolvedShareUrl = creatorReferralUrl ?? shareUrl;
 
   const incentiveCards = useMemo(
     () => [
@@ -209,15 +228,19 @@ const PartnerProgramSection = ({
   };
 
   const handleCopyShareLink = async () => {
-    if (!referralCode) {
+    if (!creatorReferralUrl && !referralCode) {
       setShareFeedback("Apply or log in to unlock your unique share link.");
       handleScrollTo("partner-apply");
       return;
     }
     try {
       setIsCopying(true);
-      await navigator.clipboard.writeText(shareUrl);
-      setShareFeedback("Link copied—share it everywhere ✨");
+      await navigator.clipboard.writeText(resolvedShareUrl);
+      setShareFeedback(
+        creatorReferralUrl
+          ? "Your referral link copied—share it everywhere ✨"
+          : "Invite link copied—credit goes to the ref detected on this device.",
+      );
     } catch (error) {
       console.error("Clipboard copy failed", error);
       setShareFeedback("Copy not available. Manually copy the link below.");
@@ -225,6 +248,72 @@ const PartnerProgramSection = ({
       setIsCopying(false);
     }
   };
+
+  const handleCopyProfileCode = async () => {
+    if (!partnerProfile?.referralCode) return;
+    try {
+      setIsCopyingProfileCode(true);
+      await navigator.clipboard.writeText(partnerProfile.referralCode);
+      setShareFeedback("Referral code copied—share it with your community.");
+    } catch (error) {
+      console.error("Clipboard copy failed", error);
+      setShareFeedback("Copy not available. Manually copy the code below.");
+    } finally {
+      setIsCopyingProfileCode(false);
+    }
+  };
+
+  useEffect(() => {
+    if (!isConnected || !address) {
+      setPartnerProfile(null);
+      setProfileError(null);
+      setIsFetchingProfile(false);
+      return;
+    }
+
+    let isCancelled = false;
+
+    const fetchProfile = async () => {
+      setIsFetchingProfile(true);
+      setProfileError(null);
+      try {
+        const response = await fetch("/api/partners/me", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ walletAddress: address }),
+        });
+
+        const body = await response.json().catch(() => ({}));
+        if (!response.ok) {
+          throw new Error(body?.error || "Unable to fetch partner profile");
+        }
+
+        if (!isCancelled) {
+          setPartnerProfile(body as PartnerProfileResponse);
+        }
+      } catch (error) {
+        if (!isCancelled) {
+          console.error("Failed to fetch partner profile", error);
+          setProfileError(
+            error instanceof Error ? error.message : "Unable to load profile",
+          );
+          setPartnerProfile(null);
+        }
+      } finally {
+        if (!isCancelled) {
+          setIsFetchingProfile(false);
+        }
+      }
+    };
+
+    void fetchProfile();
+
+    return () => {
+      isCancelled = true;
+    };
+  }, [isConnected, address]);
 
   const handleApplyInputChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -437,7 +526,7 @@ const PartnerProgramSection = ({
             <div className="mt-6 rounded-2xl border border-white/10 bg-black/40 p-4">
               <p className="text-sm text-gray-400">Referral URL</p>
               <div className="font-mono mt-2 break-all text-sm text-white">
-                {shareUrl}
+                {resolvedShareUrl}
               </div>
             </div>
             <button
@@ -447,10 +536,10 @@ const PartnerProgramSection = ({
             >
               {isCopying ? "Copying..." : "Copy link"}
             </button>
-            {!referralCode && (
+            {!creatorReferralUrl && (
               <p className="mt-3 text-sm text-yellow-300">
-                No referral detected yet. Submit an application or sign in to
-                the partner portal to unlock your unique code.
+                No creator referral code detected yet. Submit an application or
+                sign in to the partner portal so ops can approve you.
               </p>
             )}
             <div className="mt-6 space-y-4">
@@ -469,13 +558,62 @@ const PartnerProgramSection = ({
               </div>
               <div className="rounded-2xl border border-white/10 bg-black/40 p-4">
                 <p className="text-sm font-semibold text-gray-400">
-                  Referral code detected
+                  Creator referral status
+                </p>
+                {isConnected ? (
+                  isFetchingProfile ? (
+                    <p className="mt-2 text-sm text-gray-300">
+                      Checking Tapfiliate for your code…
+                    </p>
+                  ) : partnerProfile?.referralCode ? (
+                    <div className="mt-2">
+                      <p className="font-mono text-xl font-bold text-white">
+                        {partnerProfile.referralCode}
+                      </p>
+                      <button
+                        className="mt-3 rounded-full bg-white/10 px-4 py-2 text-sm font-semibold text-white transition hover:bg-white/20 disabled:opacity-40"
+                        onClick={handleCopyProfileCode}
+                        disabled={isCopyingProfileCode}
+                      >
+                        {isCopyingProfileCode ? "Copying..." : "Copy code"}
+                      </button>
+                      <p className="mt-2 text-xs text-gray-400">
+                        Share {`${playUrl}?ref=${partnerProfile.referralCode}`}{" "}
+                        to credit your wallet instantly.
+                      </p>
+                    </div>
+                  ) : (
+                    <div className="mt-2 text-sm text-yellow-200">
+                      {profileError
+                        ? profileError
+                        : "No creator code yet—application still pending approvals."}
+                    </div>
+                  )
+                ) : (
+                  <p className="mt-2 text-sm text-gray-300">
+                    Connect your wallet on /play to pull your Tapfiliate code.
+                  </p>
+                )}
+                {partnerProfile?.status && (
+                  <p className="mt-2 text-xs uppercase tracking-wide text-gray-400">
+                    Status: {partnerProfile.status}
+                  </p>
+                )}
+                {partnerProfile?.lastUpdated && (
+                  <p className="text-xs text-gray-500">
+                    Updated {formatDate(partnerProfile.lastUpdated)}
+                  </p>
+                )}
+              </div>
+              <div className="rounded-2xl border border-white/10 bg-black/40 p-4">
+                <p className="text-sm font-semibold text-gray-400">
+                  Captured referral (this session)
                 </p>
                 <p className="mt-1 text-lg font-bold">
-                  {referralCode ?? "Pending approval"}
+                  {referralCode ?? "No code detected"}
                 </p>
                 <p className="text-xs text-gray-400">
-                  Codes arrive post-approval. Share `/play?ref=CODE`.
+                  Stored locally to credit the recruiter whose link you used.
                 </p>
               </div>
               <div className="rounded-2xl border border-white/10 bg-black/40 p-4">
@@ -483,12 +621,18 @@ const PartnerProgramSection = ({
                   Application status
                 </p>
                 <p className="mt-1 text-lg font-bold">
-                  {applicationRecord ? "Submitted" : "Not submitted"}
+                  {partnerProfile?.status
+                    ? partnerProfile.status
+                    : applicationRecord
+                      ? "Submitted"
+                      : "Not submitted"}
                 </p>
                 <p className="text-xs text-gray-400">
-                  {applicationRecord
-                    ? `Received ${formatDate(applicationRecord.submittedAt)}`
-                    : "Apply below for review (≤48h)."}
+                  {partnerProfile?.lastUpdated
+                    ? `Updated ${formatDate(partnerProfile.lastUpdated)}`
+                    : applicationRecord
+                      ? `Received ${formatDate(applicationRecord.submittedAt)}`
+                      : "Apply below for review (≤48h)."}
                 </p>
               </div>
             </div>
