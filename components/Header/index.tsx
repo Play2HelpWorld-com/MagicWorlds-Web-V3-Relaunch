@@ -302,27 +302,35 @@ const Header = () => {
                         rel={
                           menuItem.newTab ? "noopener noreferrer" : undefined
                         }
-                        className={`relative inline-block text-xs font-bold uppercase tracking-wider transition-all duration-500 ease-out sm:text-sm ${
-                          pathUrl === menuItem.path
-                            ? "bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent drop-shadow-[0_0_8px_rgba(99,102,241,0.5)]"
-                            : "text-white hover:bg-gradient-to-r hover:from-indigo-400 hover:via-purple-400 hover:to-pink-400 hover:bg-clip-text hover:text-transparent"
-                        }`}
+                        className="group relative inline-block text-xs font-bold uppercase tracking-wider text-white transition-all duration-500 ease-out sm:text-sm"
                         style={{
                           fontFamily:
                             "'Orbitron', 'Rajdhani', 'Exo 2', sans-serif",
                         }}
                       >
                         <span className="relative inline-flex items-center">
-                          <span className="relative z-10">
+                          <span
+                            className={`relative z-10 transition-all duration-500 ${
+                              pathUrl === menuItem.path
+                                ? "bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent drop-shadow-[0_0_8px_rgba(99,102,241,0.5)]"
+                                : "group-hover:bg-gradient-to-r group-hover:from-indigo-400 group-hover:via-purple-400 group-hover:to-pink-400 group-hover:bg-clip-text group-hover:text-transparent"
+                            }`}
+                          >
                             {menuItem.title}
                           </span>
-                          {pathUrl === menuItem.path && (
-                            <>
-                              <span className="absolute -bottom-1 left-0 h-0.5 w-full animate-[shimmer_2s_ease-in-out_infinite] rounded-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 shadow-[0_0_8px_rgba(99,102,241,0.6)] transition-all duration-500 ease-out"></span>
-                              <span className="absolute -inset-1 -z-10 animate-pulse rounded-lg bg-gradient-to-r from-indigo-500/10 via-purple-500/10 to-pink-500/10 blur-sm"></span>
-                            </>
-                          )}
                         </span>
+                        {pathUrl === menuItem.path && (
+                          <>
+                            <span
+                              aria-hidden="true"
+                              className="pointer-events-none absolute -bottom-1 left-0 right-0 -z-10 h-0.5 w-full animate-[shimmer_2s_ease-in-out_infinite] rounded-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 shadow-[0_0_8px_rgba(99,102,241,0.6)] transition-all duration-500 ease-out"
+                            ></span>
+                            <span
+                              aria-hidden="true"
+                              className="pointer-events-none absolute -inset-1 -z-20 animate-pulse rounded-lg bg-gradient-to-r from-indigo-500/10 via-purple-500/10 to-pink-500/10 blur-sm"
+                            ></span>
+                          </>
+                        )}
                       </Link>
                     )}
                   </li>
