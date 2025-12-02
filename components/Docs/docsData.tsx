@@ -1596,7 +1596,7 @@ export const docsData: Record<string, DocSection> = {
   },
 
   "knowledge-hub": {
-    title: "Knowledge & Legal Hub",
+    title: "Docs",
     content: (
       <div className="space-y-6">
         <p className="text-lg">
