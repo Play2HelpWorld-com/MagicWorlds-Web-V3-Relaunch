@@ -98,25 +98,29 @@ const PartnerProgramSection = ({
       {
         icon: Coins,
         title: "20% Lifetime Revenue",
-        description: "Weekly MWG payouts on every referred purchase.",
+        description:
+          "20% of every referred player’s total spend (LTV) routed to you.",
         stat: "Paid Saturdays",
       },
       {
         icon: Gift,
         title: "Instant $TOKEN Bonus",
-        description: "Wallet connect (PCE) locks in the player + bonus.",
+        description:
+          "Wallet connect PCE fires the Tapfiliate `/cus/c/` call + bonus.",
         stat: "Auto-triggered",
       },
       {
         icon: Wallet,
         title: "Tapfiliate S2S",
-        description: "Ref= capture + wallet-as-customer ID for full LTV.",
-        stat: "V1.7 API",
+        description:
+          "`ref` capture + wallet-as-customer ID to secure every payout.",
+        stat: "v1.7 API",
       },
       {
         icon: ShieldCheck,
         title: "Hybrid Approvals",
-        description: "Auto green-light low-risk creators, review others.",
+        description:
+          "Auto-approve ≥70 score creators, manual review for everyone else.",
         stat: "<48h SLA",
       },
     ],
@@ -127,15 +131,15 @@ const PartnerProgramSection = ({
     () => [
       {
         title: "1. Capture referral",
-        body: "`ref` query is stored client-side and sent with every wallet event.",
+        body: "`ref` query is stored locally on /play, ensuring every action carries your affiliate code.",
       },
       {
         title: "2. Wallet connect (PCE)",
-        body: "S2S `/cus/c/` call fires, instant bonus queued, LTV link created.",
+        body: "Tapfiliate `/cus/c/` S2S call fires, instant $TOKEN bonus queues, and the wallet becomes the customer ID.",
       },
       {
         title: "3. Revenue event",
-        body: "Game backend triggers `/con/c/` so the 20% share posts weekly.",
+        body: "Game backend triggers `/con/c/` conversions so your 20% revenue share lands in the weekly export.",
       },
     ],
     [],
@@ -239,11 +243,11 @@ const PartnerProgramSection = ({
         id="partner-hero"
         className="relative overflow-hidden  px-4 py-20 sm:py-24 lg:py-28"
       >
-        <div className="absolute inset-0 bg-gradient-to-b from-cyan-500/10 via-purple-500/10 to-black" />
+        {/* <div className="absolute inset-0 bg-gradient-to-b from-cyan-500/10 via-purple-500/10 to-black" /> */}
         <div className="relative mx-auto flex max-w-6xl flex-col gap-12 lg:flex-row lg:items-center">
           <div className="flex-1">
             <p className="text-sm font-semibold uppercase tracking-[0.3em] text-cyan-300">
-              Tapfiliate + Wallet Connect
+              Tapfiliate S2S · Wallet Connect PCE
             </p>
             <motion.h1
               className="mt-4 text-4xl font-black leading-tight text-white md:text-5xl lg:text-6xl"
@@ -262,10 +266,11 @@ const PartnerProgramSection = ({
               variants={motionFade}
               custom={2}
             >
-              Dual incentive stack designed for creators: earn a weekly 20%
-              revenue share forever and grant players an instant $TOKEN bonus
-              the moment they connect their wallet. `/play` captures referrals,
-              while Tapfiliate S2S keeps payouts accurate.
+              Earn a 20% lifetime revenue share on every referred player and
+              trigger an instant $TOKEN bonus the moment their wallet connects.
+              The official play landing page captures `?ref=` codes, while our
+              Tapfiliate v1.7 S2S setup keeps payouts auditable and aligned with
+              Web3 growth KPIs.
             </motion.p>
             <motion.div
               className="mt-8 flex flex-wrap gap-4"
@@ -326,10 +331,7 @@ const PartnerProgramSection = ({
         </div>
       </section>
 
-      <section
-        id="partner-share"
-        className="border-b border-white/5 px-4 py-16 lg:py-20"
-      >
+      <section id="partner-share" className=" px-4 py-16 lg:py-20">
         <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-2">
           <motion.div
             className="rounded-3xl border border-white/10 bg-gradient-to-br from-cyan-500/10 to-blue-500/5 p-6"
@@ -365,7 +367,7 @@ const PartnerProgramSection = ({
           </motion.div>
 
           <motion.div
-            className="rounded-3xl border border-white/10 bg-white/5 p-6"
+            className="rounded-3xl  p-6"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
@@ -379,8 +381,9 @@ const PartnerProgramSection = ({
               Copy-ready URL
             </h2>
             <p className="mt-3 text-gray-300">
-              When you are approved, we auto-populate your unique referral URL
-              below. Share it anywhere to trigger Tapfiliate tracking instantly.
+              Once approved, we drop your unique themagicworlds.com/play link
+              here. Share it across YouTube descriptions, Discord servers, X
+              threads, or Link-in-bio tools to trigger Tapfiliate instantly.
             </p>
             <div className="mt-6 rounded-2xl border border-white/10 bg-black/40 p-4">
               <p className="text-sm text-gray-400">Referral URL</p>
@@ -398,17 +401,17 @@ const PartnerProgramSection = ({
             {!referralCode && (
               <p className="mt-3 text-sm text-yellow-300">
                 No referral detected yet. Submit an application or sign in to
-                the partner portal.
+                the partner portal to unlock your unique code.
               </p>
             )}
           </motion.div>
         </div>
       </section>
 
-      <section className="border-b border-white/5 px-4 py-16 lg:py-20">
+      <section className="px-4 py-16 lg:py-20">
         <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-2">
           <motion.div
-            className="rounded-3xl border border-white/10 bg-white/5 p-6"
+            className="rounded-3xl  p-6"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
@@ -452,8 +455,9 @@ const PartnerProgramSection = ({
             </div>
             <h2 className="mt-4 text-3xl font-bold">Tell us about you</h2>
             <p className="mt-3 text-gray-200">
-              Complete the quick intake so we can score you and release your
-              share link.
+              Complete the intake so we can score you against Tapfiliate
+              history, verified socials, and priority regions before we release
+              your share link.
             </p>
             <form className="mt-6 space-y-4" onSubmit={handleApplySubmit}>
               <div className="grid gap-4 sm:grid-cols-2">
@@ -572,7 +576,9 @@ const PartnerProgramSection = ({
                 href={`mailto:${PARTNER_SUPPORT_EMAIL}`}
               >
                 {PARTNER_SUPPORT_EMAIL}
-              </a>
+              </a>{" "}
+              with “Partner Program” in the subject so ops can fast-track your
+              ticket.
             </p>
           </motion.div>
         </div>
@@ -592,15 +598,22 @@ const PartnerProgramSection = ({
             </div>
             <h2 className="mt-4 text-3xl font-bold">Manual payout runbook</h2>
             <ul className="mt-4 list-disc space-y-3 pl-5 text-sm text-gray-300">
-              <li>Friday: export Tapfiliate performance, validate S2S logs.</li>
               <li>
-                Saturday: send MWG payouts (wallet + bonus) via ops wallet.
+                Friday: export Tapfiliate performance and validate `/cus/c/` +
+                `/con/c/` S2S logs.
               </li>
-              <li>Log confirmation tx hashes + notify affiliates via email.</li>
+              <li>
+                Saturday: send MWG payouts (wallet + instant bonus) via ops
+                wallet after finance sign-off.
+              </li>
+              <li>
+                Log confirmation tx hashes, attach to CRM, and notify affiliates
+                via email.
+              </li>
             </ul>
             <p className="mt-4 text-sm text-gray-400">
-              Future sprint: automate payouts once MWG treasury multi-sig is
-              live.
+              Future sprint: automate payouts once the MWG treasury multi-sig
+              and Tapfiliate webhook queue are live.
             </p>
           </motion.div>
           <motion.div
