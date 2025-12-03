@@ -275,11 +275,11 @@ const GameDownloads = ({ initialReferralCode }: GameDownloadsProps) => {
         <FloatingParticles />
 
         {/* Hero Section */}
-        <section className="relative flex min-h-screen items-center justify-center px-4 pb-20 pt-32">
+        <section className="relative flex min-h-[480px] flex-col items-center justify-center px-4 pb-16 pt-28 sm:min-h-[560px] sm:pb-20 sm:pt-32 lg:max-h-[920px] lg:min-h-[640px]">
           {/* Background GIF */}
           <div className="absolute inset-0 -z-10">
             <Image
-              src="/3d/signup2-unscreen.gif"
+              src="/3d/5.gif"
               alt="Magic Worlds gameplay"
               fill
               priority
