@@ -1135,35 +1135,35 @@ export const docsData: Record<string, DocSection> = {
     ),
   },
 
-  "repository-structure": {
-    title: "Repository Structure",
-    content: (
-      <div className="overflow-x-auto rounded-lg border border-gray-600 bg-gray-800 p-4">
-        <pre className="text-sm text-gray-200">
-          {`Magic-World/
-│── .github/                  # GitHub-specific settings
-│── docs/                     # Documentation
-│   ├── patch-notes/          # Patch notes for each version
-│   ├── project-management/   # Project management documentation
-│   ├── README.md             # Project overview
-│   ├── CONTRIBUTING.md       # Contribution guidelines
-│── scripts/                  # Automation and deployment scripts
-│── src/                      # Source code for the main game
-│   ├── core/                 # Core game mechanics
-│   ├── assets/               # Global assets
-│   ├── engine/               # Game engine logic
-│── tests/                    # Testing framework
-│── worlds/                   # Sub-worlds stored as folders
-│   ├── music-world/          # Music World files
-│   ├── fashion-world/        # Fashion World files
-│   ├── sub-world/            # Additional sub-worlds files
-│── CHANGELOG.md              # Patch notes
-│── LICENSE                   # Open-source license
-│── README.md                 # Main repository overview`}
-        </pre>
-      </div>
-    ),
-  },
+  //   "repository-structure": {
+  //     title: "Repository Structure",
+  //     content: (
+  //       <div className="overflow-x-auto rounded-lg border border-gray-600 bg-gray-800 p-4">
+  //         <pre className="text-sm text-gray-200">
+  //           {`Magic-World/
+  // │── .github/                  # GitHub-specific settings
+  // │── docs/                     # Documentation
+  // │   ├── patch-notes/          # Patch notes for each version
+  // │   ├── project-management/   # Project management documentation
+  // │   ├── README.md             # Project overview
+  // │   ├── CONTRIBUTING.md       # Contribution guidelines
+  // │── scripts/                  # Automation and deployment scripts
+  // │── src/                      # Source code for the main game
+  // │   ├── core/                 # Core game mechanics
+  // │   ├── assets/               # Global assets
+  // │   ├── engine/               # Game engine logic
+  // │── tests/                    # Testing framework
+  // │── worlds/                   # Sub-worlds stored as folders
+  // │   ├── music-world/          # Music World files
+  // │   ├── fashion-world/        # Fashion World files
+  // │   ├── sub-world/            # Additional sub-worlds files
+  // │── CHANGELOG.md              # Patch notes
+  // │── LICENSE                   # Open-source license
+  // │── README.md                 # Main repository overview`}
+  //         </pre>
+  //       </div>
+  //     ),
+  //   },
 
   monetization: {
     title: "Monetization",
@@ -1595,144 +1595,145 @@ export const docsData: Record<string, DocSection> = {
     ),
   },
 
-  knowledgeHub: {
-    "call-to-action": {
-      title: "Knowledge & Legal Hub",
-      content: (
-        <div className="space-y-6">
-          <p className="text-lg">
-            Explore the latest briefs, strategy docs, and compliance resources
-            powering Magic Worlds.
-          </p>
+  "knowledge-hub": {
+    title: "Documents",
+    content: (
+      <div className="space-y-6">
+        <p className="text-lg">
+          Explore the latest briefs, strategy docs, and compliance resources
+          powering Magic Worlds.
+        </p>
 
-          <div className="rounded-lg border border-blue-500/40 bg-blue-900/20 p-4">
-            <h3 className="mb-3 text-xl font-bold text-blue-300">
-              Company Intelligence
+        <div className="rounded-lg border border-blue-500/40 bg-blue-900/20 p-4">
+          <h3 className="mb-3 text-xl font-bold text-blue-300">
+            Company Intelligence
+          </h3>
+          <div className="grid gap-4 md:grid-cols-2">
+            <a
+              href="https://www.notion.so/What-Happened-In-Magic-Worlds-Last-Week-28b80e68c0ea803db590ea9b9bf83d07?source=copy_link"
+              target="_blank"
+              rel="noreferrer"
+              className="group flex flex-col rounded-lg border border-blue-500/20 bg-blue-950/30 p-4 transition hover:border-blue-300/60 hover:bg-blue-950/60"
+            >
+              <h4 className="font-semibold text-white group-hover:text-blue-200">
+                Weekly Recap
+              </h4>
+              <p className="text-sm text-blue-200/80">
+                A snapshot of wins, blockers, and KPIs from the past week.
+              </p>
+            </a>
+            <a
+              href="https://www.notion.so/Company-mission-and-strategy-28b80e68c0ea80778fb5ced94a5911d0?source=copy_link"
+              target="_blank"
+              rel="noreferrer"
+              className="group flex flex-col rounded-lg border border-indigo-500/20 bg-indigo-950/30 p-4 transition hover:border-indigo-300/60 hover:bg-indigo-950/60"
+            >
+              <h4 className="font-semibold text-white group-hover:text-indigo-200">
+                Mission & Strategy
+              </h4>
+              <p className="text-sm text-indigo-200/80">
+                Our north star, strategic pillars, and execution principles.
+              </p>
+            </a>
+            <a
+              href="https://www.notion.so/Proposal-for-new-year-campaign-28b80e68c0ea8054a383c5cb0e0a4555?source=copy_link"
+              target="_blank"
+              rel="noreferrer"
+              className="group flex flex-col rounded-lg border border-purple-500/20 bg-purple-950/30 p-4 transition hover:border-purple-300/60 hover:bg-purple-950/60"
+            >
+              <h4 className="font-semibold text-white group-hover:text-purple-200">
+                New Year Campaign
+              </h4>
+              <p className="text-sm text-purple-200/80">
+                Promotional beats, creative hooks, and ROI targets.
+              </p>
+            </a>
+            <a
+              href="https://www.notion.so/Customer-feedback-report-28b80e68c0ea8080a11ad681dce56e08?source=copy_link"
+              target="_blank"
+              rel="noreferrer"
+              className="group flex flex-col rounded-lg border border-emerald-500/20 bg-emerald-950/30 p-4 transition hover:border-emerald-300/60 hover:bg-emerald-950/60"
+            >
+              <h4 className="font-semibold text-white group-hover:text-emerald-200">
+                Feedback Report
+              </h4>
+              <p className="text-sm text-emerald-200/80">
+                Player sentiment, feature requests, and action items.
+              </p>
+            </a>
+          </div>
+        </div>
+
+        <div className="grid gap-6 md:grid-cols-2">
+          <div className="rounded-lg border border-amber-500/30 bg-amber-900/20 p-4">
+            <h3 className="mb-3 text-xl font-bold text-amber-300">
+              Vision & Research
             </h3>
-            <div className="grid gap-4 md:grid-cols-2">
+            <div className="space-y-3">
               <a
-                href="https://www.notion.so/What-Happened-In-Magic-Worlds-Last-Week-28b80e68c0ea803db590ea9b9bf83d07?source=copy_link"
+                href="https://www.notion.so/White-Paper_Magic-Worlds_Pioneering-Gamified-Philanthropy-in-Immersive-Gaming-Universes-2a280e68c0ea80e1a2dce8152d320e67?source=copy_link"
                 target="_blank"
                 rel="noreferrer"
-                className="group flex flex-col rounded-lg border border-blue-500/20 bg-blue-950/30 p-4 transition hover:border-blue-300/60 hover:bg-blue-950/60"
+                className="block rounded-lg border border-amber-500/30 bg-amber-950/40 px-4 py-3 text-sm transition hover:border-amber-200/60 hover:bg-amber-950/70"
               >
-                <h4 className="font-semibold text-white group-hover:text-blue-200">
-                  Weekly Recap
-                </h4>
-                <p className="text-sm text-blue-200/80">
-                  A snapshot of wins, blockers, and KPIs from the past week.
-                </p>
+                White Paper — Gamified Philanthropy
               </a>
               <a
-                href="https://www.notion.so/Company-mission-and-strategy-28b80e68c0ea80778fb5ced94a5911d0?source=copy_link"
+                href="https://www.notion.so/BLOCKCHAIN-and-AI-29b80e68c0ea807fba10cde147345a4f?source=copy_link"
                 target="_blank"
                 rel="noreferrer"
-                className="group flex flex-col rounded-lg border border-indigo-500/20 bg-indigo-950/30 p-4 transition hover:border-indigo-300/60 hover:bg-indigo-950/60"
+                className="block rounded-lg border border-amber-500/30 bg-amber-950/40 px-4 py-3 text-sm transition hover:border-amber-200/60 hover:bg-amber-950/70"
               >
-                <h4 className="font-semibold text-white group-hover:text-indigo-200">
-                  Mission & Strategy
-                </h4>
-                <p className="text-sm text-indigo-200/80">
-                  Our north star, strategic pillars, and execution principles.
-                </p>
-              </a>
-              <a
-                href="https://www.notion.so/Proposal-for-new-year-campaign-28b80e68c0ea8054a383c5cb0e0a4555?source=copy_link"
-                target="_blank"
-                rel="noreferrer"
-                className="group flex flex-col rounded-lg border border-purple-500/20 bg-purple-950/30 p-4 transition hover:border-purple-300/60 hover:bg-purple-950/60"
-              >
-                <h4 className="font-semibold text-white group-hover:text-purple-200">
-                  New Year Campaign
-                </h4>
-                <p className="text-sm text-purple-200/80">
-                  Promotional beats, creative hooks, and ROI targets.
-                </p>
-              </a>
-              <a
-                href="https://www.notion.so/Customer-feedback-report-28b80e68c0ea8080a11ad681dce56e08?source=copy_link"
-                target="_blank"
-                rel="noreferrer"
-                className="group flex flex-col rounded-lg border border-emerald-500/20 bg-emerald-950/30 p-4 transition hover:border-emerald-300/60 hover:bg-emerald-950/60"
-              >
-                <h4 className="font-semibold text-white group-hover:text-emerald-200">
-                  Feedback Report
-                </h4>
-                <p className="text-sm text-emerald-200/80">
-                  Player sentiment, feature requests, and action items.
-                </p>
+                Blockchain & AI Architecture
               </a>
             </div>
           </div>
 
-          <div className="grid gap-6 md:grid-cols-2">
-            <div className="rounded-lg border border-amber-500/30 bg-amber-900/20 p-4">
-              <h3 className="mb-3 text-xl font-bold text-amber-300">
-                Vision & Research
-              </h3>
-              <div className="space-y-3">
-                <a
-                  href="https://www.notion.so/White-Paper_Magic-Worlds_Pioneering-Gamified-Philanthropy-in-Immersive-Gaming-Universes-2a280e68c0ea80e1a2dce8152d320e67?source=copy_link"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="block rounded-lg border border-amber-500/30 bg-amber-950/40 px-4 py-3 text-sm transition hover:border-amber-200/60 hover:bg-amber-950/70"
-                >
-                  White Paper — Gamified Philanthropy
-                </a>
-                <a
-                  href="https://www.notion.so/BLOCKCHAIN-and-AI-29b80e68c0ea807fba10cde147345a4f?source=copy_link"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="block rounded-lg border border-amber-500/30 bg-amber-950/40 px-4 py-3 text-sm transition hover:border-amber-200/60 hover:bg-amber-950/70"
-                >
-                  Blockchain & AI Architecture
-                </a>
-              </div>
-            </div>
-
-            <div className="rounded-lg border border-red-500/30 bg-red-900/20 p-4">
-              <h3 className="mb-3 text-xl font-bold text-red-300">
-                Legal Center
-              </h3>
-              <div className="space-y-3">
-                <a
-                  href="https://www.notion.so/WHITEPAPER-LEGAL-DISCLAIMER-29b80e68c0ea80449413d5ad66414c50?source=copy_link"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="block rounded-lg border border-red-500/30 bg-red-950/40 px-4 py-3 text-sm transition hover:border-red-200/60 hover:bg-red-950/70"
-                >
-                  Legal Disclaimer
-                </a>
-                <a
-                  href="https://www.notion.so/TERMS-OF-USE-29b80e68c0ea807583f1d61b98dc2439?source=copy_link"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="block rounded-lg border border-red-500/30 bg-red-950/40 px-4 py-3 text-sm transition hover:border-red-200/60 hover:bg-red-950/70"
-                >
-                  Terms of Use
-                </a>
-                <a
-                  href="https://www.notion.so/PRIVACY-POLICY-29b80e68c0ea805bae7cfcfca8c661a8?source=copy_link"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="block rounded-lg border border-red-500/30 bg-red-950/40 px-4 py-3 text-sm transition hover:border-red-200/60 hover:bg-red-950/70"
-                >
-                  Privacy Policy
-                </a>
-                <a
-                  href="https://www.notion.so/COOKIE-POLICY-29b80e68c0ea80c89001da11ad8194f0?source=copy_link"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="block rounded-lg border border-red-500/30 bg-red-950/40 px-4 py-3 text-sm transition hover:border-red-200/60 hover:bg-red-950/70"
-                >
-                  Cookie Policy
-                </a>
-              </div>
+          <div className="rounded-lg border border-red-500/30 bg-red-900/20 p-4">
+            <h3 className="mb-3 text-xl font-bold text-red-300">
+              Legal Center
+            </h3>
+            <div className="space-y-3">
+              <a
+                href="https://www.notion.so/WHITEPAPER-LEGAL-DISCLAIMER-29b80e68c0ea80449413d5ad66414c50?source=copy_link"
+                target="_blank"
+                rel="noreferrer"
+                className="block rounded-lg border border-red-500/30 bg-red-950/40 px-4 py-3 text-sm transition hover:border-red-200/60 hover:bg-red-950/70"
+              >
+                Legal Disclaimer
+              </a>
+              <a
+                href="https://www.notion.so/TERMS-OF-USE-29b80e68c0ea807583f1d61b98dc2439?source=copy_link"
+                target="_blank"
+                rel="noreferrer"
+                className="block rounded-lg border border-red-500/30 bg-red-950/40 px-4 py-3 text-sm transition hover:border-red-200/60 hover:bg-red-950/70"
+              >
+                Terms of Use
+              </a>
+              <a
+                href="https://www.notion.so/PRIVACY-POLICY-29b80e68c0ea805bae7cfcfca8c661a8?source=copy_link"
+                target="_blank"
+                rel="noreferrer"
+                className="block rounded-lg border border-red-500/30 bg-red-950/40 px-4 py-3 text-sm transition hover:border-red-200/60 hover:bg-red-950/70"
+              >
+                Privacy Policy
+              </a>
+              <a
+                href="https://www.notion.so/COOKIE-POLICY-29b80e68c0ea80c89001da11ad8194f0?source=copy_link"
+                target="_blank"
+                rel="noreferrer"
+                className="block rounded-lg border border-red-500/30 bg-red-950/40 px-4 py-3 text-sm transition hover:border-red-200/60 hover:bg-red-950/70"
+              >
+                Cookie Policy
+              </a>
             </div>
           </div>
         </div>
-      ),
-    },
+      </div>
+    ),
+  },
+
+  "call-to-action": {
     title: "Call-to-Action (CTA)",
     content: (
       <div className="space-y-6">

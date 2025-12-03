@@ -29,7 +29,7 @@ const ContentSection = ({ section }) => {
       <motion.h1
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
-        className="mb-6 bg-gradient-to-r from-purple-400 via-fuchsia-400 to-cyan-400 bg-clip-text font-orbitron text-3xl font-black uppercase tracking-tight text-transparent"
+        className="mb-6 bg-gradient-to-r from-purple-400 via-fuchsia-400 to-cyan-400 bg-clip-text font-orbitron text-2xl font-black uppercase tracking-tight text-transparent sm:text-3xl lg:text-4xl"
       >
         {section.title}
       </motion.h1>
@@ -195,13 +195,11 @@ export default function Docs() {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="mb-4 flex items-center justify-center gap-4"
+          className="mb-4 flex flex-col items-center justify-center gap-3 text-center sm:flex-row sm:text-left"
         >
-          {/* <Trophy className="h-12 w-12 text-yellow-400 drop-shadow-[0_0_15px_rgba(234,179,8,0.5)]" /> */}
-          <h2 className="bg-gradient-to-r from-purple-400 via-fuchsia-400 to-cyan-400 bg-clip-text font-orbitron text-6xl font-black uppercase text-transparent">
-            DOCUMENTATION
+          <h2 className=" bg-gradient-to-r from-purple-400 via-fuchsia-400 to-cyan-400 bg-clip-text font-orbitron text-2xl font-black uppercase text-transparent sm:text-3xl lg:text-5xl">
+            Documentation
           </h2>
-          {/* <Trophy className="h-12 w-12 text-yellow-400 drop-shadow-[0_0_15px_rgba(234,179,8,0.5)]" /> */}
         </motion.div>
         <motion.p
           initial={{ opacity: 0 }}

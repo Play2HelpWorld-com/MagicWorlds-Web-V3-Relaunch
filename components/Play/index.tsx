@@ -275,11 +275,11 @@ const GameDownloads = ({ initialReferralCode }: GameDownloadsProps) => {
         <FloatingParticles />
 
         {/* Hero Section */}
-        <section className="relative flex min-h-screen items-center justify-center px-4 pb-20 pt-32">
+        <section className="relative flex min-h-[480px] flex-col items-center justify-center px-4 pb-16 pt-32 sm:min-h-[560px] sm:pb-20 sm:pt-36 lg:max-h-[920px] lg:min-h-[640px]">
           {/* Background GIF */}
           <div className="absolute inset-0 -z-10">
             <Image
-              src="/3d/signup2-unscreen.gif"
+              src="/3d/5.gif"
               alt="Magic Worlds gameplay"
               fill
               priority
@@ -305,7 +305,7 @@ const GameDownloads = ({ initialReferralCode }: GameDownloadsProps) => {
 
             {/* Title */}
             <motion.h1
-              className="mb-6 font-orbitron text-6xl font-black uppercase leading-none md:text-8xl lg:text-9xl"
+              className="mb-6 font-orbitron text-5xl font-black uppercase leading-none md:text-6xl lg:text-7xl xl:text-8xl"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3, duration: 0.8 }}
