@@ -35,7 +35,7 @@
     "lucide-react": "^0.462.0",
     "magic-worlds": "file:",
     "merkletreejs": "^0.4.1",
-    "next": "15.0.3",
+    "next": "15.0.5",
     "next-themes": "^0.2.1",
     "node-cron": "^3.0.3",
     "pino-pretty": "^13.0.0",
