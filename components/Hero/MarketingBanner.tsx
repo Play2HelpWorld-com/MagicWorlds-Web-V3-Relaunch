@@ -37,6 +37,9 @@ const MarketingBanner = () => {
   const positionRef = useRef(0);
   const bannerRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const touchStartYRef = useRef<number | null>(null);
+  const lastTouchDeltaRef = useRef(0);
+  const lastTouchTimeRef = useRef(0);
 
   const updateBannerPosition = (value: number) => {
     positionRef.current = value;
@@ -83,23 +86,20 @@ const MarketingBanner = () => {
       return;
     }
 
-    const handleWheel = (e: WheelEvent) => {
-      const delta = e.deltaY;
+    const advanceBanner = (delta: number, force = false) => {
       const currentPosition = positionRef.current;
       const atTopOfPage = window.scrollY <= 0;
 
       const shouldReveal = delta < 0 && atTopOfPage;
       const shouldHide = delta > 0 && currentPosition > -100;
 
-      if (!shouldReveal && !shouldHide) {
+      if (!force && !shouldReveal && !shouldHide) {
         if (currentPosition <= -99.5) {
           setIsBannerActive(false);
           updateBannerPosition(-100);
         }
         return;
       }
-
-      e.preventDefault();
 
       const movement = delta * SLIDE_SPEED;
       let nextPosition = currentPosition - movement;
@@ -112,9 +112,69 @@ const MarketingBanner = () => {
       }
     };
 
+    const handleWheel = (e: WheelEvent) => {
+      const delta = e.deltaY;
+      if (delta === 0) return;
+      advanceBanner(delta);
+      e.preventDefault();
+    };
+
+    const handleTouchStart = (e: TouchEvent) => {
+      if (!isBannerActive) return;
+      touchStartYRef.current = e.touches[0]?.clientY ?? null;
+      lastTouchDeltaRef.current = 0;
+      lastTouchTimeRef.current = performance.now();
+    };
+
+    const handleTouchMove = (e: TouchEvent) => {
+      if (touchStartYRef.current === null) return;
+      const currentY = e.touches[0]?.clientY ?? touchStartYRef.current;
+      const delta = touchStartYRef.current - currentY;
+      lastTouchDeltaRef.current = delta;
+      lastTouchTimeRef.current = performance.now();
+      advanceBanner(delta * 1.5, true);
+      e.preventDefault();
+    };
+
+    const handleTouchEnd = () => {
+      const now = performance.now();
+      const timeDelta = Math.max(now - lastTouchTimeRef.current, 1);
+      const velocity = lastTouchDeltaRef.current / timeDelta;
+      const progress = Math.abs(positionRef.current);
+
+      const shouldDismiss =
+        progress >= 60 ||
+        Math.abs(velocity) > 0.5 ||
+        positionRef.current <= -90;
+
+      if (shouldDismiss) {
+        setIsBannerActive(false);
+        updateBannerPosition(-100);
+      } else {
+        updateBannerPosition(0);
+      }
+
+      touchStartYRef.current = null;
+      lastTouchDeltaRef.current = 0;
+      lastTouchTimeRef.current = now;
+    };
+
     window.addEventListener("wheel", handleWheel, { passive: false });
-    return () => window.removeEventListener("wheel", handleWheel);
-  }, [isBannerActive]);
+    window.addEventListener("touchstart", handleTouchStart, {
+      passive: false,
+    });
+    window.addEventListener("touchmove", handleTouchMove, {
+      passive: false,
+    });
+    window.addEventListener("touchend", handleTouchEnd);
+
+    return () => {
+      window.removeEventListener("wheel", handleWheel);
+      window.removeEventListener("touchstart", handleTouchStart);
+      window.removeEventListener("touchmove", handleTouchMove);
+      window.removeEventListener("touchend", handleTouchEnd);
+    };
+  }, [isBannerActive, bannerPosition]);
 
   if (!isBannerActive) {
     return null;
@@ -125,13 +185,39 @@ const MarketingBanner = () => {
   return (
     <div
       ref={bannerRef}
+      className="fixed inset-0 z-50 h-screen w-full overflow-hidden bg-black"
       style={{
         transform: `translateY(${bannerPosition}%)`,
         transition: "transform 0.3s cubic-bezier(0.32, 0.72, 0, 1)",
         willChange: "transform",
+        touchAction: "none",
       }}
-      className="fixed inset-0 z-50 h-screen w-full overflow-hidden bg-black"
     >
+      <button
+        type="button"
+        aria-label="Close marketing banner"
+        className="absolute right-4 top-4 z-50 rounded-full bg-black/60 p-2 text-white shadow-lg backdrop-blur-md transition hover:bg-black/70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-300"
+        onClick={() => {
+          updateBannerPosition(-100);
+          setIsBannerActive(false);
+        }}
+      >
+        <svg
+          width={20}
+          height={20}
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth={2}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden="true"
+          className="block"
+        >
+          <line x1="18" y1="6" x2="6" y2="18" />
+          <line x1="6" y1="6" x2="18" y2="18" />
+        </svg>
+      </button>
       {/* Retro Gaming Background with Media Rotation */}
       <div className="absolute inset-0 h-full w-full">
         <AnimatePresence mode="wait">
@@ -202,7 +288,7 @@ const MarketingBanner = () => {
                   MAGIC
                 </span>
                 <span
-                  className="relative -mt-3 block sm:-mt-4 lg:-mt-5"
+                  className="relative block"
                   style={{
                     WebkitTextStroke: "3px rgba(255, 255, 255, 0.4)",
                     paintOrder: "stroke fill",
